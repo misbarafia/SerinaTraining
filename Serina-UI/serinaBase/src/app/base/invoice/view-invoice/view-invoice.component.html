@@ -1,0 +1,612 @@
+<div *ngIf="!editable" class="pos_rel">
+  <span class="goBackIn ml-3" (click)="backToInvoice()">
+    <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+  </span>
+  <h6 class="headh6 pl-80">View {{ Itype }}</h6>
+</div>
+<div *ngIf="editable" class="pos_rel">
+  <span class="goBackIn ml-3" (click)="backToInvoice()">
+    <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+  </span>
+  <h6 class="headh6 pl-80">{{ headerName }}</h6>
+</div>
+<div class="row invoice-body">
+  <div class="viewPdf" style="right: 160px;">
+    <button
+          *ngIf="
+            (editPermissionBoolean ||
+              changeApproveBoolean ||
+              financeApproveBoolean) &&
+            (submitBtn_boolean || vendorUplaodBoolean) && lineTabBoolean
+          "
+          class="btnUpload btn_extra_bg"
+          (click)="open_dialog('AddLine',null)"
+        >
+        <i class="fa fa-plus" aria-hidden="true"></i> Add Line
+        </button>
+  </div>
+  <div class="viewPdf" *ngIf="!isPdfAvailable" style="right: 100px;">
+    <button class="btnUpload" (click)="DownloadPDF()">
+      <i class="fa fa-download" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="viewPdf" *ngIf="!isPdfAvailable">
+    <button class="btnUpload" (click)="viewPdf()">{{ btnText }}</button>
+  </div>
+  <div
+    class="col-12 p-0 pl-1"
+    [ngClass]="!isPdfAvailable && showPdf ? 'col-lg-5' : 'col-lg-12'"
+  >
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li
+        *ngIf="!isServiceData"
+        class="nav-item mr-2"
+        pTooltip="Vendor details"
+        tooltipPosition="top"
+        (click)="changeTab('show','vendor')"
+      >
+        <a
+          class="nav-link active"
+          id="vendor-tab"
+          data-toggle="tab"
+          href="#vendor"
+          role="tab"
+          aria-controls="vendor"
+          aria-selected="true"
+          >Vendor details</a
+        >
+      </li>
+      <li
+        *ngIf="isServiceData"
+        class="nav-item mr-2"
+        pTooltip="Service details"
+        tooltipPosition="top"
+        (click)="changeTab('show','service')"
+      >
+        <a
+          class="nav-link active"
+          id="vendor-tab"
+          data-toggle="tab"
+          href="#vendor"
+          role="tab"
+          aria-controls="vendor"
+          aria-selected="true"
+          >Service details</a
+        >
+      </li>
+      <li
+        class="nav-item mr-2"
+        pTooltip="Header details"
+        tooltipPosition="top"
+        (click)="changeTab('show','head')"
+      >
+        <a
+          class="nav-link "
+          id="header-tab"
+          data-toggle="tab"
+          href="#header"
+          role="tab"
+          aria-controls="header"
+          aria-selected="false"
+          >Header details</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        pTooltip="Line details"
+        tooltipPosition="top"
+        (click)="changeTab('hide','line')"
+      >
+        <a
+          class="nav-link"
+          id="line-tab"
+          data-toggle="tab"
+          href="#line"
+          role="tab"
+          aria-controls="line"
+          aria-selected="false"
+          >Line details</a
+        >
+      </li>
+      <!-- <button class="raiseAlert" pTooltip="raise an alert" tooltipPosition="top"><i class="fa fa-exclamation-triangle"
+          aria-hidden="true"></i></button> -->
+    </ul>
+    <div class="bg-design-all tabsDiv">
+      <div class="tabDiv tab-content" id="myTabContent">
+        <!-- vendor -->
+        <div
+          class="tab-pane fade show active"
+          id="vendor"
+          role="tabpanel"
+          aria-labelledby="vendor-tab"
+        >
+          <div class="displayFlex">
+            <div *ngFor="let data of vendorData | keyvalue; let i = index">
+              <div>
+                <label
+                  class="label-head"
+                  style="margin-bottom: -5px"
+                  [title]="data.key"
+                  >{{ data.key }}
+                </label>
+                <input
+                  #inputv
+                  type="text"
+                  [value]="data.value"
+                  [title]="data.value"
+                  [disabled]="!vendorDetalilsEditBoolean"
+                  class="form-control mb-1 inputHeight"
+                  (blur)="method()"
+                />
+                <!-- <select *ngIf="data.key == 'VendorName'" name="vendor" id="vd" [(ngModel)]="data.value" class="form-control mb-1 inputHeight">
+                  <option [value]="vendor.Vendor.VendorName" *ngFor="let vendor of readvendorsData">{{vendor.Vendor.VendorName}}</option>
+                </select> -->
+                <!-- (click)="drawrectangleonHighlight(i)"                 
+                          [ngStyle]="{'border': (value.isError === 1 ) ? '2px solid red' : (value.isError === 0 && value.IsUpdated === 0  ) ? '1px solid lightgray': (value.IsUpdated === 1 ) ? '2px solid #37dcc7':'' } "
+                        (change)="onChangeValue(value.TagLabel,inputv.value,value)"-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- header -->
+        <div
+          class="tab-pane fade"
+          id="header"
+          role="tabpanel"
+          aria-labelledby="header-tab"
+        >
+          <div class="displayFlex">
+            <div *ngFor="let value of inputData">
+              <div>
+                <label
+                  class="label-head"
+                  style="margin-bottom: -5px"
+                  
+                  >{{ value.TagLabel }}
+                  <span
+                    *ngIf="value.isError == 1"
+                    [pTooltip]="value.ErrorDesc"
+                    tooltipPosition="top"
+                    ><i
+                      class="fa fa-info-circle info_icon"
+                      aria-hidden="true"
+                    ></i
+                  ></span>
+                </label>
+                <input
+                  #inputv
+                  type="text"
+                  [value]="value.Value"
+                  [title]="value.Value"
+                  [disabled]="!editable || fin_boolean"
+                  [ngStyle]="{
+                    border:
+                      value.isError === 1
+                        ? '2px solid red'
+                        : value.isError === 0 && value.IsUpdated === 0
+                        ? '1px solid lightgray'
+                        : value.IsUpdated === 1
+                        ? '2px solid #37dcc7'
+                        : ''
+                  }"
+                  (change)="onChangeValue(value.TagLabel, inputv.value, value)"
+                  (blur)="saveChanges()"
+                  class="form-control mb-1 inputHeight"
+                />
+                <span
+                  *ngIf="
+                    value.DocumentUpdates && value.DocumentUpdates.OldValue
+                  "
+                >
+                  <span class="old_value"
+                    >Prev:
+                    <span style="color: #f38a6b"
+                      >"{{ value.DocumentUpdates.OldValue }}"</span
+                    ></span
+                  >
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- line -->
+        <div
+          class="tab-pane fade"
+          id="line"
+          role="tabpanel"
+          aria-labelledby="line-tab"
+        >
+          <table class="invert" style="width: 100%">
+            <tr
+              class="invert_tr"
+              *ngFor="let item of lineDisplayData; let i = index"
+            >
+              <td class="lineName invert_th_td" [ngStyle]="{'min-width' : item.TagName == 'S.NO' ?'40px':'130px'}">{{ item.TagName }}</td>
+              <!-- <div>
+                    <div class="linevalue invert_thtd">{{i+1}}</div>
+                  </div> -->
+              <td
+                class="linevalue invert_th_td"
+                *ngFor="let line1 of item.linedata; let i = index"
+              >
+                  
+                <div
+                  *ngFor="let line of line1 | keyvalue"
+                  class="d-flex"
+                  style="position: relative"
+                >
+                  <div *ngIf="line.key == 'DocumentLineItems' ">
+                    <!-- {{line.value.Value |json}} -->
+                    <div *ngIf="item.TagName == 'S.NO'">
+                      <div class="linevalue invert_thtd p-2">{{line.value.itemCode }}</div>
+                    </div>
+                    <div *ngIf="item.TagName == 'Actions' && editable">
+                      <div class="linevalue invert_thtd">
+                        <button style="border-color: transparent;" (click)="open_dialog('delete', line.value)">
+                          <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <span  *ngIf="item.TagName != 'S.NO' &&  item.TagName != 'Actions'">
+                      <input
+                        #inputv
+                        type="text"
+                        [ngClass]="
+                          (item.TagName == 'Description' || item.TagName == 'Name') ? 'w-des' : 'w-sm'
+                        "
+                        [value]="line.value.Value"
+                        [title]="line.value.Value"
+                        [disabled]="!editable || fin_boolean"
+                        [ngStyle]="{
+                          border:
+                            line.value.isError === 1
+                              ? '2px solid red'
+                              : line.value.isError === 0 &&
+                                line.value.IsUpdated === 0
+                              ? '1px solid lightgray'
+                              : line.value.IsUpdated === 1
+                              ? '2px solid #37dcc7'
+                              : ''
+                        }"
+                        (change)="onChangeLineValue(inputv.value, line.value)"
+                        (blur)="saveChanges()"
+                        class="form-control mb-1 inputHeight"
+                      />
+                    </span>
+                  </div>
+                  <div
+                    *ngIf="line.value?.isError == 1 && item.TagName != 'S.NO' && item.TagName != 'Actions'"
+                    [pTooltip]="line.value.ErrorDesc"
+                    tooltipPosition="top"
+                  >
+                    <i
+                      class="fa fa-info-circle info_icon"
+                      aria-hidden="true"
+                    ></i>
+                  </div>
+                  <div *ngIf="line.key == 'DocumentUpdates' && line.value && item.TagName != 'S.NO' && item.TagName != 'Actions'">
+                    <span class="old_value"
+                      >Prev:
+                      <span style="color: #f38a6b"
+                        >"{{ line.value.OldValue}}"</span
+                      ></span
+                    >
+                  </div>
+                  
+                </div>
+                
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div
+        *ngIf="editable || vendorUplaodBoolean"
+        class="btnFooter"
+        mat-dialog-actions
+      >
+        <!-- <button mat-button class="btn btnVender mr-4" type="button">Change attachment</button> -->
+        <button
+          class="btn btnVender bg-btn-cancel mr-3"
+          type="button"
+          (click)="backToInvoice()"
+        >
+          Cancel
+        </button>
+        <button
+          *ngIf="
+            (editPermissionBoolean ||
+              changeApproveBoolean ||
+              financeApproveBoolean) &&
+            (submitBtn_boolean || vendorUplaodBoolean)
+          "
+          class="btn btnVender bg-btn-cancel mr-3"
+          (click)="open_dialog('reject',null)"
+        >
+          Reject
+        </button>
+        <button
+          *ngIf="
+            (editPermissionBoolean ||
+              changeApproveBoolean ||
+              financeApproveBoolean) &&
+            (submitBtn_boolean || vendorUplaodBoolean)
+          "
+          class="btn btnVender bg-btn-success"
+          (click)="submitChanges()"
+        >
+          Submit
+        </button>
+
+        
+        
+        <button
+          *ngIf="
+            (changeApproveBoolean || financeApproveBoolean) &&
+            !fin_boolean &&
+            approveBtn_boolean &&
+            !submitBtn_boolean
+          "
+          class="btn btnVender bg-btn-success"
+          (click)="approveChanges()"
+        >
+          Approve
+        </button>
+        <button
+          *ngIf="financeApproveBoolean && fin_boolean"
+          class="btn btnVender bg-btn-success"
+          style="min-width: fit-content"
+          (click)="financeApprove()"
+        >
+          Finance Approve
+        </button>
+        <!-- <button *ngIf=" flipBoolean" class="btn btnVender mr-2 " (click)="Create()" >Create</button>
+          <button *ngIf="!tabChangeLINEBoolean && flipBoolean"  class="btn btnVender mr-2" (click)="displayAddLabelDialog = true" pTooltip="Add Label" tooltipPosition="top" >Add Label</button>
+          <button *ngIf="tabChangeLINEBoolean && flipBoolean" class="btn btnVender " (click)="addLine()" >Add Line</button> -->
+      </div>
+    </div>
+    <ngx-spinner
+      bdColor="rgba(251, 251, 251, 0.8)"
+      size="medium"
+      color="#070900"
+      [fullScreen]="false"
+      type="ball-spin-clockwise"
+    >
+      <p style="color: rgb(0, 0, 0)"></p>
+    </ngx-spinner>
+  </div>
+  <div
+    *ngIf="!isPdfAvailable && showPdf"
+    class="col-lg-7 col-12 maxPage ShowInvoiceTypeSize"
+  >
+    <div>
+      <section>
+        <div *ngIf="isImgBoolean" class="canvasConatiner_height">
+          <!-- *ngFor="let img of imgArray; let i = index " -->
+          <div style="visibility: hidden">
+            <div *ngIf="editable">
+              <span
+                [ngClass]="isRect ? 'btnInvoiceType1' : 'btnInvoiceType'"
+                (click)="drawrectangle()"
+                style="cursor: pointer"
+                >Tag</span
+              >
+            </div>
+            <div *ngIf="!editable">
+              <span class="btnInvoiceType" style="cursor: not-allowed"
+                >Tag</span
+              >
+            </div>
+          </div>
+          <div id="parentDiv">
+            <!-- <img [src]="showInvoice"> -->
+            <canvas #canvas id="canvas1"></canvas>
+          </div>
+          <span class="zoom zoom_pos_img">
+            <span class="zoom-in" (click)="zoomin()"
+              ><i class="fa fa-plus" aria-hidden="true"></i></span
+            ><br />
+            <span class="zoom-out" (click)="zoomout()"
+              ><i class="fa fa-minus" aria-hidden="true"></i
+            ></span>
+          </span>
+        </div>
+        <div *ngIf="!isImgBoolean" style="position: relative">
+          <div
+            *ngIf="isLoaded"
+            style="text-align: center; position: fixed; z-index: 100; left: 70%"
+          >
+            <div>
+              <button
+                (click)="prevPage()"
+                [disabled]="page === 1"
+                class="preBtn"
+              >
+                Prev
+              </button>
+              <span class="totalPages">{{ page }} / {{ totalPages }}</span>
+              <button
+                (click)="nextPage()"
+                [disabled]="page === totalPages"
+                class="preBtn"
+              >
+                Next
+              </button>
+            </div>
+
+            <!-- <div class="rotate_text">
+              <button class="preBtn" (click)="rotate(-90)"><i class="fa fa-undo" aria-hidden="true"></i></button>
+              <div class="f-12 ml-1">Rotate</div>
+              <button class="preBtn mr-1" (click)="rotate(90)"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+            </div> -->
+
+            <span class="zoom zoom_pos_pdf">
+              <span class="zoom-in" (click)="zoomIn()"
+                ><i class="fa fa-plus" aria-hidden="true"></i></span
+              ><br />
+              <span class="zoom-out" (click)="zoomOut()"
+                ><i class="fa fa-minus" aria-hidden="true"></i
+              ></span>
+            </span>
+          </div>
+
+          <pdf-viewer
+            #pdfviewer
+            [src]="showInvoice"
+            style="width: 100%; overflow: auto"
+            [show-all]="true"
+            [zoom]="zoomdata"
+            [original-size]="false"
+            [fit-to-page]="true"
+            [page]="page"
+            [rotation]="rotation"
+            [render-text]="true"
+            [render-text-mode]="2"
+            (after-load-complete)="afterLoadComplete($event)"
+            (text-layer-rendered)="textLayerRendered($event)"
+            (mouseup)="selectedText()"
+          >
+          </pdf-viewer>
+        </div>
+      </section>
+      <!-- <img [src]="imageUrl" style="width: 100%;height: 80vh;"><br/> -->
+    </div>
+  </div>
+</div>
+<!-- Add label-->
+<!-- <p-dialog header="Add Label" [(visible)]="displayAddLabelDialog" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '31vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div>
+    <label class="label-head"> Label</label>
+    <input type="text" class="form-control inputAddLabel mb-1" name="addLabel" ngModel #addLabel="ngModel"
+      [(ngModel)]="customLabel" required>
+      <div *ngIf="addLabel.errors &&(addLabel.touched || addLabel.dirty)" class ="alertDiv">        
+        <div [hidden]="!addLabel.errors.required">
+          **Required field
+        </div> 
+       </div> 
+    <label class="label-head">Value</label>
+    <input type="text" class="form-control inputAddLabel mb-2" name="labelValue" ngModel #labelValue="ngModel" [(ngModel)]="customValue"
+      >
+
+
+  </div>
+  <ng-template  pTemplate="footer">
+    <div class="d-flex justify-content-center">
+      <button type="button" class="btn btnVender" (click)="displayAddLabelDialog = false">Cancel</button>
+      <button type="button" class="btn btnVender"
+        [disabled]="addLabel.invalid "
+        [ngStyle]="{'cursor':(addLabel.invalid)? 'not-allowed':'pointer'}"
+        (click)="addLabelData()">Add</button>
+    </div>
+
+  </ng-template>
+</p-dialog> -->
+
+<!-- Reject modal-->
+<p-dialog
+  [header]="popUpHeader"
+  [(visible)]="displayrejectDialog"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '31vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div>
+    <!-- <label class="label-head">
+      <input
+        type="radio"
+        name="addLabel"
+        [(ngModel)]="rejectOption.value"
+        value="IT_reject"
+        required
+      />
+      <span class="ml-2 f-13">IT Reject</span>
+    </label>
+    <br />
+
+    <label class="label-head" *ngIf="!isServiceData">
+      <input
+        type="radio"
+        name="addLabel"
+        [(ngModel)]="rejectOption.value"
+        value="vendor_reject"
+        required
+      />
+      <span class="ml-2 f-13"> Vendor Reject</span>
+    </label>
+    <br /> -->
+
+    <div *ngIf="rejectpopBoolean">
+      <label class="label-head mt-2 mb-0">Comments</label>
+      <textarea
+        name="comments"
+        class="form-control"
+        style="font-size: 13px"
+        minlength="10"
+        [(ngModel)]="rejectionComments"
+        cols="50"
+        rows="2"
+        ngModel
+        #comments="ngModel"
+        required
+      ></textarea>
+      <small class="noteCss">NOTE: Add atleast 10 characters</small>
+    </div>
+    <div *ngIf="deletepopBoolean">
+      <div class="text-center">
+        <div>
+          <i
+            class="pi pi-exclamation-triangle"
+            style="font-size: 4rem; color: red"
+          ></i>
+        </div>
+        <div class="deleteDivText">
+          Are you sure you want to delete?
+        </div>
+      </div>
+    </div>
+    <div *ngIf="checkItemBoolean">
+      <label class="f-12 mt-2 mb-0">Please enter Item code number and Check is it available or not.</label>
+      <input #ItemCode type="number" class="form-control f-12">
+      <button class="btn btnVender bg-btn-success mt-2" (click)="CheckItemStatus(ItemCode.value)">
+        Check & ADD
+      </button>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center" *ngIf="!checkItemBoolean">
+      <button
+        type="button"
+        class="btn btnVender bg-btn-cancel"
+        (click)="displayrejectDialog = false"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        *ngIf="rejectpopBoolean"
+        class="btn btnVender bg-btn-success"
+        [disabled]="comments.invalid"
+        [ngStyle]="{ cursor: comments.invalid ? 'not-allowed' : 'pointer' }"
+        (click)="Reject()"
+      >
+        Send for Rejection
+      </button>
+      <button
+        type="button"
+        *ngIf="deletepopBoolean"
+        class="btn btnVender bg-btn-success"
+        (click)="removeLine()"
+      >
+        Yes
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+<p-toast></p-toast>

@@ -1,0 +1,115 @@
+Bulk-Request-Handler/node_modules/*
+Mail-Listener/node_modules/*
+Notification-Workers/venv/*
+crud-operations/app/gunicorn.py
+crud-operations/app/database.py
+crud-operations/app/venv/*
+Batch-Function/.venv/*
+InvoicePushPullTrigger/EntityModelCopy/.venv/*
+Batch-Function/.gitignore
+crud-operations/app/__pycache__/auth.cpython-38.pyc
+crud-operations/app/__pycache__/database.cpython-38.pyc
+crud-operations/app/__pycache__/main.cpython-38.pyc
+crud-operations/app/__pycache__/model.cpython-38.pyc
+crud-operations/app/crud/__pycache__/customerCrud.cpython-38.pyc
+crud-operations/app/crud/__pycache__/InvoiceCrud.cpython-38.pyc
+crud-operations/app/crud/__pycache__/permissionCrud.cpython-38.pyc
+crud-operations/app/crud/__pycache__/ServiceProviderCrud.cpython-38.pyc
+crud-operations/app/crud/__pycache__/VendorCrud.cpython-38.pyc
+crud-operations/app/dependency/__pycache__/__init__.cpython-38.pyc
+crud-operations/app/dependency/__pycache__/dependencies.cpython-38.pyc
+crud-operations/app/routers/__pycache__/authenticate.cpython-38.pyc
+crud-operations/app/routers/__pycache__/customer.cpython-38.pyc
+crud-operations/app/routers/__pycache__/invoice.cpython-38.pyc
+crud-operations/app/routers/__pycache__/permissions.cpython-38.pyc
+crud-operations/app/routers/__pycache__/serviceprovider.cpython-38.pyc
+crud-operations/app/routers/__pycache__/vendor.cpython-38.pyc
+crud-operations/app/schemas/__pycache__/authSchema.cpython-38.pyc
+crud-operations/app/schemas/__pycache__/customersm.cpython-38.pyc
+crud-operations/app/schemas/__pycache__/InvoiceSchema.cpython-38.pyc
+crud-operations/app/schemas/__pycache__/permissionssm.cpython-38.pyc
+crud-operations/app/schemas/__pycache__/ServiceProviderSchema.cpython-38.pyc
+crud-operations/app/schemas/__pycache__/VendorSchema.cpython-38.pyc
+crud-operations/app/session/__pycache__/__init__.cpython-38.pyc
+crud-operations/app/session/__pycache__/session.cpython-38.pyc
+Serina-UI/serinaBase/node_modules/*
+Utility-tool/utilityBase/node_modules/*
+logs/.gunicorn-access.log.swo
+logs/gunicorn-access.log
+logs/gunicorn-error.log
+crud-operations/app/database.py
+crud-operations/app/train_docs/MEHTAB 9497.pdf
+crud-operations/app/train_docs/MEHTAB 9548.pdf
+crud-operations/app/Uploaded_docs/16623
+crud-operations/app/Uploaded_docs/3286248462021_04_15_12_25_01_PM6.pdf
+crud-operations/app/Uploaded_docs/19186220482021_04_22_04_32_24_PM.pdf
+crud-operations/app/Uploaded_docs/19186220482021_04_22_04_32_34_PM.pdf
+crud-operations/app/Uploaded_docs/20090778902021_04_22_03_36_39_PM.pdf
+crud-operations/app/Uploaded_docs/20214111172021_04_16_09_57_24_AM.pdf
+crud-operations/app/Uploaded_docs/20214111172021_04_16_09_58_17_AM.pdf
+crud-operations/app/Uploaded_docs/20214111172021_04_16_09_59_06_AM.pdf
+crud-operations/app/Uploaded_docs/32862484662021_04_16_12_12_24_PM.pdf
+crud-operations/app/Uploaded_docs/BAKE CRAFT BAKERY LLC175256-068682-.pdf
+crud-operations/app/Uploaded_docs/CA20005140902021_04_22_04_23_32_PM.pdf
+crud-operations/app/Uploaded_docs/FRESH EXPRESS 2390.pdf
+crud-operations/app/Uploaded_docs/FRESH EXPRESS 2392.pdf
+crud-operations/app/Uploaded_docs/MEHTAB 9497.pdf
+crud-operations/app/Uploaded_docs/MEHTAB 9548.pdf
+Serina-UI/serinaBase/src/assets/New folder/MEHTAB 9548.pdf
+Serina-UI/serinaBase/src/assets/New folder/MEHTAB 9497.pdf
+*.pyc
+# *.json 
+*.pdf
+unit_test/*
+*.log
+*.xlsx
+crud-operations/app/testpdf
+crud-operations/.vscode/*
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+# Only exists if Bazel was run
+/bazel-out
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+# sadksa
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+

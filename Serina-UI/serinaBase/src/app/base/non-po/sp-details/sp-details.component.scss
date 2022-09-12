@@ -1,0 +1,145 @@
+:host ::ng-deep .p-sidebar {
+    background: #272727;
+    color: #f2be42;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.clor{
+    color:#f2be42; ;
+}
+.ml-35 {
+  margin-left: 35px;
+  position: relative;
+  top: -4px;
+}
+.allCols{
+    display: block;
+    float: none;
+    font-size: 13px;
+    padding-top: 12px;
+    border-bottom: 1.3px solid #f2be4266;
+    font-weight: 600;
+}
+.labelCols{
+    position: relative;
+    top: -2px;
+}
+.labelSide{
+    color: #f2be42 !important;
+    font-weight: 600 !important;
+}
+.dragCols{
+    float: right;
+    margin-right: 14px;
+    font-size: 11px;
+    position: relative;
+    top: -20px;
+    cursor: move;
+}
+.btnFooterSave{
+  position: relative;
+  left: 14%;
+  margin-top: 50px;
+}
+.sidebar_height{
+  height: 71vh;
+  overflow: auto;
+}
+
+// custom checkbox
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .container input {
+    position: absolute;
+    opacity: 1;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #212727;
+    border:1px solid #f2be42;
+    border-radius:5px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background-color: #f2be42;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .cost_div {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .w-250 {
+    width: 250px !important;
+    margin-right: 20px;
+  }
+  .ac_height {
+    max-height: 90vh;
+    overflow: auto;
+  }
+  .req_clr {
+    color: red;
+  }
+  .header_design {
+    background: #a4db9e;
+    padding: 4px 10px;
+    width: fit-content;
+    border-radius: 5px;
+  }
+  .b-active {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 0px 10px 2px;
+    background: #d7d7d7;
+  }

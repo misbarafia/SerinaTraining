@@ -1,0 +1,13 @@
+:host ::ng-deep {
+  .p-datatable .p-datatable-tbody > tr > td {
+    text-align: center !important;
+    padding: 8px;
+  }
+  .p-datatable .p-datatable-thead > tr > th {
+    text-align: center !important;
+    width: 100%;
+  }
+  .p-datatable table {
+    background-color: white;
+  }
+}

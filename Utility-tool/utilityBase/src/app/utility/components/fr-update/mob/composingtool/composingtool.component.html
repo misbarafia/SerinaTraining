@@ -1,0 +1,62 @@
+<div class="container-fluid">
+    <div class="flex-container">
+        <div class="item1 bg-white h-md-100 loginarea box" style="background-color: #eee;">
+            <ul class="p-3">
+                <li (click)="navigatetoPage('tagging')" class="text-center" title="Tagging">
+                    <a><i class="fa fa-tags"></i></a>
+                </li>
+                
+                <li (click)="navigatetoPage('training')" class="text-center" title="Training">
+                    <a><i class="fa fa-connectdevelop"></i></a>
+                </li>
+                
+                <li (click)="navigatetoPage('composing')" title="Compose" class="active text-center">
+                    <a><i class="fa fa-link"></i></a>
+                </li>
+                <li (click)="navigatetoPage('testing')" title="Test Model" class="text-center">
+                    <a><i class="fa fa-flash"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="item3 bg-white box p-2" style="background-color: #eee;">
+            <span style="font-size: medium;color: black;font-weight: bolder;">List of Models</span>
+            <ol *ngIf="loaded" class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let m of models;let i = index" (click)="selectmodel(m.modelInfo.modelId,i)">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">{{m.modelInfo.modelName}}</div>
+                    <span class="fw-light">{{m.modelInfo.modelId}}</span>
+                  </div>
+                  <div class="form-check" *ngIf="!m.modelInfo.attributes.isComposed"><input class="form-check-input" type="checkbox" value="" id="model-{{i}}" (click)="selectmodel(m.modelInfo.modelId,i)"></div>
+                  <span *ngIf="m.modelInfo.attributes.isComposed"><i class="fa fa-link"></i> Composed</span>
+                </li>
+            </ol>
+            <div style="margin-top: 10%;"></div>
+        </div>
+        <div class="item4 bg-white box p-2" style="background-color: #eee;">
+            <span class="headings">Compose Models</span>
+            <div style="margin-top: 4%;"></div>
+            <span class="headings-small">List of Selected Models</span>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-dark headings-small" *ngFor="let m of selectedmodels">{{m.modelInfo.modelName}}</li>
+            </ul>
+            <div style="margin-top: 4%;"></div>
+            <label for="modelname" class="headings">Master Model Name</label>
+            <input type="text" class="form-control form-control-sm" id="modelname" value="">
+            <div style="margin-top: 4%;"></div>
+            <button type="button" class="btn btnbg btn-sm" (click)="composeModels()" [disabled]="disabled"><div *ngIf="composing" class="spinner-border spinner-border-sm" role="status"></div><i *ngIf="!composing" class="fa fa-link"></i> Compose</button>
+            <div style="margin-top: 8%;"></div>
+            <span class="headings">Compose Results</span>
+            <div style="margin-top: 8%;" *ngIf="modelName != ''">
+                <span class="headings-small">Model Name: {{modelName}}</span>
+                <span style="font-size: smaller;">Model Id: {{modelId}}</span>
+                <div class="divider"></div>
+                <span class="headings-small">Average Accuracy: {{averageAccuracy}}</span>
+                <button type="button" class="btn btn-success btn-sm" (click)="saveModel()"><div *ngIf="saving" class="spinner-border spinner-border-sm" role="status"></div><i *ngIf="!saving" class="fa fa-save"></i> Save Composed Model</button>
+            </div>
+            <div style="margin-top: 20%;"></div>
+        </div>
+    </div>
+</div>
+
+  
+  

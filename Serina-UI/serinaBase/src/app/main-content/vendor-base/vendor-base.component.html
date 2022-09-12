@@ -1,0 +1,350 @@
+<!-- <div style="display: flex;">
+
+
+</div> -->
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav sideBar d-flex" mode="side" opened>
+    <div class="d_mobile">
+      <!-- <div class="tittleVendor">
+                Vendor Portal
+            </div> -->
+      <div class="logotitle">
+        <div class="logoPlaceholder">
+          <img
+            class="logo_img"
+            src="assets/serina.png"
+            alt="logo"
+            width="42"
+            height="42"
+          />
+        </div>
+        <div class="placeLogo">
+          Serina Plus
+          <span class="portalName">Vendor Portal</span>
+        </div>
+      </div>
+      <div class="routeLinks">
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Dashboard"
+          [routerLink]="'home'"
+        >
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            home
+          </span>
+          Dashboard
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Upload"
+          [routerLink]="'uploadInvoices'"
+        >
+          <!-- <i class="fa fa-cloud-upload f-18 ml-r-12" aria-hidden="true"></i> -->
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            upload_file
+          </span>
+          Upload
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Document Status"
+          [routerLink]="'invoice'"
+        >
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            receipt
+          </span>
+          Document Status
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Exceptions"
+          [routerLink]="'ExceptionManagement'"
+        >
+          <i
+            class="fa fa-pencil-square f-18 ml-r-12"
+            aria-hidden="true"
+            routerLinkActive="ml-9"
+          ></i>
+          Exceptions
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Payment Status"
+          [routerLink]="'payment-details-vendor'"
+        >
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            monetization_on
+          </span>
+          Payment Status
+        </div>
+
+        <!-- <div *ngIf="addUsersBoolean" class="navLink" data-text="Roles" routerLinkActive="active" [routerLink]="'vendorUsers'">
+                    <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                        manage_accounts
+                        </span>
+                        Roles
+                </div> -->
+
+        <div
+          *ngIf="addUsersBoolean"
+          class="navLink"
+          data-text="Contact Details"
+          routerLinkActive="active"
+          [routerLink]="'vendorContacts'"
+        >
+          <i
+            class="fa fa-address-book f-18 ml-r-12"
+            aria-hidden="true"
+            routerLinkActive="ml-9"
+          ></i>
+          Contact Details
+        </div>
+      </div>
+      <div class="copy">Copyrights 2021</div>
+    </div>
+  </mat-drawer>
+  <div class="example-sidenav-content">
+    <div class="bodyContent">
+      <div class="d_mobile">
+        <i
+          class="fa fa-bars menu_icon f-16"
+          aria-hidden="true"
+          (click)="drawer.toggle()"
+        ></i>
+        <div class="f-right">
+          <span class="userName f-11">
+            <span>Last login :&nbsp; </span>
+            {{ last_login | date: "medium" }} &nbsp; &nbsp;
+          </span>
+          <span
+            class="b-right"
+            style="padding-right: 14px; cursor: pointer"
+            [routerLink]="'notifications'"
+          >
+            <i
+              class="pi pi-bell p-mr-4 p-text-secondary f-18"
+              [value]="numberOfNotify"
+              pBadge
+            ></i
+          ></span>
+
+          <span class="ml-2 dropdown">
+            <!-- <span class="material-icons top-9 ">
+                            keyboard_arrow_down
+                        </span> -->
+            <i class="fa fa-user-circle-o profileIcon" aria-hidden="true"></i>
+            <!-- <img src="/assets/maskGroup89.png" alt="Logo" width="40" height="40" style="border-radius: 50px;"> -->
+          </span>
+          <span class="b-left-sky clr userName"
+            >{{ userDetails.userdetails.firstName }}
+          </span>
+          <!-- <span class="material-icons " title="Sign Out" >
+                        power_settings_new
+                        </span> -->
+          <span (clickOutside)="onClickedOutside($event)">
+            <mat-icon
+              class="sign_out dropdown"
+              svgIcon="logout"
+              title="Sign Out"
+              (click)="isActive()"
+            ></mat-icon>
+            <!-- <i class="fa fa-power-off "  aria-hidden="true"></i> -->
+            <div
+              [ngStyle]="{ display: showLogout ? 'block' : 'none' }"
+              class="dropdown-content"
+            >
+              <a (click)="openDialog()">Change Password</a>
+              <a (click)="displayResponsivepopup = true">Logout</a>
+            </div>
+          </span>
+        </div>
+      </div>
+
+      <nav class="d_desk">
+        <div class="logotitle">
+          <div class="logoPlaceholder">
+            <img
+              class="logo_img"
+              src="assets/serina.png"
+              alt="logo"
+              width="35"
+              height="35"
+            />
+          </div>
+          <div class="placeLogo">
+            Serina Plus
+            <span class="portalName">Vendor Portal</span>
+          </div>
+        </div>
+        <div class="f-right mr-3 mob_menu" (click)="onClickMenu()">
+          <!-- <i class="fa fa-bars menu_icon f-16 text-light" aria-hidden="true"></i> -->
+          <input type="checkbox" name="toggle-nav" />
+          <label for="toggle-nav">
+            <span class="menu-icon"></span>
+          </label>
+        </div>
+        <section class="pos_rel" *ngIf="menubarBoolean">
+          <div class="routeLinks route_mobile">
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Dashboard"
+              [routerLink]="'home'"
+            >
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                home
+              </span>
+              Dashboard
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Upload"
+              [routerLink]="'uploadInvoices'"
+            >
+              <!-- <i class="fa fa-cloud-upload f-18 ml-r-12" aria-hidden="true"></i> -->
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                upload_file
+              </span>
+              Upload
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Document Status"
+              [routerLink]="'invoice'"
+            >
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                receipt
+              </span>
+              Document Status
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Action Center"
+              [routerLink]="'action-center'"
+            >
+              <i
+                class="fa fa-universal-access f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              Action Center
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Payment Status"
+              [routerLink]="'payment-details-vendor'"
+            >
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                monetization_on
+              </span>
+              Payment Status
+            </div>
+
+            <!-- <div *ngIf="addUsersBoolean" class="navLink" data-text="Roles" routerLinkActive="active" [routerLink]="'vendorUsers'">
+                        <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                            manage_accounts
+                            </span>
+                            Roles
+                    </div> -->
+
+            <div
+              *ngIf="addUsersBoolean"
+              class="navLink"
+              data-text="Contact Details"
+              routerLinkActive="active"
+              [routerLink]="'vendorContacts'"
+            >
+              <i
+                class="fa fa-address-book f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              Contact Details
+            </div>
+
+            <div
+              class="navLink"
+              data-text="Change Password"
+              (click)="openDialog()"
+            >
+              <i
+                class="fa fa-lock f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              Change Password
+            </div>
+
+            <div
+              class="navLink"
+              data-text="Logout"
+              (click)="displayResponsivepopup = true"
+            >
+              <i
+                class="fa fa-sign-out f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              Logout
+            </div>
+          </div>
+        </section>
+      </nav>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
+
+<!-- Cnfirmation Dialog -->
+<p-dialog
+  header=" "
+  [(visible)]="displayResponsivepopup"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '30vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="text-center">
+    <div>
+      <i
+        class="pi pi-exclamation-triangle"
+        style="font-size: 4rem; color: red"
+      ></i>
+    </div>
+    <div class="deleteDivText">
+      {{ BtnText }}
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center">
+      <button class="btn btnVender bg-btn-success mr-3" (click)="logout()">
+        Yes
+      </button>
+      <button
+        class="btn btnVender bg-btn-cancel"
+        (click)="displayResponsivepopup = false"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

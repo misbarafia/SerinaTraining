@@ -1,0 +1,16 @@
+.nav-pills .nav-link {
+  border-radius: 10px;
+  background: white;
+  color: #313971;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border: 1px solid #efefef;
+  cursor: pointer;
+}
+
+.active-pill {
+  background-color: #f2be42 !important;
+  border: 1px solid #f2be42 !important;
+  color: #ffffff !important;
+}

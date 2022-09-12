@@ -1,0 +1,217 @@
+.btnFooter-sm {
+  position: absolute;
+  bottom: 3%;
+  right: 2%;
+}
+.placement-ruleChange {
+  display: inline-block;
+  padding: 6px 10px;
+}
+.position_rule {
+  position: absolute;
+  left: 41vw;
+  top: 63px;
+  z-index: 12;
+}
+.bg-grn-btn {
+  background-color: #3ab540;
+  color: white;
+  border-radius: 0px 3px 3px 0px;
+  margin-top: -2px;
+  // left: 741px;
+}
+.bg-div-rule {
+  background-color: #b9ffbc;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+:host ::ng-deep {
+  .p-dialog .p-dialog-header {
+    padding-bottom: 0px;
+  }
+  .ng2-pdf-viewer-container {
+    height: 82vh !important;
+    max-height: 82vh;
+  }
+  .p-inputtext {
+    margin: 0;
+    height: 30px;
+    width: 142px !important;
+    border-color: #d3d3d3;
+    font-size: 12px;
+    font-weight: 600;
+    border-right: 0;
+  }
+  .p-button.p-button-icon-only {
+    background-color: #ffffff;
+  }
+}
+.input_disabled {
+  background: inherit;
+  border: 0;
+}
+.td_padding {
+  padding: 6px 10px;
+}
+.represent_color {
+  height: 16px;
+  width: 16px;
+  border: 1px solid lightgray;
+  border-radius: 20px;
+  margin-right: 10px;
+}
+
+.sel_drp {
+  height: 22px;
+  padding: 0px 3px;
+  max-width: 160px;
+  display: inline-block;
+}
+
+.display-mapped {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.invoice_color {
+  background-color: #c3f9ff;
+}
+.po_color {
+  background-color: #f5f4ec;
+}
+.grn_color {
+  background-color: #ded1e9;
+}
+.doc_height {
+  height: 35px;
+  display: flex;
+}
+.mapping_line {
+  position: relative;
+  top: -5px;
+}
+
+.error-block {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+.visiblity_hidden {
+  visibility: hidden;
+}
+.error-symbol {
+  background-color: red;
+}
+.error-border {
+  border-color: red;
+  border-style: solid;
+  border-width: 0px 0px 0px 3px;
+}
+.maxPage {
+  top: 40px;
+  max-height: 82vh !important;
+  overflow: hidden;
+}
+.zoom {
+  top: 72vh !important;
+}
+
+.textType::before {
+  content: attr(data-text);
+  font-size: 9px;
+  font-weight: 600;
+  border: 1px solid;
+  border-radius: 26px;
+  padding: 4px 6px;
+  width: 24px;
+  height: 24px;
+  margin: 0px 4px 0px 0px;
+  border-color: mediumseagreen;
+}
+.w-fill {
+  width: -webkit-fill-available;
+}
+.glow {
+  color: rgb(48, 214, 186);
+  text-align: center;
+  background: linear-gradient(
+    to right,
+    rgb(48, 214, 186) 0,
+    white 10%,
+    rgb(48, 214, 186) 20%
+  );
+  background-position: 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glow 6s infinite linear;
+  animation-fill-mode: forwards;
+  white-space: nowrap;
+}
+
+@keyframes glow {
+  0% {
+    background-position: 0;
+  }
+
+  60% {
+    background-position: 180px;
+  }
+
+  100% {
+    background-position: 180px;
+  }
+}
+
+.GRN_btn_position {
+    // position: absolute;
+    // top: -38px;
+    right: 132px;
+    position: fixed;
+    top: 63px;
+}
+.changePOInput {
+  left: inherit; 
+  right: 145px; 
+  position: absolute; 
+  z-index: 12;
+}
+
+@media screen and (max-width: 1200px) {
+  .position_rule {
+    left: 50vw;
+  }
+  :host ::ng-deep {
+    .p-inputtext {
+      width: 100px !important;
+    }
+  }
+  .changePOInput {
+    right: 100px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .GRN_btn_position {
+    bottom: 15px;
+    left: 10px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    right: unset;
+    top: unset;
+  }
+}

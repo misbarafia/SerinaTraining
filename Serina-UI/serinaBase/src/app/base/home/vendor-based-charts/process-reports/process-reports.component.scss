@@ -1,0 +1,130 @@
+.img-wrapper {
+  width: 46px;
+  height: 46px;
+  margin: 0 15px 0 0;
+  padding: 10px 13px 12px 12px;
+  border-radius: 28px;
+  text-align: center;
+  background-color: white;
+}
+.card-div {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px 20px 13px 15px;
+  // background-color: #fffbf0;
+  min-width: 16vw;
+  color: white;
+}
+.f-15 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.placement {
+  position: relative;
+  top: -1px;
+}
+.center-card-text {
+  text-align: center;
+  position: absolute;
+  top: 100px;
+  left: 0px;
+  width: 100%;
+}
+
+.bg-1 {
+  background: #4cbc9a;
+  color: white;
+}
+.bg-2 {
+  background-color: #5167b2;
+}
+.bg-3 {
+  background-color: #5dc5cc;
+}
+.bg-4 {
+  background-color: #fa8442;
+}
+.bg-5 {
+  background-color: #f15e5e;
+}
+.bg-6 {
+  background-color: #fb4953;
+}
+.bg-7 {
+  background-color: #faaf56;
+}
+
+.selectFilter {
+  // position: absolute;
+  // top: 54px;
+  // right: 23px;
+  height: 35px;
+  width: 170px;
+}
+.filters_div {
+  position: absolute;
+  top: 55px;
+  right: 305px;
+  display: flex;
+}
+
+.nav-pills .nav-link {
+  border-radius: 10px;
+  background: white;
+  color: #313971;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #efefef;
+  cursor: pointer;
+}
+
+.active-pill {
+  background-color: #313971 !important;
+  border: 1px solid #313971 !important;
+  color: #ffffff !important;
+}
+
+.chart_title {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background-color: #fde0d0;
+  z-index: 12;
+}
+.charts_height {
+  max-height: 74vh;
+  overflow: auto;
+}
+:host ::ng-deep {
+  .p-autocomplete {
+    height: 30px;
+  }
+  .p-autocomplete-dd .p-autocomplete-input {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    font-size: 11px;
+    font-weight: 600;
+  }
+}
+@media screen and (max-width:1300px) {
+  .filter_inputDash {
+    top: 50px;
+      right: 0;
+  }
+  .filters_div {
+    top: 82px;
+    right: 0;
+  }
+  .tableDtDiv {
+    position: relative;
+    top: 27px;
+  }
+  .charts_height {
+    position: relative;
+    top: 20px;
+  }
+}

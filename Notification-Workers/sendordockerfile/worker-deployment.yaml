@@ -1,0 +1,27 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: notification-sender
+  namespace: rovedev
+spec: 
+  selector: 
+    matchLabels: 
+      app: notification-sender
+  replicas: 1 # tells deployment to run 2 pods matching the template 
+  revisionHistoryLimit: 0
+  template:
+    metadata: 
+      labels: 
+        app: notification-sender
+    spec: 
+      containers: 
+      - name: notification-sender
+        image: roveregistry.azurecr.io/serina-server:rove-notification-sender
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            cpu: 50m
+      imagePullSecrets:
+      - name: deploymentsecret 

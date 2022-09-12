@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: qa-tls-secret
+spec:
+  secretName: qa-tls-secret
+  dnsNames:
+  - serina-qa.centralindia.cloudapp.azure.com
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+    group: cert-manager.io

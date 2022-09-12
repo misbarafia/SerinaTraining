@@ -1,0 +1,261 @@
+.f14W25 {
+    width: 25%;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.statusType {
+    color: white !important;
+    width: 90px !important;
+    padding: 4px 12px 6px 12px !important;
+    display: inline-block;
+    border-radius: 20px;
+    text-align: center !important;
+    background: #107e3e;
+    margin: 4px 8px;
+}
+
+.totalPage {
+    max-height: 86vh;
+    overflow: auto;
+    min-height: 82vh;
+}
+.statusTypeactive {
+    background-color: #107e3e;
+}
+.statusTypepending {
+    background-color: #e0e0e0;
+    color: #0f3f62;
+}
+
+.btn_type {
+    background: #f5d8e7;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+}
+
+// primeng table
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+    padding: 9px;
+}
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    text-align: center;
+}
+:host ::ng-deep .p-paginator {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 1px 50px;
+}
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+    border: 0 none;
+    color: #6c757d;
+    min-width: 30px;
+    font-size: 12px;
+    height: 30px;
+    margin: 5px;
+    transition: box-shadow 0.2s;
+    border-radius: 3px;
+}
+:host ::ng-deep .pi-chevron-down:before {
+    content: "\e902";
+    font-size: 13px;
+}
+:host ::ng-deep .p-paginator .p-paginator-current {
+    font-size: 13px;
+}
+.tableSearchInput {
+    width: 100%;
+    height: 30px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    font-size: 12px;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+.tableSearchInput:focus {
+    outline: 0 !important;
+}
+
+:host ::ng-deep .p-fluid .p-inputtext {
+    width: 100%;
+    height: 30px;
+    font-size: 13px;
+}
+.tableDataDiv {
+    box-shadow: none;
+    max-height: 77vh;
+    overflow: auto;
+    margin-top: -5px;
+}
+
+// serach
+.searchInput {
+    background: #ffffff;
+    padding: 8px 14px;
+    width: 70%;
+    height: 30px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    margin-top: 10px;
+    border: 1px solid #f2be42;
+}
+.searchInput:focus {
+    outline: 0;
+}
+.searchBar {
+    position: fixed;
+    z-index: 10;
+    top: 44px;
+    right: 0;
+}
+.searchIcon {
+    position: relative;
+    top: 0px;
+    cursor: pointer;
+    left: -27px;
+    font-size: 18px;
+    color: #a9a9a9;
+}
+
+//  calender
+.filterData {
+    position: absolute;
+    top: 59px;
+    right: 20px;
+}
+.filterBtn {
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 7px;
+    margin-left: 10px;
+}
+:host ::ng-deep .p-calendar {
+    display: inline-flex;
+    position: relative;
+    height: 34px;
+    font-size: 13px;
+}
+:host ::ng-deep  {
+    .p-datepicker .p-monthpicker .p-monthpicker-month {
+
+    font-size: 11px;
+    font-weight: 600;
+}
+.p-datepicker .p-datepicker-header .p-datepicker-title {
+    line-height: 2rem;
+    font-size: 13px;
+    font-weight: 600;
+}
+}
+
+.f-13Table {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: fit-content;
+    font-size: 13px;
+    font-weight: 600;
+}
+.table th,
+.table td {
+    padding: 6px;
+}
+.label-head {
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    margin-top: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0;
+}
+.inputHeight {
+    font-size: 12px;
+    font-weight: 600;
+    height: 30px;
+    margin-right: 5px;
+    min-width: 185px;
+    max-width: 185px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-div {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 14px 20px 13px 15px;
+    // background-color: #fffbf0;
+    min-width: 16vw;
+    color: white;
+}
+.f-15 {
+    font-size: 15px;
+    font-weight: 600;
+}
+// .text_color {
+//     font-size: 12px;
+//     color: #666363;
+// }
+
+.img-wrapper {
+        width: 46px;
+        height: 46px;
+        margin: 0 15px 0 0;
+        padding: 10px 13px 12px 12px;
+        border-radius: 28px;
+        text-align: center;
+        background-color: white;
+}
+.placement {
+    position: relative;
+    top: -1px;
+}
+
+.bg-1 {
+    background: #4CBC9A;
+    color: white;
+}
+.bg-2 {
+    background-color:#FB4953;
+}
+.bg-3 {
+    background-color: #5DC5CC;
+}
+.bg-4 {
+    background-color:  #FAAF56;
+}
+.bg-5 {
+    background-color:#5167B2;
+}
+// :host ::ng-deep .p-datepicker table td {
+//     padding: 0;
+//     font-size: 12px;
+// }
+// :host ::ng-deep .p-datepicker table th {
+//     padding: 0.5rem;
+//     font-size: 13px;
+// }
+// :host ::ng-deep .p-datepicker .p-datepicker-header .p-datepicker-title {
+//     line-height: 2rem;
+//     font-size: 13px;
+// }
+// :host ::ng-deep .p-calendar .p-inputtext {
+//     flex: 1 1 auto;
+//     font-size: 13px;
+//     width: 1%;
+// }

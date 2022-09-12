@@ -1,0 +1,67 @@
+<div>
+  <ul class="nav nav-pills">
+    <li class="nav-item mr-1">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Expense'"
+        (click)="choosepageTab('Expense')"
+      >
+        Expense Report Current vs Previous Month Bill</a
+      >
+    </li>
+    <li class="nav-item mr-1">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Tarrif'"
+        (click)="choosepageTab('Tarrif')"
+      >
+        Tarrif Analysis</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Invoice'"
+        (click)="choosepageTab('Invoice')"
+      >
+        Invoice Report</a
+      >
+    </li>
+  </ul>
+
+  <div class="tableDataDiv pt-1" [ngSwitch]="viewType">
+    <!-- Expense Report Current vs Previous Month Bill Tab -->
+    <div *ngSwitchCase="'Expense'">
+      <app-table
+        [tableData]="expenseTableData"
+        [invoiceColumns]="columnsForExpense"
+        [showPaginator]="showPaginatorExpense"
+        [columnsToFilter]="expenseColumnField"
+        [columnLength]="ColumnLengthExpense"
+      >
+      </app-table>
+    </div>
+
+    <!-- Tarrif Analysis Tab -->
+    <div *ngSwitchCase="'Tarrif'">
+      <app-table
+        [tableData]="tarrifTableData"
+        [invoiceColumns]="columnsForTarif"
+        [showPaginator]="showPaginatorTarrif"
+        [columnsToFilter]="TarifColumnField"
+        [columnLength]="ColumnLengthTarrif"
+      >
+      </app-table>
+    </div>
+    <div *ngSwitchCase="'Invoice'">
+      <app-table
+        [tableData]="invoiceTableData"
+        [invoiceColumns]="columnsForInv"
+        [showPaginator]="showPaginatorInvoice"
+        [columnsToFilter]="InvColumnField"
+        [columnLength]="ColumnLengthInv"
+      >
+      </app-table>
+    </div>
+  </div>
+</div>

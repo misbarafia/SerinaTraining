@@ -1,0 +1,147 @@
+<div>
+  <div>
+    <!-- <div class="searchBar">
+      <input
+        class="searchInput"
+        pInputText
+        type="text"
+        (keyup)="searchInvoice($event.target.value)"
+        placeholder="Search..."
+        (input)="GRN.filterGlobal($event.target.value, 'contains')"
+      />
+      <span class="material-icons searchIcon"> search </span>
+    </div> -->
+    <p-table
+      #GRN
+      [value]="tableData"
+      [paginator]="showPaginatorGRNTable"
+      [rows]="rows"
+      [first]="first"
+      [showCurrentPageReport]="true"
+      (onPage)="paginate($event)"
+      [globalFilterFields]="[
+        'docheaderID',
+        'idInvoice',
+        'documentDate',
+        'PODocumentID',
+        'totalAmount'
+      ]"
+      [showFirstLastIcon]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      styleClass="p-datatable-striped"
+      [rowsPerPageOptions]="[10, 25, 50]"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th
+            pTooltip="PO Number"
+            tooltipPosition="top"
+            pSortableColumn="PODocumentID"
+          >
+            PO Number
+          </th>
+          <th
+            pTooltip="Received GRN No"
+            tooltipPosition="top"
+            pSortableColumn="docheaderID"
+          >
+            Received GRN No
+          </th>
+          <th
+            pTooltip="Received Date"
+            tooltipPosition="top"
+            pSortableColumn="documentDate"
+          >
+            Received Date
+          </th>
+          <th
+            pTooltip="GRN Amount"
+            tooltipPosition="top"
+            pSortableColumn="totalAmount"
+          >
+            GRN Amount
+          </th>
+
+          <th>Actions</th>
+        </tr>
+        <tr class="sticky_top">
+          <td>
+            <input
+              pInputText
+              type="text"
+              (input)="
+                GRN.filter($event.target.value, 'PODocumentID', 'contains')
+              "
+              [value]="GRN.filters['PODocumentID']?.value"
+              placeholder="Search by PoNumber"
+              class="p-column-filter tableSearchInput"
+            />
+          </td>
+          <td>
+            <input
+              pInputText
+              type="text"
+              (input)="
+                GRN.filter($event.target.value, 'docheaderID', 'contains')
+              "
+              [value]="GRN.filters['docheaderID']?.value"
+              placeholder="Search by GRN no"
+              class="p-column-filter tableSearchInput"
+            />
+          </td>
+          <td>
+            <input
+              pInputText
+              type="text"
+              (input)="
+                GRN.filter($event.target.value, 'documentDate', 'contains')
+              "
+              [value]="GRN.filters['documentDate']?.value"
+              placeholder="Search by ReceivedDate"
+              class="p-column-filter tableSearchInput"
+            />
+          </td>
+          <td>
+            <input
+              pInputText
+              type="text"
+              (input)="
+                GRN.filter($event.target.value, 'totalAmount', 'contains')
+              "
+              [value]="GRN.filters['totalAmount']?.value"
+              placeholder="Search by Amount"
+              class="p-column-filter tableSearchInput"
+            />
+          </td>
+
+          <td></td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-invoiceData>
+        <tr>
+          <td>{{ invoiceData.PODocumentID }}</td>
+          <td>{{ invoiceData.docheaderID }}</td>
+          <td>{{ invoiceData.documentDate }}</td>
+          <td>{{ invoiceData.totalAmount }}</td>
+          <td>
+            <i
+              class="pi pi-eye f-16 showEye"
+              (click)="viewInvoice(invoiceData)"
+            ></i>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="p-t-30">
+            <img src="assets/Group 2691.png" width="260" alt="imageUrl" />
+            <br />
+            No Data found.
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft"> </ng-template>
+      <ng-template pTemplate="paginatorright"> </ng-template>
+    </p-table>
+  </div>
+</div>

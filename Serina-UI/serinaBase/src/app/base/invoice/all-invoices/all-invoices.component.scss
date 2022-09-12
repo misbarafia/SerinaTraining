@@ -1,0 +1,88 @@
+@import "src/styles/documentsStyles";
+@include document;
+
+:host ::ng-deep {
+  .p-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+    border: 1px solid #f5f5f5;
+    border-width: 0 0 1px 0;
+    padding: 7px;
+  }
+  .p-datatable .p-datatable-thead > tr > th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    text-align: center;
+    border: 1px solid #f5f5f5;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    padding: 10px;
+    font-size: 12px;
+    background: #ffffff;
+    transition: box-shadow 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .p-paginator {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    border: 0 none;
+    color: #6c757d;
+    min-width: 30px;
+    font-size: 12px;
+    height: 30px;
+    margin: 5px;
+    transition: box-shadow 0.2s;
+    border-radius: 3px;
+  }
+  .pi-chevron-down:before {
+    content: "\e902";
+    font-size: 13px;
+  }
+  .p-paginator .p-paginator-current {
+    font-size: 13px;
+  }
+
+  .p-fluid .p-multiselect {
+    display: flex;
+    height: 30px;
+    font-size: 12px;
+    padding: 0px;
+  }
+  .p-multiselect .p-multiselect-label {
+    padding: 3px;
+    text-align: center;
+  }
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .p-dropdown .p-dropdown-label.p-placeholder {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+.pos-rel {
+  position: relative;
+  top: 2px;
+}
+.scroll{
+  max-height: 70vh;
+  overflow: auto;
+  min-height: 70vh;
+}
+// @media screen and (max-width: 576px){ 
+//    .p-datatable .p-datatable-tbody > tr > td {
+//       text-overflow : clip !important;
+//       font-size: 12px !important;
+//    }
+//    .p-datatable .p-datatable-thead > tr > th {
+//       text-overflow:clip !important;
+//       font-size: 12px !important;
+//    }
+// }

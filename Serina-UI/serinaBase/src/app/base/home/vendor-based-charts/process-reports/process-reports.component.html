@@ -1,0 +1,187 @@
+<div class="filter_inputDash">
+  <p-calendar
+    [(ngModel)]="rangeDates"
+    selectionMode="range"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    placeholder="Select dates to Filter"
+    [readonlyInput]="true"
+    [showIcon]="true"
+    showButtonBar="true"
+    inputId="range"
+    (onClearClick)="clearDates()"
+  ></p-calendar>
+  <button class="btnUpload filter_btn_m" (click)="filterByDate(rangeDates)">Filter</button>
+</div>
+<div class="d-flex filters_div">
+  <div class="selectFilter mr-2">
+    <!-- <select class="f-12 form-control font_weight">
+      <option value="">Select Vendor</option>
+      <option value="ALL">ALL</option>
+      <option *ngFor="let vendor of vendorsData">
+        {{ vendor.VendorName }}
+      </option>
+    </select> -->
+    <p-autoComplete
+      placeholder="Select Vendor"
+      (onSelect)="selectVendor($event)"
+      [group]="false"
+      [(ngModel)]="selectedVendorValue"
+      [suggestions]="filteredVendors"
+      (completeMethod)="filterVendor($event)"
+      field="VendorName"
+      [dropdown]="true"
+    >
+      <ng-template let-group pTemplate="group">
+        <div class="flex align-items-center">
+          <span class="f-12">{{ group.VendorName }}</span>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+
+  <div class="selectFilter mr-2">
+    <select
+      class="f-12 form-control font_weight"
+      (change)="selectEntityFilter($event.target.value)"
+    >
+      <option value="">Select Entity</option>
+      <option value="ALL">ALL</option>
+      <option *ngFor="let entity of entity" [value]="entity.idEntity">
+        {{ entity.EntityName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="selectFilter">
+    <select
+      class="f-12 form-control font_weight"
+      (change)="selectedSource($event.target.value)"
+    >
+      <option value="" disabled selected>Select Source type</option>
+      <option value="ALL">ALL</option>
+      <option *ngFor="let source of sourceData" [value]="source.sourceType">
+        {{ source.sourceType }}
+      </option>
+    </select>
+  </div>
+</div>
+<div class="tableDtDiv">
+  <div class="d-flex justify-content-between">
+    <div class="card-div d-flex bg-1">
+      <div class="img-wrapper">
+        <!-- <i class="fa fa-check"></i> -->
+        <mat-icon class="placement" svgIcon="vendor_up"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Total Uploaded</div>
+        <div class="f-15">{{ totalUploaded }}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-2">
+      <div class="img-wrapper">
+        <!-- <i class="fa fa-exclamation-triangle"></i> -->
+        <mat-icon class="placement" svgIcon="vendor_pr"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Invoiced in ERP</div>
+        <div class="f-15">{{ invoicedInERP }}</div>
+      </div>
+    </div>
+    
+    <div class="card-div d-flex bg-3">
+      <div class="img-wrapper">
+        <mat-icon class="placement" svgIcon="vendor_rm"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">In Progress</div>
+        <div class="f-15">{{ pendingCount }}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-4">
+      <div class="img-wrapper">
+        <mat-icon class="placement" svgIcon="vendor_rej"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Rejected</div>
+        <div class="f-15">{{ rejectedCount }}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-5">
+      <div class="img-wrapper">
+        <mat-icon class="placement" svgIcon="vendor_err"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Error Invoices</div>
+        <div class="f-15">{{ errorCount }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="charts_height">
+  <div class="d-flex justify-content-between mt-2" style="position: relative">
+    <div class="chart_title f-12">Invoice Pending by Amount</div>
+    <div  class="chart_div">
+      <div [ngStyle]="{'visibility':!noDataPAboolean ? 'visible':'hidden'}" id="vendor_clm_chart" >
+      </div>
+      <div [ngStyle]="{'visibility':noDataPAboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    <div class="chart_title f-12" style="left: 52%">
+      Invoice Count by Vendor
+    </div>
+    <div class="chart_div">
+      <div [ngStyle]="{'visibility':!noDataVndrCountboolean ? 'visible':'hidden'}" id="bar_chart"></div>
+      <div [ngStyle]="{'visibility': noDataVndrCountboolean ? 'visible':'hidden'}"  class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    
+  </div>
+  <div class="d-flex justify-content-between mt-2" style="position: relative">
+    <div class="chart_title f-12">Aging in Serina</div>
+    <div class="chart_div">
+      <div [ngStyle]="{'visibility': !noDataAgeboolean ? 'visible':'hidden'}" id="vendor_clm_chart1" ></div>
+      <div [ngStyle]="{'visibility': noDataAgeboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    
+    <div class="chart_title f-12" style="left: 52%">
+      Invoice Count by Source Type
+    </div>
+    <div class="chart_div">
+      <div [ngStyle]="{'visibility': !noDataSourceboolean ? 'visible':'hidden'}" id="pie_chart" ></div>
+      <div [ngStyle]="{'visibility': noDataSourceboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    
+  </div>
+  <!-- <div class="d-flex justify-content-between mt-2" style="position: relative">
+    <div class="chart_title f-12">
+      Invoice Count by Entity
+    </div>
+    <div class="chart_div">
+      <div [ngStyle]="{'visibility': !noDataSourceEntityboolean ? 'visible':'hidden'}" id="pie_chart_entity"></div>
+      <div [ngStyle]="{'visibility': noDataSourceEntityboolean ? 'visible':'hidden'}"  class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    
+  </div> -->
+  <ngx-spinner
+    bdColor="rgba(251, 251, 251, 0.8)"
+    size="medium"
+    color="#070900"
+    [fullScreen]="false"
+    type="ball-spin-clockwise"
+  >
+    <p style="color: rgb(0, 0, 0)"></p>
+  </ngx-spinner>
+</div>

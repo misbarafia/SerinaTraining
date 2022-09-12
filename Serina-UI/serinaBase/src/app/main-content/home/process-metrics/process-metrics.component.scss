@@ -1,0 +1,94 @@
+// .tableDataDiv {
+//     box-shadow: none;
+//     max-height: 70vh !important;
+//     min-height: 70vh !important;
+//     overflow: auto;
+//     margin-top: -5px;
+// }
+
+.img-wrapper {
+    width: 46px;
+    height: 46px;
+    margin: 0 15px 0 0;
+    padding: 10px 13px 12px 12px;
+    border-radius: 28px;
+    text-align: center;
+    background-color: white;
+  }
+  .card-div {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 14px 20px 13px 15px;
+    // background-color: #fffbf0;
+    min-width: 16vw;
+    color: white;
+  }
+  .f-15 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .placement {
+    position: relative;
+    top: -1px;
+  }
+  
+  .bg-1 {
+    background: #4cbc9a;
+    color: white;
+  }
+  .bg-2 {
+    background-color: #5167b2;
+  }
+  .bg-3 {
+    background-color: #5dc5cc;
+  }
+  .bg-4 {
+    background-color: #fa8442;
+  }
+  .bg-5 {
+    background-color: #f15e5e;
+  }
+  .bg-6 {
+    background-color: #fb4953;
+  }
+  .bg-7 {
+    background-color: #faaf56;
+  }
+  
+  .active_card {
+    border: 2px solid #2c2c2c;
+  }
+  
+  :host ::ng-deep {
+    .p-datatable table {
+      background-color: white;
+    }
+  }
+  
+  .tabDiv {
+    max-height: 70vh;
+    min-height: 70vh;
+    overflow: auto;
+  }
+  .dwnldBtn {
+    position: absolute;
+    top: 57px;
+    right: 320px;
+  }
+  @media screen and (max-width:1300px) {
+    .filter_inputDash {
+      top: 50px;
+        right: 0;
+    }
+    .filters_div {
+      top: 82px;
+      right: 0;
+    }
+    .dwnldBtn {
+      right: 0;
+      top: 86px;
+    }
+    .tableDatDiv {
+     margin-top: 27px;
+    }
+  }

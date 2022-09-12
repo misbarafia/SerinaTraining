@@ -1,0 +1,176 @@
+<div class="container-fluid">
+    <div class="flex-container">
+        <div class="item1 bg-white h-md-100 loginarea box" >
+            <ul class="p-3">
+                <li (click)="navigatetoPage('tagging')" class="text-center" title="Tagging">
+                    <a><i class="fa fa-tags"></i></a>
+                </li>
+                
+                <li (click)="navigatetoPage('training')" class="text-center" title="Training">
+                    <a><i class="fa fa-connectdevelop"></i></a>
+                </li>
+                
+                <li (click)="navigatetoPage('composing')" title="Compose" class="text-center">
+                    <a><i class="fa fa-link"></i></a>
+                </li>
+                <li (click)="navigatetoPage('testing')" title="Test Model" class="active text-center">
+                    <a><i class="fa fa-flash"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="item3 bg-white box">
+            <div id="sticky">
+                <div class="root-61">
+                    <div class="primarySet-65"></div>
+                    <div class="primarySet-65 p-2">{{p_name}}</div>
+                    <div class="secondarySet-72">
+                        <div class="item-66"><i class="fa fa-search-minus" (click)="zoomOuttest()"></i></div>
+                        <div class="item-66"><i class="fa fa-search-plus" (click)="zoomIntest()"></i></div>
+                        <div class="item-66"><i class="fa fa-arrow-left" (click)="previoustest()"></i></div>
+                        <div class="item-66"><i class="fa fa-arrow-right" (click)="nexttest()"></i></div>
+                        <div class="item-66">{{currentpage}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" *ngIf="analyzing" style="margin-top: 30%;">
+                <strong>Running Layout</strong>&nbsp;
+                <div class="spinner-border spinner-border-sm text-light" role="status">
+                  
+                </div>
+            </div>
+            <div *ngIf="ready">
+            <div *ngFor="let p of countertest(maxpage);let i = index">
+                <div class="asset-item-image" id="Page-{{i+1}}container">
+                    <div class="asset-preview">
+                        <div class="asset-preview-container text-center" id="pcanvas{{i+1}}" cdkDrag (cdkDragEnded)="DragRemovedtest($event)" (cdkDragMoved)="DragMovingtest($event)">
+                            <canvas id="canvas{{i+1}}"></canvas> 
+                        </div>
+                    </div>
+                </div>
+                <div class="asset-item-metadata text-center">
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="item4 bg-white box">
+            <div><i class="fa fa-flash"></i> Analyse</div>
+            <div style="margin-top: 4%;"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="headings">Model Analyse with Model</span>
+                    <label for="idmodel"></label>
+                    <select class="form-control form-control-sm" (change)="setModelId($event)" id="idmodel">
+                        <option *ngFor="let m of models" value="{{m.modelInfo.modelId}}" [selected]="m.modelInfo.modelName == modelData.modelName">{{m.modelInfo.modelName}}</option>
+                    </select>
+                    <div style="margin-top: 4%;"></div>
+                    <span style="font-size: small;"><b>Model Id:</b> {{modelid}}</span>
+                </div>
+                <div style="margin-top: 8%;"></div>
+                <hr>
+                <div class="col-md-12">
+                    <span class="headings">Choose an Image or Pdf</span>
+                    <input type="file" (change)="getFiles($event)">
+                    <div style="margin-top: 4%;"></div>
+                    <button type="button" class="btn btnbg btn-sm" style="font-size: small;" (click)="runAnalyses()"><div *ngIf="testing" class="spinner-border spinner-border-sm" role="status"></div><i *ngIf="!testing" class="fa fa-flash"></i> Test Model</button> &nbsp;<small style="font-weight: bold;color: #888888;">or Skip to</small>&nbsp; <button type="button" class="btn btncancel btn-sm" style="font-size: small;" (click)="model_validate()"><div *ngIf="validating" class="spinner-border spinner-border-sm" role="status"></div><i *ngIf="!validating" class="fa fa-check-square"></i> Validate Model</button>
+                </div>
+                <div style="margin-top: 4%;"></div>
+                <hr>
+                <div class="col-md-12">
+                    <span class="headings">Analyse Result</span>
+                    <ol *ngIf="analyzed" class="list-group list-group-numbered">
+                        <div *ngFor="let f of ObjectKeystest(fields);let i = index">
+                            <li *ngIf="fields[f].type == 'string'" class="list-group-item d-flex justify-content-between align-items-start" id="field{{i}}">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold" style="color: #888888;">{{i+1}}. {{f}}</div>
+                                <div class="result" style="font-size: small;">{{fields[f].text}}</div>
+                            </div>
+                            <span *ngIf="fields[f].confidence > 0.7" class="badge bg-success rounded-pill">{{RoundOff(fields[f].confidence * 100)}} %</span>
+                            <span *ngIf="fields[f].confidence > 0.3 && fields[f].confidence < 0.7" class="badge bg-primary rounded-pill">{{RoundOff(fields[f].confidence * 100)}} %</span>
+                            <span *ngIf="fields[f].confidence < 0.3" class="badge bg-danger rounded-pill">{{RoundOff(fields[f].confidence * 100)}} %</span>
+                            </li>
+                            <li *ngIf="fields[f].type == 'array'" class="tableresult d-flex justify-content-between align-items-start" id="field{{i}}" (click)="viewTable(f)" data-toggle="modal" data-target="#staticBackdrop">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{i+1}}. {{f}}</div>
+                                    <div><i class="fa fa-table"></i> Click to View Result</div>
+                                </div>
+                            </li>
+                        </div>
+                    </ol>
+                </div>
+                <div style="margin-top: 4%;"></div>
+                <hr>
+                <div *ngIf="validating" class="f-13 p-3" style="color: rgb(10 80 90);">
+                    {{model_validate_msg}}
+                </div>
+                <div *ngIf="status4Boolean" class="f-13 p-3" style="color: rgb(0 167 0);">
+                    {{model_validate_msg}}
+                </div>
+                <div *ngIf="invalidModelBoolean" class="f-13 p-3" style="color: rgb(192, 5, 5);">
+                    {{model_invalidate_msg}}
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn btnbg btn-sm" (click)="uploadToSerina()" [disabled]="validating || invalidModelBoolean"><div *ngIf="saving" class="spinner-border spinner-border-sm" role="status"></div><i *ngIf="!saving" class="fa fa-save"></i> {{uploadbuttonmsg}}</button>
+                </div>
+                <button type="button" class="btn btnbg btn-sm" id="openmodel" data-toggle="modal" data-target="#confirmModel" style="visibility: hidden;">Click</button>
+
+                <div style="margin-top: 20%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+                    
+<div class="modal fade" id="confirmModel" style="z-index: 3001;margin-top: 10%;"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="border: none;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+            <div>
+              <i class="fa fa-exclamation-triangle" style="font-size: 4rem;color:#f2be42;"></i>
+            </div>
+            <div class="deleteDivText">
+              This {{valuename}} exists across different {{valueent}}.<br> Do you want to copy this model for all the {{valueent}}?<br>
+              {{valuename}}: {{vendor}}
+            </div>
+          </div><br><br>
+          <div class="d-flex justify-content-center mb-3">
+            <button class="btn btnbg mr-3" data-dismiss="modal" (click)="yesanswer()">Yes</button>
+            <button class="btn btncancel" data-dismiss="modal" (click)="noanswer()">No</button>
+          </div>
+        </div>
+        
+          
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" style="z-index: 3001" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">{{currenttable}}</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+        </div>
+        <div class="modal-body" style="overflow: scroll">
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th *ngFor="let h of currentheaders">{{h}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let r of rows;let i = index">
+                <td *ngFor="let c of rows[i]">{{c}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+    </div>
+  </div>
+

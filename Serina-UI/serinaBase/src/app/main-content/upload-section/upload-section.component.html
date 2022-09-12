@@ -1,0 +1,189 @@
+<!-- upload Invoice -->
+<h6 class="headh6">Upload Section</h6>
+
+<div class="fileUploadDiv p-2 m-2">
+  <div class="centerSelection">
+    <div *ngIf="!reuploadBoolean">
+      <!--Vendor Portal Upload-->
+      <div *ngIf="!isCustomerPortal" class="d-flex flex_col">
+        <div class="selectFilter mr-2">
+          <label class="f-13 mb-0">Select Entity</label><br />
+          <select class="form-control accountSelect f-12" (change)="selectEntity($event.target.value)">
+            <option value="" style="font-weight: 500;">Select Entity</option>
+            <option *ngFor="let entity of entity" [value]="entity.idEntity" >
+              {{ entity.EntityName }}
+            </option>
+          </select>
+        </div>
+        <div class="mr-2">
+          <label class="f-13 mb-0">Select Vendor Account</label>
+          <select
+            class="form-control accountSelect"
+            [(ngModel)]="vendorAccountName"
+            (change)="selectVendorAccount_vdr(vendorAccountName)"
+            required
+          >
+            <option
+              *ngFor="let vendorA of vendorAccount"
+              [value]="vendorA.idVendorAccount"
+            >
+              {{ vendorA.Account }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!--Customer Portal Upload-->
+      <div *ngIf="isCustomerPortal" class="d-flex flex_col">
+
+        <div class="selectFilter mr-2">
+          <label class="f-13 mb-0">Select Entity</label><br />
+          <select class="form-control accountSelect f-12" (change)="selectEntity($event.target.value)">
+            <option value="" style="font-weight: 500;">Select Entity</option>
+            <option *ngFor="let entity of entity" [value]="entity.idEntity" >
+              {{ entity.EntityName }}
+            </option>
+          </select>
+        </div>
+
+        <!--Vendor Selection-->
+        <div class="mr-2">
+          <label class="f-13 mb-0">Select Vendor</label><br />
+          <p-autoComplete
+            placeholder="Select vendor"
+            (onSelect)="selectVendorAccount($event)"
+            [group]="false"
+            [suggestions]="filteredVendors"
+            (completeMethod)="filterVendor($event)"
+            field="VendorName"
+            [dropdown]="true"
+          >
+            <ng-template let-group pTemplate="group">
+              <div class="flex align-items-center">
+                <span class="f-12">{{ group.VendorName }}</span>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+
+        <!--Vendor Account Selection based by entitys-->
+        <div style="display: none;">
+          <label class="f-13 mb-0">Select Account</label><br />
+          <select
+            name="accounts"
+            id="accounts"
+            class="form-control accountSelect f-12"
+            [(ngModel)]="vendorAccountName"
+            (change)="onSelectAccountByEntity(vendorAccountName)"
+          >
+            
+              <option
+                class="f-12 p-3"
+                style="color: gray"
+                [value]="account.idVendorAccount"
+                *ngFor="let account of vendorAccountByEntity"
+              >
+                {{ account.Account }}
+              </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Option-->
+    <div class="d-flex justify-content-center mt-3">
+      <div class="" *ngIf="displaySelectPdfBoolean || reuploadBoolean">
+        <div
+          *ngIf="isuploadable"
+          ng2FileDrop
+          [uploader]="uploader"
+          [ngClass]="{ 'file-over': hasBaseDropZoneOver }"
+          (fileOver)="fileOverBase($event)"
+          class="file-upload"
+          (onFileDrop)="fileDrop($event)"
+          class="dashed-border"
+        >
+          <div style="margin: 30px" *ngIf="isuploadable">
+            <span class="material-icons f-80"> filter_none </span>
+            <div class="underdropIcon">Drag and drop an Invoice copy</div>
+            <small class="f-12">File type must be in .jpeg .png .pdf</small>
+            <div class="fileText">Or</div>
+            <label for="img" class="img-browse"> Attach Invoice </label>
+            <input
+              ng2FileSelect
+              accept=".png, .jpg, .pdf"
+              (change)="onSelectFile($event)"
+              [uploader]="uploader"
+              #fileInput
+              type="file"
+              id="img"
+              name="img"
+              hidden
+            />
+          </div>
+        </div>
+
+        <!--Filename dispaly with size-->
+        <div *ngIf="!isuploadable">
+          <div class="b-type">
+            <button type="button" class="close" (click)="cancelSelect()">
+              <span class="cls" aria-hidden="true">&times;</span>
+            </button>
+            <div class="img-name">
+              <strong>FileName : &nbsp;</strong>{{ name }}
+            </div>
+            <div class="img-type">
+              <strong>FileSize : &nbsp;</strong>{{ size }} &nbsp;MB
+            </div>
+          </div>
+
+          <div class="f-13 mt-2 mb-2" style="color: green">
+            {{ processStage }}
+          </div>
+        </div>
+
+        <!--Progress bar-->
+        <div class="f-12" *ngIf="progress">Upload progressbar</div>
+        <div class="progress mb-2" *ngIf="progress">
+          <div
+            class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+            [style.width]="progress + '%'"
+          >
+            {{ progress }}%
+          </div>
+        </div>
+        <div class="f-12" *ngIf="OcrProgress" id="percText">
+          {{ progressText }}
+        </div>
+        <div class="progress mb-2" *ngIf="OcrProgress">
+          <div
+            class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+            id="precWidth"
+            [style.width]="progressWidth + '%'"
+          >
+            {{ progressWidth }}%
+          </div>
+        </div>
+
+        <!--buttons-->
+        <div class="text-center" *ngIf="!isuploadable">
+          <button
+            type="button"
+            class="btn btnVender bg-btn-cancel mr-2"
+            (click)="cancelQueue()"
+          >
+            Cancel
+          </button>
+          <button
+            class="btn btnVender bg-btn-success"
+            [disabled]="progress || OcrProgress"
+            (click)="uploadInvoice()"
+          >
+            Upload
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

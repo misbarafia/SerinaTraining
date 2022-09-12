@@ -1,0 +1,80 @@
+<div>
+    <div class="filter_inputDash">
+        <p-calendar
+          [(ngModel)]="rangeDates"
+          selectionMode="range"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          placeholder="Select dates to Filter"
+          [readonlyInput]="true"
+          [showIcon]="true"
+          showButtonBar="true"
+          inputId="range"
+          (onClearClick)="clearDates()"
+        ></p-calendar>
+        <button class="btnUpload filter_btn_m" (click)="filterByDate(rangeDates)">Filter</button>
+      </div>
+    <div class="charts_height">
+        <!-- <div class="d-flex justify-content-between mt-2" style="position: relative">
+          <div class="chart_title f-12">Invoice Pending by Amount</div>
+          <div  class="chart_div">
+            <div [ngStyle]="{'visibility':!noDataPAboolean ? 'visible':'hidden'}" id="vendor_clm_chart" >
+            </div>
+            <div [ngStyle]="{'visibility':noDataPAboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+              No Data Available
+            </div>
+          </div>
+          <div class="chart_title f-12" style="left: 52%">
+            Invoice Count by Vendor
+          </div>
+          <div class="chart_div">
+            <div [ngStyle]="{'visibility':!noDataVndrCountboolean ? 'visible':'hidden'}" id="bar_chart"></div>
+            <div [ngStyle]="{'visibility': noDataVndrCountboolean ? 'visible':'hidden'}"  class="f-13 center-card-text">
+              No Data Available
+            </div>
+          </div>
+          
+        </div> -->
+        <div class="d-flex justify-content-between mt-2" style="position: relative">
+          <div class="chart_title f-12">Aging in Serina</div>
+          <div class="chart_div">
+            <div [ngStyle]="{'visibility': !noDataAgeboolean ? 'visible':'hidden'}" id="vendor_clm_chart1_v" ></div>
+            <div [ngStyle]="{'visibility': noDataAgeboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+              No Data Available
+            </div>
+          </div>
+          
+          <div class="chart_title f-12" style="left: 52%">
+            Most ordered items
+          </div>
+          <div class="chart_div">
+            <div [ngStyle]="{'visibility': !noDataSourceboolean ? 'visible':'hidden'}" id="col_chart_v" ></div>
+            <div [ngStyle]="{'visibility': noDataSourceboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+              No Data Available
+            </div>
+          </div>
+          
+        </div>
+        <!-- <div class="d-flex justify-content-between mt-2" style="position: relative">
+          <div class="chart_title f-12">
+            Invoice Count by Entity
+          </div>
+          <div class="chart_div">
+            <div [ngStyle]="{'visibility': !noDataSourceEntityboolean ? 'visible':'hidden'}" id="pie_chart_entity"></div>
+            <div [ngStyle]="{'visibility': noDataSourceEntityboolean ? 'visible':'hidden'}"  class="f-13 center-card-text">
+              No Data Available
+            </div>
+          </div>
+          
+        </div> -->
+        <ngx-spinner
+          bdColor="rgba(251, 251, 251, 0.8)"
+          size="medium"
+          color="#070900"
+          [fullScreen]="false"
+          type="ball-spin-clockwise"
+        >
+          <p style="color: rgb(0, 0, 0)"></p>
+        </ngx-spinner>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<h6 class="headh6">AGI Etisalat Cost Allocation Upload</h6>
+<div class="container-fluid">
+  <!-- 
+    <div class="fileUploadDiv p-2 m-2" style="align-items:flex-start;min-height: auto;">
+      <div class="centerSelection centerCss">
+        <div class="d-flex">
+          <div class="selectFilter mr-2">
+            <label class="f-13 mb-0">Select Entity</label><br />
+            <select class="form-control accountSelect f-12" (change)="selectEntity($event.target.value)">
+              <option value="" style="font-weight: 500;">Select Entity</option>
+              <option *ngFor="let entity of entity" [value]="entity.idEntity" >
+                {{ entity.EntityName }}
+              </option>
+            </select>
+          </div>
+          
+        </div>
+  
+      </div>
+    </div> -->
+  <div class="mb-2">
+    <!-- <div class="f-13"> Click Upload button to add new cost allocation</div> -->
+    <div class="d-i-block" [ngClass]="btnEnabled ? 'mt-0' : 'di-ceter'">
+      <div class="d-i-block" [ngClass]="btnEnabled ? 'mt-0' : 'bg-clr'">
+        <div class="d-i-block ml-3">
+          <label class="f-13">Select file to upload</label><br />
+          <input
+            type="file"
+            id="custom-upload"
+            (change)="onChange($event)"
+            hidden
+            [disabled]="btnEnabled"
+            
+            #inputFile
+          />
+          <label for="custom-upload" class="custom-btn f-12 mr-2" [ngStyle]="{'cursor':btnEnabled ? 'not-allowed':'pointer'}"
+            >Choose file</label
+          >
+
+          <!-- name of file chosen -->
+          <span class="f-12">{{ fileChoosen }}</span>
+        </div>
+      </div>
+      <div class="f-13 text-danger" *ngIf="isExcelFile === false">
+        This is not an Excel file
+      </div>
+    </div>
+    <div class="d-inline ml-2">
+      <button [disabled]="progress" *ngIf="btnEnabled" class="btnUpload" (click)="uploadFile_cost()">
+        <span
+          *ngIf="progress"
+          class="spinner-border spinner-border-sm mr-1"
+        ></span>
+        Upload
+      </button>
+    </div>
+    <div class="f-12" *ngIf="progress">Upload progressbar</div>
+    <div class="progress mb-2" *ngIf="progress">
+      <div
+        class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+        [style.width]="progress + '%'"
+      >
+        {{ progress }}%
+      </div>
+    </div>
+  </div>
+
+  <div class="filter_inputDash">
+    <p-calendar
+      [(ngModel)]="selectDate"
+      view="month"
+      dateFormat="mm/yy"
+      [showIcon]="true"
+      [yearNavigator]="true"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      [yearRange]="displayYear"
+      placeholder="Select dates to filter.."
+      [readonlyInput]="false"
+      inputId="monthpicker"
+      showButtonBar="true"
+      (onClearClick)="clearDates()"
+    ></p-calendar>
+    <button class="btnUpload filter_btn_m" (click)="filterMonthData(selectDate)">Filter</button>
+  </div>
+  <div class="table_scroll">
+    <app-table
+      [tableData]="totalTableData"
+      [invoiceColumns]="columnsForTotal"
+      [showPaginator]="showPaginatortotal"
+      [columnsToFilter]="totalColumnField"
+      [columnLength]="ColumnLengthtotal"
+    >
+    </app-table>
+  </div>
+</div>
+<p-toast></p-toast>

@@ -1,0 +1,380 @@
+<div class="d-flex justify-content-between pageHeader">
+    <h6 class="font_weight ml-3">Service Providers List</h6>
+    <div class="mr-4" style="display: flex">
+      <!-- <button
+        type="button"
+        class="btn btnadd btn-sm"
+        style="flex: 68%; font-size: small;"
+        data-toggle="modal"
+        data-target="#exampleModalCenter"
+      >
+        <i class="fa fa-plus"></i> New Service Provider</button> -->
+      <div class="selectFilter mr-2">
+        <select
+          class="form-control inputField f-12"
+          [(ngModel)]="onboard_status"
+          (change)="selectedType($event.target.value)"
+        >
+          <option value="" style="font-weight: 500" disabled selected>
+            Select status
+          </option>
+          <option *ngFor="let element of onBoardArray" [value]="element.name">
+            {{ element.name }}
+          </option>
+        </select>
+      </div>
+      <div class="selectFilter mr-2">
+        <select
+          class="form-control inputField f-12"
+          [(ngModel)]="selectedEntityId"
+          (change)="selectEntity($event.target.value)"
+        >
+          <option value="" style="font-weight: 500" disabled selected>
+            Select Entity
+          </option>
+          <option value="ALL" style="font-weight: 500">ALL</option>
+          <option *ngFor="let entity of entity" [value]="entity.idEntity">
+            {{ entity.EntityName }}
+          </option>
+        </select>
+      </div>
+  
+      <button
+        type="button"
+        class="btn btnadd btn-sm"
+        style="flex: 68%; font-size: small"
+        (click)="filter()"
+      >
+        Filter
+      </button>
+      <input
+        class="inputField form-control"
+        style="margin-left: 1rem"
+        type="text"
+        name="search"
+        [(ngModel)]="spNameForSearch"
+        placeholder=" Search Service Provider...."
+      />
+      <button
+        type="button"
+        class="btn btnadd btn-sm ml-1"
+        style="flex: 68%; font-size: small"
+        (click)="filteSP()"
+      >
+        Filter
+      </button>
+    </div>
+  </div>
+  
+  <div class="d-flex justify-content-center h-ele" style="margin-top: -18px">
+    <div
+      *ngIf="listLoading; else spinner"
+      class="scroller"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [scrollWindow]="false"
+      (scrolled)="onScroll()"
+    >
+      <div class="animate-bottom">
+        <div
+          *ngIf="SPListDispaly.length != 0"
+          class="d_flex"
+          style="margin-left: 2%"
+        >
+          <div
+            *ngFor="let sp of SPListDispaly; let i = index"
+            class="card m3 box_shadow card_shape"
+          >
+            <div class="card-body">
+              <h5 class="card-title f-14">{{ sp.ServiceProviderName }}</h5>
+              <h6 class="card-subtitle mb-2">
+                <small>{{ sp.EntityName }}</small>
+              </h6>
+              <!-- <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a> -->
+              <div class="btn_position">
+                <!-- <button class="btn btnbg f-13 mr-40">New Template</button> -->
+                <div class="d-flex justify-content-between">
+                  <div
+                    *ngIf="sp.OnboardedStatus == 'Onboarded'"
+                    class="f-12 mt-1"
+                    style="color: green"
+                  >
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    Onboarded
+                  </div>
+                  <div
+                    *ngIf="sp.OnboardedStatus == 'Not-Onboarded'"
+                    class="f-12 mt-1"
+                    style="color: rgb(211, 45, 45)"
+                  >
+                    Not-Onboarded
+                  </div>
+                  <div>
+                    FR Update<button
+                      class="btn btnbg f-13 ml-3"
+                      (click)="frUpdate(sp)"
+                    >
+                      <i class="fa fa-arrow-right" style="color: #ffffff"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="SPListDispaly.length == 0" class="f-13 mt-5">
+          No Data found.
+        </div>
+      </div>
+    </div>
+    <ng-template #spinner>
+      <div class="loader"></div>
+    </ng-template>
+  </div>
+  <div
+    class="modal fade bd-example-modal-lg"
+    id="exampleModalCenter"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">New Service Provider</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            id="closebtn"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6 style="font-size: small; color: #273c75">Service Provider Details</h6>
+          <form [formGroup]="spForm" (ngSubmit)="saveSP()" class="row">
+            <div class="col-4">
+              <label for="spName" style="font-size: x-small; color: red"
+                >Service Provider Name*</label
+              >
+              <input
+                type="text"
+                formControlName="SPName"
+                id="SPName"
+                class="form-control form-control-sm"
+                required
+              />
+              <div *ngIf="f.SPName.errors">
+                <small class="text-danger">Please provide a service provider name.</small>
+              </div>
+            </div>
+  
+            <div class="col-4">
+              <label for="Email" style="font-size: x-small; color: red"
+                >Email-Id*</label
+              >
+              <input
+                type="email"
+                formControlName="Email"
+                id="Email"
+                class="form-control form-control-sm"
+                required
+              />
+              <div *ngIf="f.Email.errors">
+                <small class="text-danger">Please provide a valid email.</small>
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="Contact" style="font-size: x-small">Contact No.</label>
+              <input
+                type="number"
+                formControlName="Contact"
+                id="Contact"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-8">
+              <label for="Address" style="font-size: x-small">Address</label>
+              <input
+                type="text"
+                formControlName="Address"
+                id="Address"
+                class="form-control"
+              />
+            </div>
+            <div class="col-4">
+              <label for="SPCode" style="font-size: x-small"
+                >Service Provider Code</label
+              >
+              <input
+                type="number"
+                formControlName="SPCode"
+                id="SPCode"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-8">
+              <label for="Desc" style="font-size: x-small">Description</label>
+              <input
+                type="text"
+                formControlName="Desc"
+                id="Desc"
+                class="form-control"
+              />
+            </div>
+            <div class="col-4">
+              <label for="Website" style="font-size: x-small">Website</label>
+              <input
+                type="text"
+                formControlName="Website"
+                id="Website"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="FirstName" style="font-size: x-small">Firstname</label>
+              <input
+                type="text"
+                formControlName="FirstName"
+                id="FirstName"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="LastName" style="font-size: x-small">Lastname</label>
+              <input
+                type="text"
+                formControlName="LastName"
+                id="LastName"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="Designation" style="font-size: x-small"
+                >Designation</label
+              >
+              <input
+                type="text"
+                formControlName="Designation"
+                id="Designation"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="TRNNumber" style="font-size: x-small">TRN Number</label>
+              <input
+                type="text"
+                formControlName="TRNNumber"
+                id="TRNNumber"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="TradeLicense" style="font-size: x-small"
+                >Trade License</label
+              >
+              <input
+                type="text"
+                formControlName="TradeLicense"
+                id="TradeLicense"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="VATLicense" style="font-size: x-small"
+                >VAT License</label
+              >
+              <input
+                type="text"
+                formControlName="VATLicense"
+                id="VATLicense"
+                class="form-control form-control-sm"
+              />
+            </div>
+  
+            <h6 class="col-12 p-3" style="font-size: small; color: #273c75">
+              SP Account Details
+            </h6>
+            <div class="col-8">
+              <label for="Account" style="font-size: x-small; color: red"
+                >Account*</label
+              >
+              <input
+                type="text"
+                formControlName="Account"
+                id="Account"
+                class="form-control"
+                required
+              />
+              <div *ngIf="f.Account.errors">
+                <small class="text-danger">provide a valid account.</small>
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="AccountType" style="font-size: x-small; color: red"
+                >Account Type*</label
+              >
+              <input
+                type="text"
+                formControlName="AccountType"
+                id="AccountType"
+                class="form-control form-control-sm"
+                required
+              />
+              <div *ngIf="f.AccountType.errors">
+                <small class="text-danger">Please provide an account type.</small>
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="Country" style="font-size: x-small">Country</label>
+              <input
+                type="text"
+                formControlName="Country"
+                id="Country"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="City" style="font-size: x-small">City</label>
+              <input
+                type="text"
+                formControlName="City"
+                id="City"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-4">
+              <label for="LocationCode" style="font-size: x-small"
+                >Location Code</label
+              >
+              <input
+                type="text"
+                formControlName="LocationCode"
+                id="LocationCode"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-12 p-3">
+              <input
+                type="submit"
+                class="btn btnbg btn-sm"
+                style="float: right"
+                value="Add Service Provider"
+              /><span
+                *ngIf="submitted"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+  

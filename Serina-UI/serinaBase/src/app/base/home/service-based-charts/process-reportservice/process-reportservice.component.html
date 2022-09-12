@@ -1,0 +1,167 @@
+<div class="d-flex filters_div">
+  <div class="selectFilter mr-2">
+    <select class="form-control f-12 font_weight" (change)="selectedService($event.target.value)">
+      <option value="">Select Serviceprovider</option>
+      <option value="ALL">ALL</option>
+      <option *ngFor="let service of serviceData" [value]="service.ServiceProviderName">
+        {{ service.ServiceProviderName }}
+      </option>
+    </select>
+  </div>
+  
+  <div class="selectFilter ">
+    <select
+      class="f-12 form-control font_weight"
+      (change)="selectEntityFilter($event.target.value)"
+    >
+      <option value="">Select Entity</option>
+      <option value="ALL">ALL</option>
+      <option *ngFor="let entity of entity" [value]="entity.idEntity">
+        {{ entity.EntityName }}
+      </option>
+    </select>
+  </div>
+</div>
+<div class="filter_inputDash">
+  <p-calendar
+    [(ngModel)]="rangeDates"
+    selectionMode="range"
+    [minDate]="minDate"
+    [maxDate]="maxDate"
+    placeholder="Select dates to Filter"
+    [readonlyInput]="true"
+    [showIcon]="true"
+    showButtonBar="true"
+    inputId="range"
+    (onClearClick)="clearDates()"
+  ></p-calendar>
+  <button class="btnUpload filter_btn_m" (click)="filterByDate(rangeDates)">Filter</button>
+</div>
+
+<div class="tableDatDiv">
+  <div class="d-flex">
+    <div class="card-div d-flex mr-3 bg-1">
+      <div class="img-wrapper">
+        <!-- <i class="fa fa-check"></i> -->
+        <mat-icon class="placement" svgIcon="service_total"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Total Invoices Downloaded</div>
+        <div class="f-15">{{totolDownloadCount}}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex mr-3 bg-2">
+      <div class="img-wrapper">
+        <mat-icon class="placement" svgIcon="service_dwn"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Processed to ERP</div>
+        <div class="f-15">{{totalProcessCount}}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-3">
+      <div class="img-wrapper">
+        <!-- <i class="fa fa-exclamation-triangle"></i> -->
+        <mat-icon class="placement" svgIcon="service_pr"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Pending Invoices</div>
+        <div class="f-15">{{totalPendingCount}}</div>
+      </div>
+    </div>
+
+    <!-- <div class="card-div d-flex bg-6">
+            <div class="img-wrapper">
+              <mat-icon class="placement" svgIcon="service_rm"></mat-icon>
+            </div>
+            <div >
+              <div class="f-12">Remaining</div>
+              <div class="f-15">12</div>
+            </div>
+          </div>
+      
+          <div class="card-div d-flex bg-7">
+            <div class="img-wrapper">
+              <mat-icon class="placement" svgIcon="service_scn"></mat-icon>
+            </div>
+            <div>
+              <div class="f-12">Total Scaned Invoices</div>
+              <div class="f-15">3</div>
+            </div>
+          </div> -->
+  </div>
+</div>
+<!-- <div class="charts_height">
+  <div class="d-flex justify-content-between mt-2" style="position: relative">
+    <div class="chart_title f-12">
+      Processed vs Downloaded per Service Provider
+    </div>
+    <div id="stack_chart" class="chart_div"></div>
+    <div class="chart_title f-12" style="left: 52%">Total Processed Value</div>
+    <div id="column_chart" class="chart_div"></div>
+  </div>
+  <div class="d-flex justify-content-between mt-2" style="position: relative">
+    <div class="chart_title f-12">Pending Invoices by Amount</div>
+    <div id="column_chart1" class="chart_div"></div>
+    <div class="chart_title f-12" style="left: 52%">
+      Overall Invoice Processed vs Downloaded
+    </div>
+    <div id="pie_chart" class="chart_div"></div>
+  </div>
+</div> -->
+
+<div class="charts_height">
+  <div class="d-flex justify-content-between mt-2" style="position: relative">
+    <div class="chart_title f-12">Processed vs Downloaded per Service Provider</div>
+    <div  class="chart_div">
+      <div [ngStyle]="{'visibility':!noDataCountboolean ? 'visible':'hidden'}" id="stack_chart" >
+      </div>
+      <div [ngStyle]="{'visibility':noDataCountboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    <div class="chart_title f-12" style="left: 52%">
+      Total Processed Value
+    </div>
+    <div class="chart_div">
+      <div [ngStyle]="{'visibility':!noDataProcessboolean ? 'visible':'hidden'}" id="column_chart"></div>
+      <div [ngStyle]="{'visibility': noDataProcessboolean ? 'visible':'hidden'}"  class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    
+  </div>
+  <div class="d-flex justify-content-between mt-2" style="position: relative">
+    <div class="chart_title f-12">Pending Invoices by Amount</div>
+    <div class="chart_div">
+      <div [ngStyle]="{'visibility': !noDataPendingboolean ? 'visible':'hidden'}" id="column_chart1" ></div>
+      <div [ngStyle]="{'visibility': noDataPendingboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    
+    <div class="chart_title f-12" style="left: 52%">
+      Overall Invoice Processed vs Downloaded
+    </div>
+    <div class="chart_div">
+      <div [ngStyle]="{'visibility': !noDataOverallboolean ? 'visible':'hidden'}" id="pie_chart" ></div>
+      <div [ngStyle]="{'visibility': noDataOverallboolean ? 'visible':'hidden'}" class="f-13 center-card-text">
+        No Data Available
+      </div>
+    </div>
+    
+  </div>
+
+</div>
+
+<ngx-spinner
+bdColor="rgba(251, 251, 251, 0.8)"
+size="medium"
+color="#070900"
+[fullScreen]="false"
+type="ball-spin-clockwise"
+>
+<p style="color: rgb(0, 0, 0)"></p>
+</ngx-spinner>

@@ -1,0 +1,420 @@
+@mixin auth {
+  :host {
+    // The styles you want to share
+    .sideBar {
+      width: 12.5%;
+      height: 100vh;
+      background-color: #272727;
+      z-index: 1;
+    }
+    .bodyContent {
+      // width: 94%;
+      height: 100vh;
+      padding: 0px;
+      overflow-x: auto;
+      background-color: #fafafa;
+    }
+    .menu_icon {
+      position: absolute;
+      top: 16px;
+      left: 4px;
+      z-index: 19065;
+      cursor: pointer;
+    }
+    .navLink {
+      color: #9c9c9c;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      position: relative;
+      align-items: center;
+      margin: 4px 0px;
+      padding: 8px !important;
+      width: 100%;
+      /* display: flex; */
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: 0.5s;
+      transition-delay: 0.3s;
+    }
+    .navLink:hover:not(.active) {
+      // background: #f2be42;
+      // padding: 6px;
+      // border-radius: 0px 30px 30px 0px;
+      // color: #272727;
+      // margin-right: 0px;
+      // transition: all 0.5s ease-out;
+      color: #9c9c9c2f;
+      transition-delay: 0s;
+    }
+    .navLink:not(.active)::before {
+      content: attr(data-text);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      color: #f2be42;
+      text-shadow: 0 0 10px #f2be42, 0 0 30px #f2be42, 0 0 80px #f2be42;
+      font-weight: 600;
+      letter-spacing: 30px;
+      white-space: nowrap;
+      opacity: 0;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .navLink:hover:before {
+      opacity: 1;
+      letter-spacing: normal;
+      transition-delay: 0.3s;
+    }
+    .navLink:focus {
+      outline: 0 !important;
+    }
+    .routeLinks {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      top: 80px;
+      padding-right: 5px;
+      max-height: 85vh;
+      overflow: auto;
+    }
+    .active {
+      background-image: linear-gradient(
+        90deg,
+        rgba(242, 190, 66, 0.1) 0%,
+        rgba(242, 190, 66, 0) 100%
+      );
+      border-left: 3px solid #f2be42;
+      padding: 6px;
+      /* border-radius: 0px 30px 30px 0px; */
+      color: #f2be42;
+      margin-right: 0px;
+      transition: all 0.4s ease;
+    }
+    .active:focus {
+      outline: 0 !important;
+    }
+    .f-18 {
+      font-size: 18px;
+    }
+    .ml-r-12 {
+      margin: 0px 12px;
+      width: 20px;
+    }
+
+    // name display
+
+    .f-right {
+      position: fixed;
+      right: 4%;
+      top: 8px;
+      z-index: 156;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    .menu-img {
+      width: 15px;
+      height: 10px;
+      margin-left: 74.8px;
+      cursor: pointer;
+    }
+
+    p:focus {
+      outline: 0;
+    }
+    .p-20 {
+      padding: 20px;
+    }
+    .userName {
+      font-weight: 600;
+      font-size: 12px;
+      margin-left: 10px;
+      position: relative;
+      top: -3px;
+    }
+    .top-9 {
+      color: #a4afb7;
+      font-size: 20px;
+      position: relative;
+      top: 8px;
+    }
+    .profileIcon {
+      font-size: 25px;
+      position: relative;
+      top: 5px;
+      color: #f2be42;
+    }
+    .clr {
+      color: black;
+    }
+    .bell-clr {
+      color: #34dad8;
+      font-size: 16px;
+    }
+    .f-16 {
+      font-size: 16px;
+    }
+    .side-bar-text {
+      width: 85px;
+      padding: 10px 4px 4px 0px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+    .side-bar-text:focus {
+      outline: 0;
+    }
+    .container-fluid {
+      padding-left: 0;
+    }
+    .controls {
+      display: inline-block;
+    }
+    .b-right {
+      border-right: 2px solid #ebebf2;
+    }
+    .b-right:focus {
+      outline: 0 !important;
+    }
+    .full-screen {
+      background-color: rgba(13, 11, 60, 1);
+      position: absolute;
+      padding: 7px;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      top: 48vh;
+    }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      top: -4px;
+      cursor: pointer;
+    }
+    .dropdown-content {
+      // display: none;
+      top: 23px;
+      position: absolute;
+      background-color: #ffffff;
+      min-width: 160px;
+      box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+      z-index: 109;
+      right: 0;
+    }
+    .dropdown-content a {
+      cursor: pointer;
+      color: black !important;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-size: 13px;
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0 !important;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      border-radius: 0;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .center_absolute {
+      position: absolute;
+      top: 13px;
+      left: 0px;
+      width: 93%;
+    }
+
+    .logotitle {
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      position: absolute;
+      top: 20px;
+      left: 1%;
+      display: flex;
+    }
+    .copy {
+      color: #9c9c9c;
+      position: absolute;
+      font-weight: 600;
+      font-size: 11px;
+      bottom: 7px;
+      left: 3%;
+    }
+    .tittleVendor {
+      color: #f2be42;
+      display: flex;
+      font-weight: 700;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .logoPlaceholder {
+      width: 42px;
+      height: 42px;
+      background: #fff;
+      border-radius: 5px;
+    }
+    .placeLogo {
+      position: relative;
+      top: 0px;
+      font-size: clamp(14px, 17px, 18px);
+      left: 10px;
+    }
+    .logo_img {
+      border: 1px solid #f2be42;
+      border-radius: 25px;
+    }
+    .portalName {
+      display: block;
+      font-size: clamp(9px, 10.5px, 11px);
+      font-weight: 600;
+      text-align: center;
+      color: #f2be42;
+    }
+    .sign_out {
+      margin-left: 10px;
+      color: #f2be42;
+      cursor: pointer;
+      position: relative;
+      width: 16px;
+      height: 16px;
+      top: -3px;
+    }
+    .route_mobile {
+      width: 46%;
+      background: #272727;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 123;
+    }
+    // .mob_menu::before {
+    //     content: '';
+    // }
+    // aligning the menu button with the hidden checkbox
+    input[name="toggle-nav"],
+    label[for="toggle-nav"] {
+      position: absolute;
+      width: 18px;
+      height: 29px;
+    }
+
+    input[name="toggle-nav"] {
+      display: block;
+      cursor: pointer;
+      opacity: 0;
+      z-index: 1091;
+
+      &:hover:checked + label[for="toggle-nav"],
+      &:active:checked + label[for="toggle-nav"],
+      &:focus:checked + label[for="toggle-nav"] {
+        .menu-icon::before,
+        .menu-icon::after {
+          background-color: #ffffff;
+        }
+      }
+    }
+
+    label[for="toggle-nav"] {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1090;
+
+      // creating the menu button
+      .menu-icon {
+        display: block;
+        width: 100%;
+        height: 3px;
+        border-radius: 10px;
+        background-color: #ffffff;
+        transition: all 0.5s ease;
+
+        &::before,
+        &::after {
+          position: absolute;
+          @extend .menu-icon;
+          content: "";
+        }
+
+        &::before {
+          top: 7px;
+        }
+
+        &::after {
+          bottom: 7px;
+        }
+      }
+    }
+
+    input[name="toggle-nav"]:checked {
+      & ~ .side-nav-panel {
+        left: 0;
+      }
+
+      & + label[for="toggle-nav"] {
+        .menu-icon {
+          // makes the middle bar disappear to help create the X
+          background-color: transparent;
+
+          &::before,
+          &::after {
+            background-color: #ffffff;
+          }
+
+          // rotates and positions the top and bottom bar to create the X
+          &::before {
+            top: 10px;
+            transform: rotate(45deg);
+          }
+
+          &::after {
+            bottom: 16px;
+            transform: rotate(-45deg);
+          }
+        }
+      }
+    }
+    @media screen and (max-width: 1100px) {
+      // .navLink {
+      //   font-size: 10px;
+      // }
+      .sideBar {
+        width: 18.5%;
+      }
+    }
+    // @media screen and (max-width: 1100px) and (min-width: 800px) {
+    //   .sideBar {
+    //     width: 16%;
+    //   }
+    // }
+
+    @media screen and (max-width: 576px) {
+      .sideBar {
+        width: 0%;
+      }
+      .logotitle {
+        position: relative;
+        top: 2px;
+        background-color: #272727;
+        padding: 5px 3px;
+      }
+      .logoPlaceholder {
+        width: 35px;
+        height: 35px;
+      }
+      .placeLogo {
+        top: -4px;
+      }
+    }
+  }
+}

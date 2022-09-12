@@ -1,0 +1,309 @@
+<h6 class="headh6">Vendor Portal users List</h6>
+
+<div class="container-fluid" >
+
+
+    <div>
+      <ul class="nav nav-tabs">
+        <li [routerLink]="['/vendorPortal/roles','createdUsers']" class="nav-item" >
+          <a class="nav-link" [class.active-tab]="viewType == 'user'"
+            (click)="viewType = 'user'">Users</a></li>
+        <!-- <li [routerLink]="['/vendorPortal/roles','definedRoles']" [class.active]="viewType == 'roles'"><a class="nav-link"
+            (click)="viewType = 'roles'">Roles</a></li> -->
+      </ul>
+    </div>
+
+    <div [ngSwitch]="viewType" class="bg-design-all pt-2">
+      <!-- All users -->
+      <div *ngSwitchCase="'user'">
+        <div class="positionCreateUpload">
+          <!-- <button class=" btnUpload mr-2">Export</button> -->
+          <button class=" btnUpload mr-2" (click)="displayAddUserDialog = true"><span class="f-16">+</span> Add New
+            User</button>
+
+        </div>
+        <div class="mat-elevation-z8">
+          <div>
+            <div class="searchBar">
+              <input class="searchInput" pInputText type="text" placeholder="Search..."
+                (input)="userRole.filterGlobal($event.target.value, 'contains')" />
+              <span class="material-icons searchIcon">
+                search
+              </span>
+            </div>
+            <p-table #userRole [value]="vendorUserReadData" [paginator]="showPaginator" [rows]="10"
+              [showCurrentPageReport]="true" styleClass="p-datatable-striped"
+              [globalFilterFields]="['idVendorUser','UserName','UserName','Email']"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10,25,50]">
+
+              <ng-template pTemplate="header">
+                <tr>
+                  <th>User ID</th>
+                  <th>Name</th>
+                  <th>Role</th>
+
+                  <th><span>Email</span></th>
+                  <th>Activity Status</th>
+                  <!-- <th pSortableColumn="rnk">Financial Approval Level</th> -->
+                  <th>Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-users>
+                <tr>
+                  <td>{{users.idUser}}</td>
+                  <td>{{users.firstName}} {{users.lastName}}</td>
+                  <td>{{users.NameOfRole}}</td>
+                  <!-- <td class="p-0">
+                    <select class="form-control inputHeight f-12" (change)="changeUserRole(users,users.NameOfRole)"
+                      [(ngModel)]="users.NameOfRole">
+                      <option *ngFor="let role of DisplayRoleName" [value]="role.NameOfRole">{{role.NameOfRole}}
+                      </option>
+                    </select>
+                  </td> -->
+
+                  <td><span>{{users.email}}</span></td>
+                  <td>
+                    <span *ngIf="users.isActive ==  1">Activated</span>
+                    <span *ngIf="users.isActive ==  0"
+                      style="color: #f34141;">Inactive</span>
+                  </td>
+                  <td>
+                    <button class="btnUpload mr-2" [disabled]="users.isActive ==  0"
+                    [ngStyle]="{ 'cursor' : users.isActive ==  0 ? 'not-allowed' : 'pointer' } "
+                    (click)="resetPasswordVendor(users.email)">Reset</button>
+                    <button *ngIf="users.isActive ==  0" class="statusType btnUpload actveBtn"
+                      style="background-color: #107e3e;"
+                      (click)="confirmationPopUp(users.idUser)">Activate</button>
+                    <button *ngIf="users.isActive ==  1" class="statusType btnUpload actveBtn"
+                      style="background-color: #ec0606;"
+                      (click)="confirmationPopUp(users.idUser)">Deactivate</button>
+                  </td>
+                  <!-- <td>{{users.rnk}}</td> -->
+                  <!-- <td>
+                    <i class="fa fa-pencil-square-o actionsBtn" (click)="editUser(users)" aria-hidden="true"></i>
+                  </td> -->
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="6" class="p-t-30 text-center">
+                    <img src="assets/Group 2691.png" width="260" alt="imageUrl"> <br>
+                    No users found.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- roles -->
+      <div *ngSwitchCase="'roles'">
+        <div class="positionCreateUpload">
+          <button class=" btnUpload mr-2" (click)="createRole()"><span class="f-16">+</span> Create New Role</button>
+        </div>
+        <p-table [value]="DisplayRoleName" [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-striped">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="text-align: left;" pSortableColumn="NameOfRole">Role Name</th>
+              <th style="text-align: left;" pSortableColumn="actions">Actions</th>
+              <th style="text-align: center;">Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-users>
+            <tr>
+              <td style="text-align: left;">{{users.NameOfRole}}</td>
+              <td style="text-align: left;"></td>
+              <td style="text-align: center;">
+                <p-toast></p-toast>
+                <!-- (click)="confirm($event,users)"  -->
+                <p-confirmPopup></p-confirmPopup>
+                <i (click)="showDailog(users)" class="fa fa-trash-o actionsBtn mr-2" aria-hidden="true"></i>
+                <i class="fa fa-pencil-square-o actionsBtn" (click)="editRole(users)" aria-hidden="true"></i>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6" class="p-t-30 text-center">
+                <img src="assets/Group 2691.png" width="260" alt="imageUrl"> <br>
+                No Data found.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- add User Dialog -->
+
+<p-dialog header="Add New Vendor" [(visible)]="displayAddUserDialog" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '31vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div>
+    <!-- <label class="inviteLabel">Select Vendor</label>
+    <select class="form-control inputBox" [(ngModel)]="vendorCreate" name="vendrCreate" ngModel #vendrCreate="ngModel"
+      (change)="selectVendor(vendorCreate)" required>
+      <option *ngFor="let vendor of vendorList" [value]="vendor.VendorName">{{vendor.VendorName}}</option>
+    </select>
+    <div *ngIf="vendrCreate.errors &&(vendrCreate.touched || vendrCreate.dirty)" class="alertDiv">
+      <div [hidden]="!vendrCreate.errors.required">
+        **Required field
+      </div>
+    </div> -->
+
+    <!-- <label class="inviteLabel">Select Vendor Account</label>
+    <select class="form-control inputBox" [(ngModel)]="createVAccount" name="accountCreate" ngModel
+      #accountCreate="ngModel" (change)="selectVendorAccount(createVAccount)" required>
+      <option *ngFor="let vendorA of vendorAccount" [value]="vendorA.Account">{{vendorA.Account}}</option>
+    </select>
+    <div *ngIf="accountCreate.errors &&(accountCreate.touched || accountCreate.dirty)" class="alertDiv">
+      <div [hidden]="!accountCreate.errors.required">
+        **Required field
+      </div>
+    </div> -->
+
+    <label class="inviteLabel" for="username">Username</label>
+    <input type="text" 
+          id="username" 
+          class="form-control inputBox" 
+          name="userCreate" 
+          ngModel 
+          #userCreate="ngModel"
+          [(ngModel)]="createUserName" 
+          (keyup)="userCheck($event.target.value)" 
+          [ngStyle]="{'border-left': userBoolean ? '5px solid green' : userNotBoolean ? '5px solid red':'' } "
+          minlength="6" 
+          required>
+
+    <!-- <span *ngIf="userBoolean" class="f-13 mt-user" style="color: green;">
+      <i class="fa fa-check-circle" aria-hidden="true"></i>
+    </span>
+    <span *ngIf="userNotBoolean" class="f-13 mt-user" style="color: #f35353;">
+      <i class="fa fa-times-circle" aria-hidden="true"></i>
+    </span> -->
+    <div *ngIf="userCreate.errors &&(userCreate.touched || userCreate.dirty)" class="alertDiv">
+      <div [hidden]="!userCreate.errors.minlength">
+        UserName should contains atleast 6 letters.
+      </div>
+      <div [hidden]="!userCreate.errors.required">
+        **Required field
+      </div>
+    </div>
+
+    <label class="inviteLabel">First Name</label>
+    <input type="text" class="form-control inputBox" name="fnameCreate" ngModel #fnameCreate="ngModel"
+      [(ngModel)]="createVfirstName" required>
+
+    <div *ngIf="fnameCreate.errors &&(fnameCreate.touched || fnameCreate.dirty)" class="alertDiv">
+      <div [hidden]="!fnameCreate.errors.required">
+        **Required field
+      </div>
+    </div>
+
+    <label class="inviteLabel">Last Name</label>
+    <input type="text" class="form-control inputBox" name="lnameCreate" ngModel #lnameCreate="ngModel"
+      [(ngModel)]="createVlastName" required>
+
+    <div *ngIf="lnameCreate.errors &&(lnameCreate.touched || lnameCreate.dirty)" class="alertDiv">
+      <div [hidden]="!lnameCreate.errors.required">
+        **Required field
+      </div>
+    </div>
+
+    <label class="inviteLabel" for="email"> Email ID</label>
+    <input type="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control inputBox"
+      name="EmailCreate" ngModel #createMail="ngModel" [(ngModel)]="emailIdInvite" required>
+    <div *ngIf="createMail.errors &&(createMail.touched || createMail.dirty)" class="alertDiv">
+      <div [hidden]="!createMail.errors?.pattern">
+        Please enter valid email.
+      </div>
+      <div [hidden]="!createMail.errors.required">
+        **Required field
+      </div>
+    </div>
+
+
+  </div>
+  <ng-template pTemplate="footer">
+    <button type="button" class="btn btnVender bg-btn-cancel mr-3" (click)="displayAddUserDialog = false">Cancel</button>
+    <button type="button" class="btn btnVender bg-btn-success"
+      [ngStyle]="{'cursor':( fnameCreate.invalid || lnameCreate.invalid|| createMail.invalid || userCreate.invalid || userNotBoolean)? 'not-allowed':'pointer'}"
+      [disabled]=" fnameCreate.invalid|| lnameCreate.invalid ||createMail.invalid || userCreate.invalid || userNotBoolean "
+      (click)="createVendorUser()">Add New User</button>
+
+  </ng-template>
+</p-dialog>
+
+<!-- edit User -->
+<p-dialog header="Edit User" [(visible)]="displayEditUserDialog" [breakpoints]="{'960px': '75vw'}"
+[style]="{width: '31vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+<div>
+  <label class="inviteLabel" for="email"> Email ID</label>
+  <input type="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control inputBox" name="EmailCreate" ngModel #createMail="ngModel"
+    [(ngModel)]="userEmail" required>
+    <div *ngIf="createMail.errors && createMail.dirty" class ="alertDiv">
+      <div [hidden]="!createMail.errors?.pattern">
+        Invalid pattern
+      </div> 
+      <div [hidden]="!createMail.errors.required">
+        **Required field
+      </div> 
+     </div> 
+
+  <label class="inviteLabel" for="username">Username</label>
+  <input type="text" id="username" class="form-control inputBox" name="userCreate" ngModel #userCreate="ngModel"
+    [(ngModel)]="userName" required>
+
+    <div *ngIf="userCreate.errors && userCreate.dirty" class ="alertDiv">        
+      <div [hidden]="!userCreate.errors.required">
+        **Required field
+      </div> 
+     </div> 
+
+  <label class="inviteLabel">Role</label>
+  <!-- <select class="form-control inputBox" [(ngModel)]="editRoleName" name="roleCreate" ngModel #roleCreate="ngModel"
+    (change)="selectRole(editRoleName)" required>
+    <option *ngFor="let role of DisplayRoleName" [value]="role.NameOfRole">{{role.NameOfRole}}</option>
+  </select> -->
+  <input type="text" class="form-control inputBox" name="roleCreate" ngModel #roleCreate="ngModel"
+    [(ngModel)]="editRoleName" disabled required>
+  <div *ngIf="roleCreate.errors && roleCreate.dirty" class ="alertDiv">        
+    <div [hidden]="!roleCreate.errors.required">
+      **Required field
+    </div> 
+   </div> 
+</div>
+<ng-template pTemplate="footer">
+  <button type="button" class="btn btnVender bg-btn-cancel mr-3" (click)="displayEditUserDialog = false">Cancel</button>
+  <button type="button" class="btn btnVender bg-btn-success"
+    (click)="UpdateUser()">Edit User</button>
+
+</ng-template>
+</p-dialog>
+
+<!-- Delete Cnfirmation Dialog -->
+<p-dialog header=" " [(visible)]="displayResponsive" [breakpoints]="{'960px': '75vw'}" [style]="{width: '30vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div class="deleteDiv">
+    <div>
+      <i class="pi pi-exclamation-triangle" style="font-size: 4rem;color: red;"></i>
+    </div>
+    <div class="deleteDivText">
+      {{deleteBtnText}}
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button *ngIf="deactivateBoolean" class="btn btnVender bg-btn-success mr-3" (click)="activa_deactive()">Yes</button>
+    <button *ngIf="vendorResetBtnBoolean" class="btn btnVender bg-btn-success mr-3" (click)="resetPassVendorAPI()">Yes</button>
+    <button class="btn btnVender bg-btn-cancel" (click)="displayResponsive=false">Cancel</button>
+
+  </ng-template>
+</p-dialog>
+<p-toast></p-toast>

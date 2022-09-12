@@ -1,0 +1,120 @@
+<div class="centerAll">
+
+    <ng-stepper #cdkStepper [linear]="true">
+        <cdk-step [stepControl]="stepOne.uploadTrainData" [optional]="false">
+            <ng-template cdkStepLabel>
+                <div class="step-bullet">1</div>
+                <div class="step-title">Uploaded Train Data <span class="required"></span></div>
+            </ng-template>
+            <div #stepOne>
+                <div *ngIf="isuploadable" ng2FileDrop [uploader]="uploader" [ngClass]="{'file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" class="file-upload" (onFileDrop)="fileDrop($event)" class="dashed-border">
+                    <div style="margin: 30px;" *ngIf="isuploadable">
+                    <span class="material-icons f-80">
+                        filter_none
+                    </span>
+                    <div class="underdropIcon">Drag and drop Training Folder</div>
+                    <small class="f-12">Folder must contain atleast 5 documents of type .jpg,.png or .pdf</small>
+                    <div class="fileText">Or</div>
+                    <label for="img" class="img-browse">
+                        Browse Folder
+                    </label>
+                    <input ng2FileSelect accept=".png, .jpg, .pdf" (change)="onSelectFile($event)" [uploader]="uploader"
+                        #fileInput type="file" id="img" name="img" hidden />
+                    </div>
+                </div>
+                <form [formGroup]="uploadTrainData" (ngSubmit)="upload_Blob()" autocomplete="off" novalidate
+                    #formRef="ngForm">
+                    <label class = "f-14">Select your Train Document folder</label><br>
+                    <input type="file" webkitdirectory mozdirectory class="f-13" formControlName="uploadFolder" (change)="uploadFolderEvent($event.target.files)" required> <br>
+                    <div *ngIf="successBoolean" class="f-13" style="color: rgb(0 167 0);">
+                        Files are Uploaded Successfully
+                    </div>
+                    <div *ngIf="errorBoolean" class="f-13" style="color: rgb(192, 5, 5);">
+                        Error occured please re-upload files.
+                    </div>
+                    <button class="btn btnbg f-13 mt-2" [disabled]="!folderPath || uploadingFolderBoolean">
+                        <span *ngIf="uploadingFolderBoolean" class="spinner-border spinner-border-sm"></span>
+                        Upload
+                    </button>
+                </form>
+                <div class="d-flex justify-content-end m-r-5">
+                    <button class="btn btn-primary f-13 " [disabled]="!folderPathBoolean" cdkStepperNext>Next</button>
+                </div>
+
+            </div>
+        </cdk-step>
+
+        <cdk-step [stepControl]="stepTwo.stepTwoForm" [optional]="false">
+            <ng-template  cdkStepLabel>
+                <div class="step-bullet">2</div>
+                <div class="step-title">Uploaded Model Result</div>
+            </ng-template>
+            <div #stepTwo>
+                <div>
+                    <label class = "f-14">Select Model Result</label><br>
+                    <input type="file"  class="f-13"  (change)="uploadFileEvent($event.target.files)" required> <br>
+                    <div *ngIf="successFileBoolean" class="f-13" style="color: rgb(0 167 0);">
+                        File Uploaded Successfully.
+                    </div>
+                    <div *ngIf="errorFileBoolean" class="f-13" style="color: rgb(192, 5, 5);">
+                        Error occured please re-upload file.
+                    </div>
+                    <button class="btn btnbg f-13 mt-2" [disabled] = "!uploadFileName || uploadingFileBoolean" (click)="model_validate()">
+                        <span *ngIf="uploadingFileBoolean" class="spinner-border spinner-border-sm"></span>
+                        Upload
+                    </button>
+                </div>
+                <div class="buttons mt-2">
+                    <div class="button">
+                        <button class="btn btn-secondary f-13 previous" cdkStepperPrevious>Previous</button>
+                    </div>
+                    <div class="button">
+                        <button class="btn btn-primary f-13 m-r-5" [disabled]="!successFileBoolean" cdkStepperNext>Next</button>
+                    </div>
+                </div>
+            </div>
+        </cdk-step>
+
+        <cdk-step [stepControl]="stepThree.stepThreeForm" [optional]="false">
+            <ng-template cdkStepLabel>
+                <div class="step-bullet">3</div>
+                <div class="step-title">Updated to DB <span class="required"></span></div>
+            </ng-template>
+            <div #stepThree>
+                <div class="f-14">
+                    Final Model Data
+                </div>
+                <div class="max_height_div">
+                    <ngx-json-viewer [json]="jsonFinalData"></ngx-json-viewer>
+                </div>
+                <div class="buttons">
+                    <div class="button">
+                        <button class="btn btn-secondary f-13 previous" cdkStepperPrevious>Previous</button>
+                    </div>
+                    <div class="button">
+                        <button class="btn btnbg f-13 m-r-5" cdkStepperNext>Upload to serina</button>
+                    </div>
+                </div>
+            </div>
+        </cdk-step>
+
+        <!-- <cdk-step [stepControl]="stepFour.stepFourForm" [optional]="true" [state]="stepFour.state">
+            <ng-template cdkStepLabel>
+                <div class="step-bullet">4</div>
+                <div class="step-title">Updated to DB</div>
+            </ng-template>
+            <div #stepFour>
+                <div class="buttons">
+                    <div class="button">
+                        <button class="btn btn-secondary f-13 previous" cdkStepperPrevious>Previous</button>
+                    </div>
+                    <div class="button">
+                        <button class="btn btnbg f-13 m-r-5" cdkStepperNext>Upload to serina</button>
+                    </div>
+                </div>
+            </div>
+        </cdk-step> -->
+    </ng-stepper>
+</div>
+
+<p-toast></p-toast>

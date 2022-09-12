@@ -1,0 +1,49 @@
+<div>
+
+  <ul class="nav nav-pills">
+    <li class="nav-item mr-1">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Process'"
+        (click)="choosepageTab('Process')"
+      >
+        Process Reports</a
+      >
+    </li>
+    <!-- <li class="nav-item mr-1">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Detailed'"
+        (click)="choosepageTab('Detailed')"
+      >
+        Detailed Reports</a
+      >
+    </li> -->
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Summary'"
+        (click)="choosepageTab('Summary')"
+      >
+        Summary</a
+      >
+    </li>
+  </ul>
+
+  <div class="tableDataDiv" [ngSwitch]="viewType" style="padding-top: 12px">
+    <!-- Process invoices Tab -->
+    <div *ngSwitchCase="'Process'">
+      <app-process-reportservice></app-process-reportservice>
+    </div>
+
+    <!-- Detailed invoices Tab -->
+    <div *ngSwitchCase="'Detailed'">
+      <app-detailed-reports></app-detailed-reports>
+    </div>
+
+    <!-- Summary invoices Tab -->
+    <div *ngSwitchCase="'Summary'">
+      <app-summary></app-summary>
+    </div>
+  </div>
+</div>

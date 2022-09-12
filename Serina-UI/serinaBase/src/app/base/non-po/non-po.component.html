@@ -1,0 +1,175 @@
+<div *ngIf="initialViewVendor">
+  <h6 class="headh6">Service provider List</h6>
+</div>
+<div class="container-fluid p-0">
+  <div *ngIf="vendorList">
+
+    <!-- <div *ngIf="!initialViewVendor">
+      <h6 class="headh6">Service provider Details - {{venderdetails.ServiceProviderName}}</h6>
+    </div> -->
+
+
+    <div *ngIf="initialViewVendor" class="mb-3" style="display: flex;">
+
+
+      <!-- <div class="positionCreateUpload">
+
+        <button class=" btnUpload mr-2" (click)="displayAddspDialog = true"><span class="f-16">+</span> Add Service
+          provider</button>
+      </div> -->
+    </div>
+
+    <div *ngIf="initialViewVendor" class="mat-elevation-z8 table_max_height">
+
+      <div class="searchBar">
+        <input class="searchInput" pInputText type="text" placeholder="Search..."
+          (input)="spRead.filterGlobal($event.target.value, 'contains')" />
+          <span class="material-icons searchIcon">
+            search
+          </span>
+        <!-- <i class="fa fa-search searchIcon" aria-hidden="true"></i> -->
+      </div>
+      <div class="bg-design-all tableDataDiv mr-2">
+        <p-table #spRead [value]="serviceproviderreaddata" [paginator]="showPaginator" [rows]="10"
+        [showCurrentPageReport]="true" [globalFilterFields]="['ServiceProviderName','idServiceProvider','EntityName']"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-striped">
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="idServiceProvider">SP Id</th>
+            <th pSortableColumn="ServiceProviderName">Name</th>
+            <th pSortableColumn="EntityName">Entity Name</th>
+            <th class="action_Zindex">View</th>
+            <!-- <th>Action</th> -->
+          </tr>
+          <tr class="sticky_top">
+            <td>
+              <input pInputText type="text" style="text-align: left;"
+                (input)="spRead.filter($event.target.value, 'idServiceProvider', 'contains')"
+                [value]="spRead.filters['idServiceProvider']?.value" placeholder="Search by"
+                class="p-column-filter tableSearchInput">
+            </td>
+            <td>
+              <input pInputText type="text" style="text-align: left;"
+                (input)="spRead.filter($event.target.value, 'ServiceProviderName', 'contains')"
+                [value]="spRead.filters['ServiceProviderName']?.value" placeholder="Search by"
+                class="p-column-filter tableSearchInput">
+            </td>
+            <td>
+              <input pInputText type="text" style="text-align: left;" (input)="spRead.filter($event.target.value, 'EntityName', 'contains')"
+                [value]="spRead.filters['EntityName']?.value" placeholder="Search by "
+                class="p-column-filter tableSearchInput">
+            </td>
+            <td>
+
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-users>
+          <tr>
+            <td>{{users.idServiceProvider}}</td>
+            <td>{{users.ServiceProviderName}}</td>
+            <td>{{users.EntityName}}</td>
+            <td>
+              <i class="pi pi-eye f-16 showEye" (click)="viewFullDetails(users)"></i>
+            </td>
+            <!-- <td><i class="fa fa-ellipsis-h" aria-hidden="true"></i></td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4" class="p-t-30 text-center">
+              <img src="assets/Group 2691.png" width="260" alt="imageUrl"> <br>
+              No Data found.</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="paginatorleft">
+        </ng-template>
+        <ng-template pTemplate="paginatorright">
+        </ng-template>
+      </p-table>
+      </div>
+      <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="true" type="ball-spin-clockwise">
+        <p style="color: rgb(0, 0, 0)"> </p>
+      </ngx-spinner>
+
+    </div>
+
+    <div *ngIf="!initialViewVendor" class="mat-elevation-z8 table_max_height" style="top: 0;">
+      <div>
+        <app-sp-details [spaccountreaddata]="spaccountreaddata"
+                        [spbyidreaddata]="spbyidreaddata"
+                        [spinvoicereaddata]="spinvoicereaddata"
+                        [spDetails]="venderdetails"
+                        [showPaginator]="showPaginator"
+                        [serviceproviderreaddata]="serviceproviderreaddata"
+                        (intialViewSp) = "getDisplayInitialBoolean($event)"
+                        (displayAddspDialog)="displayAddspDialogmethod($event)"></app-sp-details>
+      </div>
+      <p-toast></p-toast>
+    </div>
+  </div>
+
+</div>
+
+
+<!--Add SP Modal -->
+<p-dialog header="Add Service Provider" [(visible)]="displayAddspDialog" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '31vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div>
+    <label class="inviteLabel"> Service Provider Name</label>
+    <input type="email" class="form-control inputHeight mb-1" name="spName" ngModel #spName="ngModel"
+      [(ngModel)]="AddspName" required>
+      <div *ngIf="spName.errors &&(spName.touched || spName.dirty)" class ="alertDiv">        
+        <div [hidden]="!spName.errors.required">
+          **Required field
+        </div> 
+       </div> 
+
+    <label class="inviteLabel">ERPS Code</label>
+    <input type="text" class="form-control inputHeight mb-1" name="spId" ngModel #spID="ngModel" [(ngModel)]="erpsCode"
+      required>
+      <div *ngIf="spID.errors &&(spID.touched || spID.dirty)" class ="alertDiv">        
+        <div [hidden]="!spID.errors.required">
+          **Required field
+        </div> 
+       </div> 
+    <label class="inviteLabel">Location Code</label>
+    <input type="text" class="form-control inputHeight mb-1" name="spLocation" ngModel #spLocation="ngModel"
+      [(ngModel)]="LocationSp" required>
+      <div *ngIf="spLocation.errors &&(spLocation.touched || spLocation.dirty)" class ="alertDiv">        
+        <div [hidden]="!spLocation.errors.required">
+          **Required field
+        </div> 
+       </div> 
+
+    <label class="inviteLabel">City</label>
+    <input type="text" class="form-control inputHeight mb-1" name="spCity" ngModel #spCity="ngModel"
+      [(ngModel)]="citySp" required>
+      <div *ngIf="spCity.errors &&(spCity.touched || spCity.dirty)" class ="alertDiv">        
+        <div [hidden]="!spCity.errors.required">
+          **Required field
+        </div> 
+       </div> 
+
+    <label class="inviteLabel">Country</label>
+    <input type="text" class="form-control inputHeight mb-1" name="spCountry" ngModel #spCountry="ngModel"
+      [(ngModel)]="countrysp" required>
+
+      <div *ngIf="spCountry.errors &&(spCountry.touched || spCountry.dirty)" class ="alertDiv">        
+        <div [hidden]="!spCountry.errors.required">
+          **Required field
+        </div> 
+       </div> 
+  </div>
+  <ng-template pTemplate="footer">
+    <button type="button" class="btn btnVender bg-btn-cancel" (click)="displayAddspDialog = false">Cancel</button>
+    <button type="button" class="btn btnVender bg-btn-success"
+      [disabled]="spName.invalid || spID.invalid || spLocation.invalid || spCity.invalid || spCountry.invalid"
+      [ngStyle]="{'cursor':(spName.invalid || spID.invalid || spLocation.invalid || spCity.invalid || spCountry.invalid)? 'not-allowed':'pointer'}"
+      (click)="createNewSp()">Add</button>
+
+  </ng-template>
+</p-dialog>
+<p-toast></p-toast>

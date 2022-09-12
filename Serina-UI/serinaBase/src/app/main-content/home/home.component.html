@@ -1,0 +1,61 @@
+<h6 class="headh6">Business Reports</h6>
+<section  class="container-fluid home_main_div">
+    <div>
+        <ul class="nav nav-pills">
+          <li class="nav-item mr-1">
+            <a
+              class="nav-link"
+              [class.active-pill]="viewType == 'Process'"
+              (click)="choosepageTab('Process')"
+            >
+              Process Metrics</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              [class.active-pill]="viewType == 'detailed'"
+              (click)="choosepageTab('detailed')"
+            >
+              Detailed Reports</a
+            >
+          </li>
+        </ul>
+      
+        <!-- <div class="filter_inputDash" *ngIf="viewType == 'emailException'">
+          <p-calendar
+            [(ngModel)]="rangeDates"
+            selectionMode="range"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            placeholder="Select dates to Filter"
+            [readonlyInput]="true"
+            [showIcon]="true"
+            showButtonBar="true"
+            inputId="range"
+            (onClearClick)="clearDates()"
+          ></p-calendar>
+          <button class="btnUpload filter_btn_m" (click)="filterByDate(rangeDates)">Filter</button>
+        </div> -->
+      
+        <div  [ngSwitch]="viewType" style="padding-top: 12px">
+          <!-- Process invoices Tab -->
+          <div *ngSwitchCase="'Process'">
+            <process-metrics></process-metrics>
+          </div>
+      
+          <!-- detailed invoices Tab -->
+          <div *ngSwitchCase="'detailed'" class="tableDataDiv">
+            <detailed-reports></detailed-reports>
+          </div>       
+        </div>
+      </div>      
+</section>
+        <!-- <app-table
+            [tableData]="totalTableData"
+            [invoiceColumns]="columnsForTotal"
+            [showPaginator]="showPaginatortotal"
+            [columnsToFilter]="totalColumnField"
+            [columnLength]="ColumnLengthtotal"
+        >
+        </app-table> -->

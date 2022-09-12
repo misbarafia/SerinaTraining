@@ -1,0 +1,36 @@
+<div class="container-fluid p-0">
+    <ul *ngIf="this.router.url !='/IT_Utility/home'">
+        <div class="title">SERINA Utility Portal</div>
+        <li><a routerLink="home" routerLinkActive="active">Home</a></li>
+        <li><a routerLink="vendors" routerLinkActive="active">Vendors</a></li>
+        <li><a routerLink="/IT_Utility/service-providers" routerLinkActive="active">Service Providers</a></li>
+        <li *ngIf="isAdmin"><a routerLink="settings" routerLinkActive="active">Settings</a></li>
+        <li><a routerLink="guide" routerLinkActive="active">Guide</a></li>
+        <li title="Sign Out" (click)="openPopup()"><a >
+          <img src="assets/logout_ic.svg" style="width: 20px; cursor: pointer;">
+            </a>
+        </li>
+    </ul>
+    <div class="pl-4 router_body">
+        <router-outlet></router-outlet>
+    </div>
+    <div style="margin-bottom: 8%;"></div>
+</div>
+<p-dialog header=" " [(visible)]="displaypopup" [breakpoints]="{'960px': '75vw'}" [style]="{width: '30vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div class="text-center">
+    <div>
+      <i class="fa fa-exclamation-triangle" style="font-size: 4rem;color:#f2be42;"></i>
+    </div>
+    <div class="deleteDivText">
+      Are you sure you want to logout Now?
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center mb-3">
+        <button class="btn btnbg mr-3" (click)="signOut()">Yes</button>
+        <button class="btn btncancel" (click)="displaypopup=false">Cancel</button>
+    </div>
+
+  </ng-template>
+</p-dialog>

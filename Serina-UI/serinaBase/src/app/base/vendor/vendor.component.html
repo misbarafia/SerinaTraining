@@ -1,0 +1,248 @@
+<div *ngIf="initialViewVendor">
+  <h6 class="headh6">Vendor List</h6>
+</div>
+<div class="container-fluid p-0">
+  <div *ngIf="vendorList">
+
+    <!-- <div style="display: flex;" mat-dialog-actions>
+
+
+      <div class="positionCreateUpload">
+        <app-vendor-details [vendoraccountreaddata]="vendoraccountreaddata"
+      [vendorbyidreaddata]="vendorbyidreaddata"></app-vendor-details>
+
+        <button class=" btnUpload mr-2"><span class="f-16">+</span> Create New Vendor</button>
+      </div>
+    </div> -->
+
+
+
+    <div *ngIf="initialViewVendor" class="mat-elevation-z8 ">
+      <div class="unisearch_in">
+        <div class="input-group" style="left: -45px;">
+          <input #serachStr type="text" class="searchInput searchInput_go b-r-right-0" placeholder="Search">
+          <button class="btnUpload b-r-left-0 mr-2" (click)="filterString(serachStr.value)">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div>
+        <!-- <div class="searchBar">
+          <input class="searchInput" pInputText type="text" placeholder="Search..."
+            (input)="vdRead.filterGlobal($event.target.value, 'contains')" />
+          <span class="material-icons searchIcon">
+            search
+          </span>
+        </div> -->
+
+        <div class="bg-design-all tableDataDiv ml-2 mr-2">
+          <p-table #vdRead [value]="vendorreaddata" [paginator]="showPaginator" [first]="first" [rows]="rows" selectionMode="single" [showCurrentPageReport]="true"
+          (onPage)="paginate($event)" [globalFilterFields]="['VendorName','Email','VenderCode','Contact','EntityName']"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-striped">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="VendorName">Name</th>
+              <th pSortableColumn="EntityName">Entity Name</th>
+              <th pSortableColumn="Email">Email Id</th>
+              <th pSortableColumn="VenderCode">Vendor Code</th>
+              <!-- <th pSortableColumn="Contact">Contact</th> -->
+              <th class="action_Zindex">View</th>
+              <!-- <th>Action</th> -->
+            </tr>
+            <tr class="sticky_top">
+              <td>
+                <input style="text-align: left;" pInputText type="text"
+                  (input)="vdRead.filter($event.target.value, 'VendorName', 'contains')"
+                  [value]="vdRead.filters['VendorName']?.value" placeholder="Search" class="p-column-filter tableSearchInput">
+              </td>
+              <td>
+                <!-- <input style="text-align: left;" pInputText type="text"
+                  (input)="vdRead.filter($event.target.value, 'EntityName', 'contains')"
+                  [value]="vdRead.filters['EntityName']?.value" placeholder="Search"
+                  class="p-column-filter tableSearchInput"> -->
+                  <p-dropdown
+                  [options]="entity"
+                  (onChange)="filter($event.value)"
+                  placeholder="Select Entity"
+                  optionLabel="EntityName"
+                  [showClear]="false"
+                  styleClass="w-100 f-11"
+                ></p-dropdown>
+              </td>
+              <td>
+                <input style="text-align: left;" pInputText type="text"
+                  (input)="vdRead.filter($event.target.value, 'Email', 'contains')"
+                  [value]="vdRead.filters['Email']?.value" placeholder="Search"
+                  class="p-column-filter tableSearchInput">
+              </td>
+              <td>
+                <input style="text-align: left;" pInputText type="text"
+                  (input)="vdRead.filter($event.target.value, 'VenderCode', 'contains')"
+                  [value]="vdRead.filters['VenderCode']?.value" placeholder="Search"
+                  class="p-column-filter tableSearchInput">
+              </td>
+              <!-- <td>
+                <input style="text-align: left;" pInputText type="text"
+                  (input)="vdRead.filter($event.target.value, 'Contact', 'contains')"
+                  [value]="vdRead.filters['Contact']?.value" placeholder="Search"
+                  class="p-column-filter tableSearchInput">
+              </td> -->
+              <td>
+
+              </td>
+              <!-- <td>
+
+                </td> -->
+
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-users>
+            <tr>
+              <td>{{users.VendorName}}</td>
+              <td>{{users.EntityName}}</td>
+              <td>{{users.Email}}</td>
+              <td>{{users.VendorCode}}</td>
+              <!-- <td>{{users.Contact}}</td> -->
+              <td><i class="pi pi-eye f-16 showEye" (click)="viewFullDetails(users)"></i></td>
+              <!-- <td><i class="fa fa-ellipsis-h" aria-hidden="true"></i></td> -->
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="6" class="p-t-30 text-center">
+                <img src="assets/Group 2691.png" width="260" alt="imageUrl"> <br>
+                No Vendors found.</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="paginatorleft">
+          </ng-template>
+          <ng-template pTemplate="paginatorright">
+          </ng-template>
+
+        </p-table>
+        </div>
+        <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="true" type="ball-spin-clockwise">
+          <p style="color: rgb(0, 0, 0)"> </p>
+        </ngx-spinner>
+      </div>
+
+    </div>
+
+    <div *ngIf="!initialViewVendor" class="mat-elevation-z8 table_max_height" style="top: 0;">
+      <app-vendor-details [vendoraccountreaddata]="vendoraccountreaddata"
+            [vendorbyidreaddata]="vendorbyidreaddata"
+            [vendorreaddata]="vendorreaddata"
+            [venderdetails]="venderdetails"
+            [showPaginator]="showPaginator"
+            (displayIntitalVendorDataBoolean)="colseDiv($event)"></app-vendor-details>
+    </div>
+  </div>
+
+
+  <!-- create vendor -->
+  <div *ngIf="!vendorList" class=" Cbody">
+    <div>
+      <div class="headh6" style="padding-left: 43px;">Vendor Details</div>
+      <form [formGroup]="vendorDetailsForm" (ngSubmit)="onSubmit()" class="p-3">
+        <div class="row">
+          <div class="col-sm-6">
+            <div>
+              <h6 class="mb-3">Personal Details:</h6>
+              <input type="text" placeholder="Vendor Name" formControlName="Name" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.Name.errors }">
+              <div *ngIf="submitted && f.Name.errors" class="invalid-feedback">
+                <div *ngIf="f.Name.errors.required">Name is required</div>
+              </div>
+              <input type="text" placeholder="Company Name" formControlName="Company" class="form-control">
+              <input type="text" placeholder="Vender Code" formControlName="VenderCode" class="form-control">
+
+
+              <input type="text" class="form-control" placeholder="Vendor Display Name">
+
+              <input type="email" class="form-control" formControlName="Email" placeholder="Vendor Email">
+
+              <div class="d-flex">
+                <input type="text" class="form-control mr-3" formControlName="Contact" placeholder="Work Phone">
+
+                <input type="text" class="form-control" formControlName="Phone" placeholder="Mobile Number">
+              </div>
+
+            </div>
+
+            <div class="mt-3">
+              <h6 class="mb-3">Other Details</h6>
+
+              <!-- <p-dropdown [options]="cities" class="pdropdown" #selectedPaymentTerms placeholder="Payment Terms" optionLabel="name" (onChange)="selectedPayment(selectedPaymentTerms)" [showClear]="false"></p-dropdown><br> -->
+              <select class="form-control inputBox" id="role" formControlName="Country" placeholder="Payment">
+                <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+              </select>
+              <!-- <p-dropdown [options]="cities" placeholder="Price List" optionLabel="name" [showClear]="false"></p-dropdown> -->
+              <select class="form-control inputBox" id="role" formControlName="Country" placeholder="Price List">
+                <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+              </select>
+            </div>
+
+            <div class="mt-3">
+              <h6 class="mb-3">Address</h6>
+              <!-- <p-dropdown [options]="cities" placeholder="Country" optionLabel="name" [showClear]="false"></p-dropdown> -->
+              <select class="form-control inputBox" id="role" formControlName="Country" placeholder="Country">
+                <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+              </select>
+              <div class="d-flex">
+                <input type="text" class="form-control mr-3" formControlName="Address" placeholder="Address">
+
+                <!-- <input type="text" class="form-control" placeholder="Street 2"> -->
+              </div>
+
+              <input type="text" class="form-control" formControlName="City" placeholder="City">
+
+              <input type="text" class="form-control" formControlName="State" placeholder="State">
+
+              <input type="text" class="form-control" formControlName="zipcode" placeholder="Zip Code">
+            </div>
+
+            <div class="mt-3">
+              <h6 class="mb-3">Contact Person</h6>
+
+              <div>
+                <input type="text" class="form-control" placeholder="Name">
+              </div>
+
+              <div class="d-flex">
+                <input type="text" class="form-control mr-3" placeholder="Email Address">
+
+                <input type="text" class="form-control" placeholder="Designation">
+              </div>
+
+              <div class="d-flex">
+                <input type="text" class="form-control mr-3" placeholder="Work Phone">
+
+                <input type="text" class="form-control" placeholder="Department">
+              </div>
+
+              <input type="text" class="form-control" placeholder="Mobile Number">
+            </div>
+          </div>
+          <div class="col-sm-6">
+
+          </div>
+        </div>
+
+        <div class="btnAction">
+
+          <button class="btn btnVender bg-btn-cancel mr-3" type="button" (click)="onCancel()">Cancel</button>
+          <button *ngIf="savedataboolean" class="btn btnVender bg-btn-success" type="submit">Save</button>
+
+          <button *ngIf="!savedataboolean" class="btn btnVender bg-btn-success" type="button" (click)='updatevendor()'>Update</button>
+        </div>
+      </form>
+      <div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>

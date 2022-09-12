@@ -1,0 +1,81 @@
+<div>
+  <!-- <div class="searchBar">
+      <input class="searchInput" pInputText type="text" (keyup)="searchImport($event.target.value)"
+        placeholder="Search..." (input)="approve.filterGlobal($event.target.value, 'contains')" />
+      <span class="material-icons searchIcon">
+        search
+      </span>
+    </div> -->
+  <p-table
+    #approve
+    [value]="tableData"
+    [rows]="rows"
+    [first]="first"
+    [paginator]="showPaginator"
+    (onPage)="paginateVendor($event)"
+    [showCurrentPageReport]="true"
+    [columns]="invoiceColumns"
+    styleClass="p-datatable-striped"
+    [globalFilterFields]="columnsToFilter"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[10, 25, 50]"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th
+          *ngFor="let col of columns"
+          [pSortableColumn]="col.field"
+          [pTooltip]="col.header"
+          tooltipPosition="top"
+        >
+          {{ col.header }}
+        </th>
+        <th *ngIf="downloadBoolean" class="action_Zindex">Actions</th>
+      </tr>
+      <tr>
+        <td *ngFor="let col of columns" class="sticky_top">
+          <input
+            pInputText
+            type="text"
+            (input)="
+              approve.filter($event.target.value || ' ', col.field, 'contains')
+            "
+            [value]="approve.filters[col.field]?.value"
+            [placeholder]="'Search by ' + col.header"
+            class="tableSearchInput"
+          />
+        </td>
+        <td></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-invoiceData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" [title]="invoiceData[col.field]">
+          {{ invoiceData[col.field] }}
+        </td>
+        <td *ngIf="etisalatBoolean">
+            <button class="b-0 actionsBtn" (click)="downloadFile(invoiceData)"
+              >
+              <i class="fa fa-download "></i>
+            </button>
+          </td>
+          <td *ngIf="itemMasterBoolean && (invoiceData['errorfile'] != '' || invoiceData['errorfile'] != null)">
+            <button class="b-0 actionsBtn" (click)="downloadFile(invoiceData)"
+              >
+              <i class="fa fa-download "></i>
+            </button>
+          </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="columnLength" class="p-t-30 text-center">
+          <img src="assets/Group 2691.png" width="260" alt="imageUrl" /> <br />
+          No Data found.
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft"> </ng-template>
+    <ng-template pTemplate="paginatorright"> </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,48 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: broker
+  namespace: rovedev
+spec: 
+  selector: 
+    matchLabels: 
+      app: broker
+  replicas: 1 # tells deployment to run 2 pods matching the template 
+  revisionHistoryLimit: 0
+  template:
+    metadata: 
+      labels: 
+        app: broker
+    spec: 
+      containers: 
+      - name: broker 
+        image: roveregistry.azurecr.io/serina-server:broker-rove
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            cpu: 50m
+        env:
+        - name: API_SECRET
+          value: SECRET
+        - name: BROKER_SECRET
+          value: ExyhM32JaE93xvc7sx2TfDc9KEENK11w
+      imagePullSecrets:
+      - name: deploymentsecret 
+      
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: broker
+spec:
+  selector:
+    app: broker
+  ports:
+  - name: http
+    port: 80
+    targetPort: 61614
+  type: ClusterIP

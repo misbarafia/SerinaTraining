@@ -1,0 +1,41 @@
+.max_height{
+    max-height: 76vh;
+    overflow: auto;
+}
+.template_head_bg{
+    background: darkkhaki;
+    padding: 4px;
+}
+.inputHeight {
+    width: 290px;
+    height: 35px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.d-i-block {
+    display: inline-block;
+}
+
+.di-ceter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 85vh;
+}
+.bg-clr {
+    background: #ffff;
+    padding: 150px;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+}
+.custom-btn {
+    background: #313971;
+    height: auto;
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}

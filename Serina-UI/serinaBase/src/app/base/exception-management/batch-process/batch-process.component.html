@@ -1,0 +1,86 @@
+<h6 *ngIf="!dashboardViewBoolean" class="headh6">Vendor based Exception</h6>
+
+<div class="container-fluid">
+  <div>
+    <div *ngIf="!dashboardViewBoolean">
+      <ul class="nav nav-tabs">
+        <li class="nav-item mr-1">
+          <a
+            class="nav-link"
+            [class.active-tab]="viewType == 'normal'"
+            (click)="chooseEditedpageTab('normal')"
+            >Exception Invoices({{ dataLength }})</a
+          >
+        </li>
+        <!-- <li class="nav-item ml-1">
+          <a
+            class="nav-link"
+            [class.active-tab]="viewType == 'editApproveBatch'"
+            (click)="chooseEditedpageTab('editApproveBatch')"
+            >Edit Approval({{ dataLengthAdmin }})</a
+          >
+        </li> -->
+      </ul>
+
+      <div class="positionCreateUpload">
+        <button class="btnUpload mr-2" (click)="exportExcel()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+        </button>
+        <!-- <button class=" btnUpload mr-2" (click)="toCreateNew()"><span class="f-16">+</span> Create</button> -->
+      </div>
+      <!-- <div class="filter_input">
+                <p-calendar [(ngModel)]="rangeDates" selectionMode="range" placeholder="Select dates to Filter"
+                    [readonlyInput]="true" [showIcon]="true" inputId="range"></p-calendar>
+                <button class="btnUpload filter_btn_m "> Filter</button>
+            </div> -->
+    </div>
+
+    <div class="tableDataDiv bg-design-all pt-1" [ngSwitch]="viewType">
+      <!-- All Tab -->
+      <div *ngSwitchCase="'normal'">
+        <div class="tableDiv">
+          <div>
+            <app-exception-table
+              [invoiceColumns]="ColumnsForBatch"
+              [columnsToDisplay]="columnsToDisplay"
+              [showPaginatorAllInvoice]="showPaginatorAllInvoice"
+              [ColumnLength]="batchProcessColumnLength"
+              (searchInvoiceData)="searchInvoiceDataV($event)"
+              [columnsData]="columnsData"
+            >
+            </app-exception-table>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Inprogress Tab -->
+      <div *ngSwitchCase="'editApproveBatch'">
+        <div *ngIf="!dashboardViewBoolean" class="tableDiv">
+          <div>
+            <app-exception-table
+              [invoiceColumns]="ColumnsForBatchApproval"
+              [columnsToDisplay]="columnsToDisplayBatchApproval"
+              (searchInvoiceData)="searchInvoiceDataV($event)"
+              [ColumnLength]="approvalPageColumnLength"
+              [showPaginatorAllInvoice]="showPaginatorApproval"
+              [columnsData]="columnsDataAdmin"
+            >
+            </app-exception-table>
+          </div>
+        </div>
+      </div>
+
+      <ngx-spinner
+            bdColor="rgba(251, 251, 251, 0.8)"
+            size="medium"
+            color="#070900"
+            [fullScreen]="false"
+            type="ball-spin-clockwise"
+          >
+            <p style="color: rgb(0, 0, 0)"></p>
+          </ngx-spinner>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

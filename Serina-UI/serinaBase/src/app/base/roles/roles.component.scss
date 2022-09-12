@@ -1,0 +1,458 @@
+.rolespage{
+    overflow: hidden;
+    max-height: 100vh;
+    min-height: 70vh;
+    overflow-x: hidden;
+}
+
+// .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+//     color: #272727 !important;
+//     background-color: #f2be42 !important;
+// }
+
+// a{
+//     color: #272727 !important;
+// }
+// .nav-pills .nav-link {
+//     border-radius: 10px;
+//     font-weight: 600;
+//     font-size: 12px;
+//     padding: 4px 14px;
+//     border: none;
+//     cursor: pointer;
+// }
+
+
+table {
+    width: 100%;
+  }
+
+:host ::ng-deep .mat-elevation-z8 {
+    box-shadow: none;
+    max-height: 74vh;
+    overflow: auto;
+}
+.f-16{
+    font-size: 16px;
+}
+.positionCreateUpload{
+    position: absolute;
+    right: 8px;
+    top: 70px;
+    z-index: 11;
+}
+tbody{
+    overflow: auto;
+    max-height: 80vh;
+    border-top: 1px solid lightgray;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #f3969a !important;
+}
+
+
+.formInvalid{
+    border:2px solid red;
+}
+
+th{
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+}
+td{
+    color: #0f3f62;
+    padding-left: 10px;
+}
+
+  .textth{
+    font-size: 12px;
+    font-weight: 700;
+    color: #0f3f62;
+  }
+  .inputForm{
+    height: 35px;
+    width: 80%;
+    background: white;
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+  }
+  .inputForm:focus {
+      border: 1px solid #313971;
+  }
+  .f-13{
+      font-size: 12px;
+      font-weight: 600;
+  }
+
+.inviteLabel{
+    font-size: 12px;
+    font-weight: 600;
+    color: #a29f9f;
+    margin-bottom: 0px;
+}
+.inputBox{
+    background: white;
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+    font-size: 12px;
+    height: 35px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.inputBox:focus {
+    border: 1px solid #313971;
+}
+
+.mt-10{
+    position: absolute;
+    top: 29px;
+    left: 358px;
+    transition: all 0.5s ease;
+    font-size: 20px;
+}
+.mt-user {
+    position: absolute;
+    top: 141px;
+    left: 375px;
+    transition: all 0.5s ease;
+    font-size: 20px;
+}
+.actveBtn{
+    border: 0;
+    border-radius: 5px;
+    margin-left: 15px;
+    font-weight: 600;
+}
+.alertDiv{
+    margin-top: -8px;
+}
+.hard_reset{
+    background: #f2be42;
+    font-size: 13px;
+    font-weight: 700;
+    width: 80%;
+}
+
+
+
+
+// entity list
+.ul-list {
+    width: 70%;
+    max-height: 49vh;
+    overflow: auto;
+}
+.listEntity{
+    list-style-type: none;
+    padding: 10px 0px 10px 20px;
+    width: 96%;
+    background: #F3FBF4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 5px;
+    display: flex;
+    justify-content:space-between ;
+}
+.text_elipse {
+    max-width: 93%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.removeList{
+    margin-right: 10px;
+    cursor: pointer;
+    color: #F08A6B;
+    font-size: 16px;
+}
+:host ::ng-deep .p-autocomplete-dd .p-autocomplete-input, .p-autocomplete-dd .p-autocomplete-multiple-container {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    width:420px;
+    height: 35px;
+    font-size: 12px;
+    font-family: "Segoe UI Regular", "Segoe UI", Arial;
+    font-weight: 600;
+    background: #ffffff;
+    border: 1px solid #d3d3d3;
+    border-right: 0;
+    border-radius: 6px 0px 0px 6px;
+}
+:host ::ng-deep .minWidthOverride{
+    width: 187px !important;
+}
+.pdropdown{
+    width: 70% !important;
+    margin-bottom: 0px !important;
+}
+:host ::ng-deep .p-button.p-button-icon-only {
+    width: 2.357rem;
+    padding: 0.5rem 0;
+    height: 35px;
+    color: lightgray;      
+    background: #ffffff;
+    border: 1px solid #d3d3d3;
+    border-left: 0;
+    border-radius: 0px 6px 6px 0px;
+
+}
+:host ::ng-deep .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+    margin: 0;
+    padding: 5px 1rem;
+    border: 0 none;
+    color: #495057;
+    background: transparent;
+    transition: box-shadow 0.2s;
+    border-radius: 0;
+    font-size: 11px;
+    font-weight: 600;
+}
+:host ::ng-deep .p-inputtext:enabled:hover {
+    border-color: lightgray;
+}
+:host ::ng-deep .p-inputtext:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: none;
+    border-color: lightgray;
+}
+
+// primeng Table
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 6px;
+}
+
+:host ::ng-deep .p-paginator {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+    border: 0 none;
+    color: #6c757d;
+    min-width: 30px;
+    font-size: 12px;
+    height: 30px;
+    margin: 5px;
+    transition: box-shadow 0.2s;
+    border-radius: 3px;
+}
+:host ::ng-deep .pi-chevron-down:before {
+    content: "\e902";
+    font-size: 13px;
+}
+:host ::ng-deep .p-paginator .p-paginator-current{
+    font-size: 13px;
+}
+
+
+
+
+
+  // serach
+
+.searchBar{
+    position: fixed;
+    z-index: 10;
+    top: 69px;
+    right: 94px;
+}
+.searchIcon{
+    position: relative;
+    top: 5px;
+    left: -27px;
+    font-size: 21px;
+    color: #a9a9a9;
+}
+
+.f-12{
+    font-size: 12px !important;
+    font-weight: 600;
+}
+.label-head{
+    font-size: 12px;
+    font-weight: 600;
+    color: #9a9a9a;
+    white-space: nowrap; 
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+.form-control:focus {
+    color: #495057;
+    border-color: #313971;
+    box-shadow: none;
+}
+
+.f-14B{
+    font-size: 14px;
+    font-weight: 600;
+}
+.clrDes{
+    color: #9c9c9c;
+}
+.roleAccess{
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.createDivht{
+    height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.b-btm {
+    border-bottom: 1px solid #d3d3d3;
+    border-radius: 0px 0px 10px 10px;
+}
+// .w-30{
+//     width: 30%;
+// }
+// confirm dailog
+:host ::ng-deep .p-dialog .p-dialog-header{
+    padding: 0.5rem;
+}
+:host ::ng-deep.p-dialog .p-dialog-footer{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+.deleteDiv{
+    display: flex;
+    align-items: center;
+    margin-top: 0px;
+    flex-direction: column;
+}
+.ml-35 {
+    margin-left: 35px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+    font-size: 16px;
+    padding-left: 16px;
+}
+.statusType {
+    color: white !important;
+}
+:host ::ng-deep {
+    .p-multiselect {
+        width: 100%;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .p-auto .p-autocomplete {
+        width: 100% !important;
+    }
+    .p-autocomplete .p-autocomplete-panel{
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    // .searchBar {
+    //     position: fixed;
+    //     z-index: 10;
+    //     top: 55px;
+    //     left: 64%;
+    // }
+    .ulTab{
+        max-width: 67% !important;
+    }
+    .statusType{
+        width: 68px !important;
+        margin: 0;
+        padding: 2px 8px !important;
+    }
+    // :host ::ng-deep .nav-pills .nav-link{
+    //     font-size: 9px !important;
+    // }
+    // :host ::ng-deep.p-datatable .p-datatable-thead > tr > th{
+    //     font-size: 8px !important;
+    // }
+    // :host ::ng-deep .p-datatable .p-datatable-thead > tr > td{
+    //     font-size: 8px;
+    // }
+    .searchInput{
+        width: 60%;
+    }
+    .inputForm{
+        width: 90%;
+    }
+    :host ::ng-deep .p-autocomplete-dd .p-autocomplete-input, .p-autocomplete-dd .p-autocomplete-multiple-container {
+
+        width:288px;
+        height: 35px;
+        font-size: 10px;
+    }
+    :host ::ng-deep .minWidthOverride {
+        width: 120px !important;
+    }
+    // .listEntity{
+    //     width: 94%;
+    //     font-size: 9px;
+    // }
+    .f-13 {
+        // font-size: 9px;
+        font-weight: 600;
+    }
+    .f-12{
+        // font-size: 9px !important;
+        font-weight: 600;
+    }
+    .w-30{
+        width: 30%;
+    }
+    .mt-10{
+        top: 27px;
+        left: 186px;
+        font-size: 20px !important;
+    }
+  }
+  @media screen and (max-width: 1100px) and (min-width: 800px) { 
+    // .searchBar{
+    //     top: 55px;
+    //     left: 71%;
+    // }
+    .statusType{
+        margin: 4px;
+    }
+    .listEntity{
+        width: 89%;
+        font-size: 11px;
+    }
+    .f-13 {
+        // font-size: 11px;
+        font-weight: 600;
+    }
+    .f-12{
+        // font-size: 11px !important;
+        font-weight: 600;
+    }
+    .w-30{
+        width: 30%;
+    }
+    .mt-10{
+        left: 264px;
+        font-size: 20px !important;
+    }
+    
+  }
+  @media screen and (max-width: 576px) { 
+    .bg-design-all {
+        max-height: 82vh;
+        overflow: auto;
+    }
+  }

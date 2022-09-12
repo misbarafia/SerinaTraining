@@ -1,0 +1,126 @@
+.d_flex {
+    display: flex;
+    flex-wrap: wrap;
+    // justify-content: space-evenly;
+  }
+  .scroller{
+    height: 86vh;
+    overflow-y:scroll;
+  }
+  .search-results{
+    height: 100%;
+    overflow: scroll;
+  }
+  .inputField {
+    height: 35px;
+    font-size: 13px;
+    font-weight: 600;
+    width: 200px;
+  }
+  .box_shadow {
+    border: 0;
+    box-shadow: 1px 1px 7px rgb(206 200 183 / 77%);
+  }
+  .btncancel{
+    background-color: #ffffff;
+    color: #273c75;
+    border: 1px solid #273c75;
+  }
+  .modal-title{
+    color: #273c75;
+  }
+  .btncancel:hover{
+    background-color: #273c75;
+    color: #ffffff;
+    border: none;
+  }
+  .btnadd{
+    background-color: #273c75;
+    color: #ffffff;
+    font-size:large;
+  }
+  .card-body{
+    background-color: #ffffff;
+  }
+  .loader{
+    zoom: 0.3;
+    margin-top: 100px;
+  }
+  .card-title{
+    color: #192a56;
+    font-weight:600px;
+  }
+  small{
+    color: #d98691;
+    font-weight: bolder;
+  }
+  .m3{
+    margin: 1.2rem;
+  }
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    margin-top: -10px;
+  }
+  .card-text{
+    font-size:x-small;
+  }
+  .card_shape {
+    min-height: 200px;
+    max-height: 200px;
+    width: 18rem;
+  }
+  .btn_position {
+    position: absolute;
+    bottom: 10px;
+    /* right: 10px; */
+    color: #192a56;
+    font-size: small;
+    font-weight: bolder;
+    width: 100%;
+    left: 0;
+    padding: 0px 10px;
+  }
+  .mr-40 {
+    margin-right: 40px !important;
+  }
+  .pageHeader {
+    padding: 10px;
+    background: #fafafa;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  /* Add animation to "page content" */
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s;
+  }
+  
+  @-webkit-keyframes animatebottom {
+    from {
+      bottom: -100px;
+      opacity: 0;
+    }
+    to {
+      bottom: 0px;
+      opacity: 1;
+    }
+  }
+  
+  @keyframes animatebottom {
+    from {
+      bottom: -100px;
+      opacity: 0;
+    }
+    to {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+  

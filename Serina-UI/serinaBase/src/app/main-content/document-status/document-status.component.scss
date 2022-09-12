@@ -1,0 +1,42 @@
+@import "src/styles/sharedDocstyle";
+@include sharedDoc;
+
+:host ::ng-deep .p-sidebar {
+    background: #272727;
+    color: #f2be42;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+:host ::ng-deep {
+  .p-orderlist .p-orderlist-controls {
+    padding: 1rem;
+    display: none;
+  }
+  .p-orderlist .p-orderlist-list{
+        border: 0;
+        background: transparent;
+        color: #f2be42 !important;
+  }
+  .p-orderlist .p-orderlist-list .p-orderlist-item{
+    color: #f2be42;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px;
+  }
+}
+
+
+
+@media screen and (max-width: 800px) {
+
+    // :host ::ng-deep .nav-pills .nav-link{
+    //     font-size: 9px !important;
+    // }
+    // :host ::ng-deep.p-datatable .p-datatable-thead > tr > th{
+    //     font-size: 8px;
+    // }
+    // :host ::ng-deep .p-datatable .p-datatable-thead > tr > td{
+    //     font-size: 8px;
+    // }
+  }

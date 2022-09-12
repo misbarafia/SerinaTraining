@@ -1,0 +1,77 @@
+.formDiv {
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+:host ::ng-deep {
+  .p-chips {
+    display: inline-flex;
+    width: 100%;
+  }
+  .p-chips .p-chips-multiple-container {
+    // padding: 1px 6px;
+    width: min-content;
+    min-width: 100% !important;
+    font-size: 12px !important;
+    font-weight: 600;
+  }
+  .p-chips-input-token input {
+    font-size: 12px !important;
+    font-weight: 600;
+  }
+  .p-chips .p-chips-multiple-container .p-chips-token .p-chips-token-icon {
+    font-size: 12px;
+  }
+  .p-multiselect-label-container {
+    //   width: 27vw !important;
+    // height: 35px;
+    font-size: 12px;
+  }
+  .p-multiselect {
+    height: 35px;
+    padding: 1px 10px;
+    width: 100%;
+    // border: 1px solid rgba(114, 112, 120, 0.14);
+  }
+  .p-multiselect:not(.p-disabled):hover {
+    border-color: #e9ecef;
+  }
+  .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+    font-size: 12px;
+  }
+  .p-multiselect-panel .p-multiselect-header .p-checkbox {
+    display: none;
+  }
+  .p-multiselect-panel
+    .p-multiselect-header
+    .p-multiselect-filter-container
+    .p-inputtext {
+    height: 28px;
+    font-size: 12px;
+  }
+  .p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .p-multiselect .p-multiselect-label {
+    padding: 2px;
+    font-weight: 600;
+    color: #495057;
+  }
+  .p-multiselect .p-multiselect-trigger {
+    width: 10px;
+  }
+}
+.tdLeft {
+    width: 30%;
+}
+.form-control {
+  height: 35px;
+}
+
+@media screen and (max-width : 800px) {
+  .tdLeft {
+    width: 47%;
+  }
+}

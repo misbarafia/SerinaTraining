@@ -1,0 +1,74 @@
+<div style="overflow: hidden;height: 100vh;">
+  <div class="row">
+      <div class="col-md-7">
+          <div class="background">
+              <img src="assets/home_image.png" alt="login">
+          </div>
+      </div>
+      <div class="col-md-5 rightSide">
+          <div class="center">
+            <ul>
+              <li><a routerLink="/IT_Utility/home" routerLinkActive="active">Home</a></li>
+              <li><a routerLink="/IT_Utility/vendors" routerLinkActive="active">Vendors</a></li>
+              <li><a routerLink="/IT_Utility/service-providers" routerLinkActive="active">Service Providers</a></li>
+              <li *ngIf="isAdmin"><a routerLink="/IT_Utility/settings" routerLinkActive="active">Settings</a></li>
+              <li><a routerLink="/IT_Utility/guide" routerLinkActive="active">Guide</a></li>
+              <li title="Sign Out"  data-toggle="modal" data-target="#exampleModal"><a style="cursor: pointer;">
+                      <img src="assets/logout_ic.svg" style="width: 20px;">
+                  </a>
+              </li>
+          </ul><br><br>
+            <img src="assets/home_vector_image.svg" style="margin-top:50px;width: 250px;"><br>
+            <span><b>Welcome to Model Onboarding Portal</b></span><br>
+            <span class="small-font">Train new document,Create a new Vendor</span><br>
+            <span class="small-font">Template, Update Vendor Configurations and do</span><br>
+            <span class="small-font">much more in this portal...</span><br><br>
+            <a class="btn btnbg f-13" (click)="startTemplate()">Start Creating Template</a>
+          </div>
+      </div>
+      <div class="modal fade" id="exampleModal" style="margin-top: 10%;"  data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="border: none;">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <div>
+                  <i class="fa fa-exclamation-triangle" style="font-size: 4rem;color:#f2be42;"></i>
+                </div>
+                <div class="deleteDivText">
+                  Are you sure you want to logout Now?
+                </div>
+              </div><br><br>
+              <div class="d-flex justify-content-center mb-3">
+                <button class="btn btnbg mr-3" (click)="signOut()">Yes</button>
+                <button class="btn btncancel" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+            
+              
+          </div>
+        </div>
+      </div>
+  </div>
+  
+</div>
+
+<!-- <div class="center_text">
+  <div class="card cardwidth">
+    <img class="card-img-top" src="https://www.centuryks.com/sites/default/files/image-uploads/document-processing-solutions.png" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title f-18">Welcome to Model On Boarding Portal</h5>
+      <p class="card-text f-13">
+        Train new document, Create a new Vendor Template, Update Vendor
+        Configurations and do much more in this portal...
+      </p>
+      <div style="float: right;">
+        <a class="btn btnbg f-13" (click)="startTemplate()">Start Creating Template</a>
+      </div>
+    </div>
+  </div>
+</div> -->

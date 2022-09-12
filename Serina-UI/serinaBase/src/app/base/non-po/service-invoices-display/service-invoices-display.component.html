@@ -1,0 +1,151 @@
+<div *ngIf="!editable" >
+    <h6 class="ml-2 headh6">View Invoice</h6>
+  </div>
+  <div *ngIf="editable">
+    <h6 class="ml-2 headh6">Edit Invoice</h6>
+  </div>
+  <div class="row invoice-body">
+  
+    <div class="col-sm-6">
+  
+      <ul class="nav nav-tabs mb-3 mt-3" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="vendor-tab" data-toggle="tab" href="#vendor" role="tab" aria-controls="vendor"
+            aria-selected="true">Header details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="line-tab" data-toggle="tab" href="#line" role="tab" aria-controls="line"
+            aria-selected="false">Line details</a>
+        </li>
+  
+      </ul>
+      <div class="tab-content tabDiv" id="myTabContent">
+  
+        <!-- Header -->
+        <div class="tab-pane fade show active" id="vendor" role="tabpanel" aria-labelledby="vendor-tab"
+          style="max-height: 63vh;overflow: auto;">
+  
+          <div class="displayFlex" >
+  
+            <ng-container  *ngIf="!requiredBoolen">
+              <form  *ngFor="let value of inputData ">
+                <div>
+                  <label class="label-head" style="margin-bottom: -5px;">{{value.TagLabel}} </label>
+                  <input #inputv [type]="(value.TagLabel == 'Issue Date' || 'Invoice Date' || 'invoice_date')? date : text " 
+                    [value]="value.Value" [title]="value.Value" [disabled]="!editable"
+                    [required]="value.highlight == true"
+                    [ngStyle]="{'border': (value.isError === 1 ) ? '2px solid red' : (value.isError === 0 && value.IsUpdated === 0  ) ? '1px solid lightgray': (value.IsUpdated === 1 ) ? '2px solid #37dcc7':'' } "
+                    (change)="onChangeValue(value.TagLabel,inputv.value,value)" class="form-control mb-1 inputHeight">
+                    <!-- <div *ngIf="requiredBoolen">
+                      <div class="requiredField" *ngIf="value.highlight == true">
+                        required Field
+                      </div>
+                    </div> -->
+                </div>
+    
+              </form>
+            </ng-container >
+            <ng-container *ngIf="requiredBoolen">
+              <form #Invoiceform ="ngForm" *ngFor="let value of inputData ">
+                
+                  <label class="label-head" style="margin-bottom: -5px;">{{value.TagLabel}} </label>
+                  <input #inputv [type]="(value.TagLabel == 'Issue Date' || 'Invoice Date' || 'invoice_date')? date : text " 
+                    [value]="value.Value" [title]="value.Value" [disabled]="!editable"
+                    [required]="value.highlight == true"
+                    [ngClass] = "value.highlight == true ?'bgHighlight':'bg'"
+                    [ngStyle]="{'border': (value.isError === 1 ) ? '2px solid red' : (value.isError === 0 && value.IsUpdated === 0  ) ? '1px solid lightgray': (value.IsUpdated === 1 ) ? '2px solid #37dcc7':'' } "
+                    (change)="onChangeValue(value.TagLabel,inputv.value,value)" class="form-control mb-1 inputHeight">
+                    <!-- <div *ngIf="requiredBoolen">
+                      <div class="requiredField" *ngIf="value.highlight == true">
+                        required Field
+                      </div>
+                    </div> -->
+                
+    
+              </form>
+            </ng-container>
+  
+          </div>
+  
+          <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="false" type="ball-spin-clockwise">
+            <p style="color: rgb(0, 0, 0)"> </p>
+          </ngx-spinner>
+  
+        </div>
+  
+  
+  
+        <!-- line -->
+        <div class="tab-pane fade lineTab" id="line" role="tabpanel" aria-labelledby="line-tab">
+  
+  
+          <table style="width: 100%;">
+            <tr style="background-color: #f5f5f5;    border-bottom: 5px solid white"
+              *ngFor="let item of lineDisplayData | keyvalue ; let i= index">
+              <td class="lineName">{{item.key}}</td>
+              <td class="linevalue" *ngFor="let line of item.value | keyvalue">
+                <input #inputv type="text" style="width: 190px;" [value]="line.value['Value']"
+                  [title]="line.value['Value']" [disabled]="!editable"
+                  [ngStyle]="{'border': (line.value.isError === 1 ) ? '2px solid red' : (line.value.isError === 0 && line.value.IsUpdated === 0  ) ? '1px solid lightgray': (line.value.IsUpdated === 1 ) ? '2px solid #37dcc7':'' } "
+                  (change)="onChangeValueLine(line.value.Value,inputv.value,line.value.idInvoiceData,line.value.idInvoiceTagDef)"
+                  class="form-control mb-1 inputHeight">
+              </td>
+            </tr>
+          </table>
+        </div>
+  
+  
+        <div *ngIf="!requiredBoolen">
+          <div *ngIf="editable" class="btnFooter" mat-dialog-actions>
+            <button mat-button class="btn btnVender mr-4" type="button">Cancel</button>
+            <button mat-button class="btn btnVender" [disabled]="erpVoucherStatus == 1" cdkFocusInitial (click)="onSubmitData()">Submit</button>
+            <button class="btn" (click)="viewDownload()"><i class="fa fa-arrow-circle-o-down"
+                aria-hidden="true"></i></button>
+          </div>
+        </div>
+        <div *ngIf="requiredBoolen">
+          <div *ngIf="editable" class="btnFooter" mat-dialog-actions>
+            <button mat-button class="btn btnVender mr-4" type="button">Cancel</button>
+            <button mat-button class="btn btnVender" [disabled]="keyRequiredboolean" cdkFocusInitial (click)="onSubmitData()">Submit</button>
+            <button class="btn" (click)="viewDownload()"><i class="fa fa-arrow-circle-o-down"
+                aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 maxPage ShowInvoiceTypeSize">
+  
+      <div>
+        <section>
+  
+          <div>
+  
+            <div *ngIf="isLoaded" style="text-align: center;
+            position: fixed;
+            z-index: 100;
+            left: 70%;">
+              <button (click)="prevPage()" [disabled]="page === 1" class="preBtn">Prev</button>
+              <span class="totalPages">{{ page }} / {{ totalPages }}</span>
+              <button (click)="nextPage()" [disabled]="page === totalPages" class="preBtn">Next</button>
+  
+              <span class="zoom">
+                <span class="zoom-in" (click)="zoomIn()"><i class="fa fa-plus" aria-hidden="true"></i></span><br>
+                <span class="zoom-out" (click)="zoomOut()"><i class="fa fa-minus" aria-hidden="true"></i></span>
+              </span>
+            </div>
+  
+            <pdf-viewer [src]="showInvoice" style="width: 100%;max-height: 60vh;overflow: auto;" [show-all]="false"
+              [zoom]=zoomdata [original-size]="false" [page]="page" (after-load-complete)="afterLoadComplete($event)">
+            </pdf-viewer>
+  
+  
+          </div>
+  
+        </section>
+  
+      </div>
+  
+  
+    </div>
+  </div>
+  <p-toast></p-toast>

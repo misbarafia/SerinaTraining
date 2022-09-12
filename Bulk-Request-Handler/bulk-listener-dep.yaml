@@ -1,0 +1,44 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: bulklistener
+  namespace: rovedev
+spec: 
+  selector: 
+    matchLabels: 
+      app: bulklistener
+  replicas: 1 # tells deployment to run 2 pods matching the template 
+  revisionHistoryLimit: 0
+  template:
+    metadata: 
+      labels: 
+        app: bulklistener
+    spec: 
+      containers: 
+      - name: bulklistener 
+        image: roveregistry.azurecr.io/serina-server:bulkrove
+        imagePullPolicy: Always
+        ports: 
+        - containerPort: 3000 
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            cpu: 50m
+      imagePullSecrets:
+      - name: deploymentsecret
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: bulklistener
+spec:
+  selector:
+    app: bulklistener
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer

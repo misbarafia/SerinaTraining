@@ -1,0 +1,38 @@
+<h6 class="headh6">Invoke Utility Invoices Batch</h6>
+
+<div class="container-fluid">
+
+  <div class="fileUploadDiv p-2 m-2" style="align-items:flex-start;min-height: auto;">
+    <div class="centerSelection centerCss">
+      <div class="d-flex">
+        <div class="selectFilter mr-2">
+          <label class="f-13 mb-0">Select Entity</label><br />
+          <select class="form-control accountSelect f-12" (change)="selectEntity($event.target.value)">
+            <option value="" style="font-weight: 500;">Select Entity</option>
+            <option *ngFor="let entity of entity" [value]="entity.idEntity" >
+              {{ entity.EntityName }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <div style="visibility: hidden;"> Hide</div>
+          <button *ngIf="erpTriggerBoolean" class="btnUpload" (click)="triggerBatch()" >Start Batch</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div>
+    <app-table
+          [tableData]="totalTableData"
+          [invoiceColumns]="columnsForTotal"
+          [showPaginator]="showPaginatortotal"
+          [columnsToFilter]="totalColumnField"
+          [columnLength]="ColumnLengthtotal"
+        >
+        </app-table>
+  </div>
+</div>
+<p-toast></p-toast>
+

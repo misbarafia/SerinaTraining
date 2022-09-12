@@ -1,0 +1,148 @@
+.leftSide{
+background-color: #30336b;
+min-height: 100vh;
+max-height: 100vh;
+padding-right: 0;
+}
+.rightSide{
+background-color: #ffffff;
+min-height: 100vh;
+max-height: 100vh;
+}
+.login-div{
+    position: absolute;
+    top: 73px;
+    right: 7%;
+    height: 513px;
+    width: 454px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 20px rgb(0 0 0 / 30%);
+}
+.t-center{
+    text-align: center;
+    font-weight: 600;
+}
+.bottom{
+    position: absolute;
+    bottom: 3%;
+    right: 30px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #888888;
+}
+.bgClr{
+    cursor: pointer;
+    background: #f2be42;
+    font-weight: 600;
+    height: 46px;
+}
+label{
+    font-size: 14px;
+    font-weight: 600;
+}
+.f-14{
+font-size: 14px;
+}
+.mt-18_ve{
+    margin-top: -18px;
+}
+.eye-show{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+.eye-show-1{
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+}
+.eye-show-2{
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+}
+.log-head{
+    font-weight: 700;
+}
+.nameHead{
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    color: #000000;
+    font-weight: 600;
+    font-size: 25px;
+}
+.loginContent{
+    position: absolute;
+    top: 60%;
+    color: white;
+    left: 6%;
+    margin-right: 48%;
+}
+.loginPageText{
+    font-weight: 600;
+    color: #d8d8d8;
+}
+.forgotText{
+    font-size: 12px;
+    font-weight: 600;
+    color: #575757;
+}
+input,
+input::-webkit-input-placeholder {
+    font-size: 13px;
+    
+}
+.h-55{
+    height: 55px;
+}
+.f-50{
+    font-size: 50px;
+    font-weight: 700;
+}
+.otp{
+    text-align: center;
+}
+:host ::ng-deep .otp-input{
+    font-size: 20px;
+}
+// .bgImageMask {
+//     background-image: url("loginmask.png");
+//     background-color: #cccccc;
+//     height: 100vh;
+//     background-position: center;
+//     background-repeat: no-repeat;
+//     background-size: cover;
+//     position: relative;
+//     /* width: 100vw; */
+//   }
+
+.d_mobile {
+    display: block;
+}
+.pos_rel {
+    position: relative;
+}
+@media screen and (max-width: 576px){
+    .login-div {
+      width: 90vw;
+      position: relative;
+      right: 0;
+  }
+  .loginContent {
+    display: none;
+  }
+  .d_mobile {
+    display: none;
+    }
+    .login-center {
+    display: flex;
+    justify-content: center;
+
+    }
+}

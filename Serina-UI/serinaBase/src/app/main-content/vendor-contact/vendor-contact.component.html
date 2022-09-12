@@ -1,0 +1,50 @@
+<h6 class="headh6">Vendor details
+  <!-- <i   class="fa fa-pencil-square-o actionsBtn mr-2" aria-hidden="true" (click)='editVendorDetails()'></i> -->
+</h6>
+
+<div class="container-fluid">
+  <div class=" bg-design-all p-2 b-top-left">
+    <div>
+  
+      <!-- <button  class="btn btnVender" type="submit" (click)="editVendorDetails()">Edit</button> -->
+      <i class="fa fa-user-circle user_icon" aria-hidden="true"></i>
+      <div [ngStyle]="{'visibility':!editBtnBoolean ? 'hidden':'visible'} " class="edit_icon"
+        (click)='editVendorDetails()'><i class="fa fa-pencil" style="font-size: 12px;" aria-hidden="true"></i></div>
+      <span class="name_place">{{vendorName}}</span>
+    </div>
+  
+    <form #vendorDetails="ngForm" (ngSubmit)="updatevendor(vendorDetails.value)">
+      <div class="max_height">
+        <!-- <table style="width: 60%;" >
+          <tr class="trHeight" *ngFor="let item of readVendorDetails | keyvalue ">
+            <td class="tdLeft">{{item.key}} <span class="colon">:</span></td>
+            <td class="tdRight">
+                <input type="text" class="form-control inputProfile" [(ngModel)] = "item.value"  [name]="item.key" [disabled]="!editable || item.key == 'Email'" 
+                [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                 [value]="item.value">
+            </td>
+          </tr>
+    
+      </table> -->
+        <div class="d_flex">
+          <div *ngFor="let item of readVendorDetails | keyvalue " style="margin-right: 15px;">
+            <div>
+              <label class="f-12">{{item.key}} </label><br>
+              <input type="text" class="form-control inputProfile" style="width: 260px;height: 33px !important;"
+                [(ngModel)]="item.value" [name]="item.key"
+                [disabled]="!editable || item.key == 'Email' || item.key == 'idVendor'"
+                [ngClass]="!editable? 'onEditFalseV':'onEditTrue'" [value]="item.value">
+            </div>
+  
+          </div>
+        </div>
+      </div>
+  
+      <div *ngIf="savebooleanVendor" class="btnAction" style="padding-bottom: 10px;">
+        <button class="btn btnVender bg-btn-cancel mr-3" type="button" (click)="onCancel()">Cancel</button>
+        <button class="btn btnVender bg-btn-success" type="submit">Save</button>
+  
+      </div>
+    </form>
+  </div>
+</div>

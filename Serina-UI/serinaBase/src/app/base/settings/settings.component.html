@@ -1,0 +1,82 @@
+<div class="container-fluid pl-0">
+    
+    <div>
+        <div class=" sidebarTab">
+
+              <div class="routeLinks" style="margin-top: 50px;">
+
+                <div class="navLink overTab" routerLinkActive="active" [routerLink]="'generalSettings'">
+                  General Settings
+                </div>
+
+                <div class="navLink overTab" routerLinkActive="active" [routerLink]="'notificationSettings'">
+                  Notification Settings
+                </div>
+                
+                <!-- <div *ngIf="isAdmin" class="navLink overTab" routerLinkActive="active" [routerLink]="'ocrConfig'" >
+                  OCR Configuration
+                </div>
+    
+                <div *ngIf="isAdmin" class="navLink overTab" routerLinkActive="active" [routerLink]="'modelException'">
+                  Invoice Model Exception 
+                </div>
+                <div *ngIf="isAdmin" class="navLink overTab" routerLinkActive="active" [routerLink]="'techException'">
+                  Technical Exception
+                </div>
+
+                <div *ngIf="isAdmin" class="navLink overTab" routerLinkActive="active" [routerLink]="'erpexception'">
+                  ERP Exception 
+                </div>
+
+                <div *ngIf="isAdmin" class="navLink overTab" routerLinkActive="active" [routerLink]="'generalLogic'">
+                  General Logical 
+                </div>
+
+                <div *ngIf="isAdmin" class="navLink overTab" routerLinkActive="active" [routerLink]="'reportsException'">
+                  Reports Configuraiton
+                </div> -->
+
+
+
+                <!-- <div class="navLink overTab" [ngClass] = "activeMenuSetting == 'ocr'?'active':'navLink'" (click)="menuChange('ocr')" >
+                  OCR Configuration
+                </div>
+    
+                <div class="navLink overTab" [ngClass] = "activeMenuSetting == 'inModel'?'active':'navLink'" (click)="menuChange('inModel')">
+                  Invoice Model Exception 
+                </div>
+                <div class="navLink overTab" [ngClass] = "activeMenuSetting == 'techEx'?'active':'navLink'" (click)="menuChange('techEx')">
+                  Technical Exception
+                </div>
+
+                <div class="navLink overTab" [ngClass] = "activeMenuSetting == 'erpEx'?'active':'navLink'" (click)="menuChange('erpEx')">
+                  ERP Exception 
+                </div>
+
+                <div class="navLink overTab" [ngClass] = "activeMenuSetting == 'generalLogic'?'active':'navLink'" (click)="menuChange('generalLogic')">
+                  General Logical 
+                </div>
+
+                <div class="navLink overTab" [ngClass] = "activeMenuSetting == 'reports'?'active':'navLink'" (click)="menuChange('reports')">
+                  Reports Configuraiton
+                </div> -->
+    
+                
+            </div>
+        </div>
+        <div class="sidebarTabContent">
+          <!-- <app-ocr-config *ngIf="activeMenuSetting == 'ocr'"></app-ocr-config>
+          <app-model-exception [action]='actions' *ngIf="activeMenuSetting == 'inModel'"></app-model-exception>
+          <app-tech-exception *ngIf="activeMenuSetting == 'techEx'"></app-tech-exception>
+          <app-erpexception *ngIf="activeMenuSetting == 'erpEx'"></app-erpexception>
+          <app-general-logic *ngIf="activeMenuSetting == 'generalLogic'"></app-general-logic>
+          <app-reports *ngIf="activeMenuSetting == 'reports'"></app-reports> -->
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+</div>
+<p-toast></p-toast>
+
+
+

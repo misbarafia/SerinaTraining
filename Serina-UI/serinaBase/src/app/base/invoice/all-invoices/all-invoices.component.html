@@ -1,0 +1,284 @@
+<div>
+  <div class="scroll">
+    <div class="searchBar" *ngIf="!router.url.includes('PO')">
+      <input
+        class="searchInput"
+        pInputText
+        type="text"
+        placeholder="Search + Enter"
+        (keyup)="searchInvoice($event.target.value)"
+        (input)="allInvoice.filterGlobal($event.target.value, 'contains')"
+      />
+      <span class="material-icons searchIcon"> search </span>
+    </div>
+    <p-table
+      #allInvoice
+      [value]="tableData"
+      [rows]="rows"
+      [first]="first"
+      [globalFilterFields]="columnsToDisplay"
+      (onPage)="paginate($event)"
+      styleClass="p-datatable-striped"
+      responsiveLayout="scroll"
+      [columns]="invoiceColumns"
+      [paginator]="showPaginatorAllInvoice"
+      [showFirstLastIcon]="true"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10, 25, 50]"
+    >
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th
+            *ngFor="let col of columns"
+            [pTooltip]="col.columnDescription"
+            tooltipPosition="top"
+            [ngStyle]="{ width: col.columnName === 'Status' ? '18%' : '' }"
+            [pSortableColumn]="col.dbColumnname"
+          >
+            {{ col.columnName }}
+          </th>
+          <th class="action_Zindex">
+            Actions
+            <i
+              *ngIf="router.url.includes('allInvoices') || router.url.includes('PO') || router.url.includes('archived') || router.url.includes('ServiceInvoices')"
+              class="fa fa-pencil-square-o actionsBtn"
+              style="border: 0"
+              aria-hidden="true"
+              (click)="showSidebar()"
+            ></i>
+          </th>
+        </tr>
+        <tr>
+          <td *ngFor="let col of columns" class="sticky_top">
+            <div [ngSwitch]="col.dbColumnname">
+              <div *ngSwitchCase="'docstatus'" class="f-12">
+                <!-- <p-columnFilter [field]="col.dbColumnname" matchMode="in" [showMenu]="false">
+                    <ng-template pTemplate="filter" let-value >
+                        <p-multiSelect  [options]="bgColorCode" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                            <ng-template let-option pTemplate="item">
+                                <div class="p-multiselect-representative-option">
+                                    <span class="ml-1 f-12">{{option.name}}</span>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                    </ng-template>
+                </p-columnFilter> -->
+                <p-dropdown
+                  [options]="statusData"
+                  [(ngModel)]="selectedStatus"
+                  (onChange)="filter($event.value)"
+                  placeholder="Select Status"
+                  [showClear]="false"
+                  styleClass="w-100 text-center f-11"
+                ></p-dropdown>
+                <!-- <select name="allStatus" id="status" class="f-12 form-control text-center" (onChange)="filter($event.target.value)">
+                  <option value="All"> ALL</option>
+                  <option [value]="status" *ngFor="let status of bgColorCode" >{{status.name}}</option>
+                </select> -->
+              </div>
+              <div *ngSwitchDefault >
+                <input
+                  pInputText
+                  type="text"
+                  (input)="
+                    allInvoice.filter(
+                      $event.target.value || ' ',
+                      col.dbColumnname,
+                      'contains'
+                    )
+                  "
+                  [value]="allInvoice.filters[col.dbColumnname]?.value"
+                  [placeholder]="'Search by ' + col.columnName"
+                  class="tableSearchInput "
+                />
+
+                <!-- <p-columnFilter placeholder="Search by ID" type="text"  [field]="col.field"></p-columnFilter> -->
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-invoiceData let-columns="columns">
+        <tr>
+          <td
+            *ngFor="let col of columns"
+            [title]="invoiceData[col.dbColumnname]"
+          >
+            <div [ngSwitch]="col.dbColumnname">
+              <div *ngSwitchCase="'docstatus'" style="z-index: 0;">
+                <!-- <td style="width: 20%;" class="statusType"
+                  [ngStyle]="{'background-color': (invoiceData.docstatus === 'Rejected' ) ? 'red' : (invoiceData.docstatus === 'In Progress' ) ? '#ff9494': (invoiceData.docstatus === 'Wait Approve' ) ? '#37dcc7': (invoiceData.docstatus === 'Approved' ) ? '#b4ea21': (invoiceData.docstatus === 'Financially Approved' ) ? '#2bd43c': (invoiceData.docstatus === 'paid' ) ? '#107e3e': (invoiceData.docstatus === 'Review' ) ? '#e6c213':'' } ">
+                  {{invoiceData[col.dbColumnname]}}
+                </td> -->
+                <div *ngFor="let color of bgColorCode">
+                  <td
+                    class="statusType"
+                    *ngIf="invoiceData.documentStatusID == color.id"
+                    [ngStyle]="{
+                      'background-color':
+                        invoiceData.documentStatusID == color.id
+                          ? color.bgcolor
+                          : '',
+                      color:
+                        invoiceData.documentStatusID == color.id
+                          ? color.textColor
+                          : ''
+                    }"
+                  >
+                    {{ invoiceData[col.dbColumnname] }}
+                    <i
+                      *ngIf="invoiceData.documentsubstatusID == 30"
+                      pTooltip="Batch Exception but ready for ERP PUSH"
+                      tooltipPosition="top"
+                      class="f-13 ml-3"
+                      style="color: red; font-weight: 800"
+                    >
+                      !</i
+                    >
+                  </td>
+                </div>
+              </div>
+              <div class="elipse" *ngSwitchDefault>
+                {{ invoiceData[col.dbColumnname] }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <i
+              class="pi pi-eye f-16 showEye mr-2"
+              (click)="viewInvoiceDetails(invoiceData)"
+            ></i>
+            <span *ngIf="router.url.includes('GRNExceptions')">
+              <button class="actionsBtn text-success b-0 font_weight" (click)="reUpload(invoiceData)">Re-Upload</button>
+            </span>
+            <i
+              *ngIf="router.url.includes('allInvoices') || router.url.includes('archived')"
+              pTooltip="Click here to view Full Status details"
+              tooltipPosition="left"
+              class="fa fa-info-circle actionsBtn"
+              (click)="viewStatusPage(invoiceData)"
+            ></i>
+
+            <span *ngIf="router.url.includes('allInvoices') || router.url.includes('archived') || router.url.includes('ServiceInvoices')">
+              <span
+              class="ml-2 pos-rel"
+              *ngIf="invoiceData.sourcetype == 'Web'"
+              title="Uploaded through Portal"
+            >
+              <i class="fa fa-cloud-upload f-16" aria-hidden="true"></i>
+            </span>
+
+            <span
+              class="ml-2 pos-rel"
+              *ngIf="invoiceData.sourcetype == 'Mail'"
+              title="Uploaded through Mail"
+            >
+              <i class="fa fa-envelope f-16" aria-hidden="true"></i>
+            </span>
+
+            <span style="visibility: hidden;"
+              class="ml-2 pos-rel"
+              *ngIf="invoiceData.sourcetype == 'RPA'"
+              title="Uploaded through Mail"
+            >
+              <i class="fa fa-envelope f-16" aria-hidden="true"></i>
+            </span>
+
+            <span
+              class="ml-2 pos-rel"
+              *ngIf="invoiceData.sourcetype == 'SharePoint'"
+              title="Uploaded through SharePoint"
+            >
+              <i class="fa fa-share f-16" aria-hidden="true"></i>
+            </span>
+            </span>
+            <i
+            *ngIf="router.url.includes('allInvoices') || router.url.includes('ServiceInvoices') || router.url.includes('payment-details-vendor')"
+              pTooltip="Click here to view ERP Status details"
+              tooltipPosition="left"
+              class="fa fa-info-circle ml-2 actionsBtn"
+              (click)="checkStatus(invoiceData)"
+            ></i>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="columnLength" class="p-t-30">
+            <img
+              src="assets/Group 2691.png"
+              width="260"
+              width="260"
+              alt="imageUrl"
+            />
+            <br />
+            No invoices found.
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft"> </ng-template>
+      <ng-template pTemplate="paginatorright"> </ng-template>
+    </p-table>
+    <ngx-spinner
+      bdColor="rgba(251, 251, 251, 0)"
+      size="medium"
+      color="#070900"
+      [fullScreen]="false"
+      type="ball-spin-clockwise"
+    >
+      <p style="color: rgb(0, 0, 0)"></p>
+    </ngx-spinner>
+  </div>
+</div>
+<!-- <p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000">
+  <h6 style="font-weight: 600;">Select Columns</h6>
+
+  <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
+    selectedItemsLabel="{0} columns selected" [style]="{minWidth: '300px'}" placeholder="Choose Columns">
+  </p-multiSelect>
+
+  <div class="btnFooterSave" mat-dialog-actions>
+    <button class="btn btnVender mr-4 clor" type="button" (click)="visibleSidebar2 = false">Cancel</button>
+    <button class="btn btnVender clor" (click)="onSave()" cdkFocusInitial>Save</button>
+  </div>
+
+</p-sidebar> -->
+
+<!-- Cnfirmation Dialog -->
+<p-dialog
+  header=" "
+  [(visible)]="checkstatusPopupBoolean"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '30vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="text-center">
+    <div>
+      <!-- <i
+        class="pi pi-exclamation-triangle"
+        style="font-size: 4rem; color: red"
+      ></i> -->
+    </div>
+    <div class="deleteDivText">
+      {{ statusText }} <br>
+      <div class="f-12">{{statusText1}}</div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <!-- <div class="d-flex justify-content-center mb-3">
+      <button class="btn btnVender bg-btn-success mr-3" (click)="logout()">
+        Yes
+      </button>
+      <button
+        class="btn btnVender bg-btn-cancel"
+        (click)="displayResponsivepopup = false"
+      >
+        Cancel
+      </button>
+    </div> -->
+  </ng-template>
+</p-dialog>
+<p-toast></p-toast>

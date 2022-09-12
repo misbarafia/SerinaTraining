@@ -1,0 +1,105 @@
+<div class="container-fluid reginstration_fullpage">
+    <div class="nameHead">
+        Serina Plus
+    </div>
+    <div *ngIf="linkActiveBoolean" class="registrationDiv">
+        <div class="title">Registration Form</div>
+        <form [formGroup]="registrationForm" (ngSubmit)="savePasswordforNewuser()">
+            <div>
+                <label for="userName">User Name</label>
+                <input type="text" id="userName" formControlName ="userName" class="form-control inputForm">
+            </div>
+            <div>
+                <label for="fName">First Name</label>
+                <input type="text" id="fName" formControlName ="firstName" class="form-control inputForm">
+            </div>
+            <div>
+                <label for="lName">Last Name</label>
+                <input type="text" id="lName" formControlName ="lastName" class="form-control inputForm">
+            </div>
+            <div>
+                <div class="form-group mb-0">
+                    <label> Set Password</label>
+                    <div class="input-group">
+                      <!-- Change input type to be dynamic -->
+                      <input
+                        [type]="fieldTextType ? 'text' : 'password'"
+                        class="form-control inputForm w-260"
+                        formControlName="password"
+                      />
+                       <div class="input-group-append">
+                        <span class="input-group-text">
+                            <i
+                            class="fa"
+                            [ngClass]="{
+                              'fa-eye-slash': !fieldTextType,
+                              'fa-eye': fieldTextType
+                            }"
+                            (click)="toggleFieldTextType()"
+                          ></i>
+                        </span>
+                     </div>
+                    </div>
+                  </div>
+                <!-- <label for="setPass">Set Password</label>
+                <div class="input-group">
+                <input [type]="fieldTextType ? 'text' : 'password'" id="setPass" formControlName ="password" class="form-control inputForm">
+
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="fa fa-eye-slash"></i>
+                      </span>
+                   </div>
+                </div>
+                
+                <div>
+                    <i class="fa fa-eye eye-show" [ngClass]="{
+                        'fa-eye-slash': !fieldTextType,
+                        'fa-eye': fieldTextType
+                      }" (click)="toggleFieldTextType()"></i>
+                </div> -->
+                <div class="error-text" *ngIf="registrationForm.get('password').invalid && (registrationForm.get('password').touched || registrationForm.get('password').dirty)">
+
+                    <div *ngIf="registrationForm.get('password').hasError('required')">
+                        password is required
+                    </div>
+            
+                    <div *ngIf="registrationForm.get('password').errors.minlength">
+                        Password must be at least 8 characters
+                    </div>
+            
+                    <div class="error-text" *ngIf="registrationForm.get('password').hasError('passwordStrength')">
+                        {{registrationForm.get('password').errors['passwordStrength']}}
+                    </div>
+                    <!-- <ul>Password must contain at least two of the following:
+                        <li>numbers, lowercase letters, Uppercase letters  </li>
+                        <li>Special characters</li>
+                    </ul> -->
+                </div>
+            </div>
+
+            <div>
+                <label for="confirmPass">Confirm Password</label>
+                <input type="password" id="confirmPass" formControlName ="reEnterPassword" (keyup)="confirmPassword($event.target.value)" class="form-control inputForm">
+            <div *ngIf="errorDivBoolean" class="alertDiv">
+                Please enter same password
+            </div>
+            </div>
+
+            <div class="btns">
+                <button class="btn btn-block btnVender bg-btn-success" type="submit" [disabled]="!registrationForm.valid || errorDivBoolean">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="!linkActiveBoolean" class="expireText">
+        <div>
+        Activation Link got Expired!.
+        </div>
+        <div>
+            <label for="getEmail">Enter email id to get Activation link</label>
+            <input type="email" class="form-control inputForm" [(ngModel)]="emailId">
+            <button class="btn btnVender bg-btn-success" (click)="resendActivationLink()">Get Activation Link</button>
+        </div>
+    </div>
+</div>
+<p-toast></p-toast>

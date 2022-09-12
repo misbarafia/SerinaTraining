@@ -1,0 +1,26 @@
+.nav-pills .nav-link {
+    border-radius: 10px;
+    background: white;
+    color: #313971;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border: 1px solid #efefef;
+    cursor: pointer;
+  }
+  
+  .active-pill {
+    background-color: #f2be42 !important;
+    border: 1px solid #f2be42 !important;
+    color: #ffffff !important;
+  }
+  .tableDataDiv {
+    max-height: 86vh;
+  }
+  .home_main_div {
+    overflow: hidden;
+    min-height: 85vh;
+    background-color: #e5e5e5;
+    margin-top: -7px;
+    padding: 10px;
+  }

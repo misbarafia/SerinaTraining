@@ -1,0 +1,16 @@
+ul {
+    padding: 10px 30px;
+}
+ul li {
+    list-style-type :circle;
+    padding: 8px;
+}
+ul li a {
+    color: #272727;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+ul li a:hover {
+    text-decoration: underline;
+}

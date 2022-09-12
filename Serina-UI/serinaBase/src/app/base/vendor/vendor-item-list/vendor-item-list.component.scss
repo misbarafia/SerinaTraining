@@ -1,0 +1,62 @@
+:host ::ng-deep  {
+    .p-datepicker .p-monthpicker .p-monthpicker-month {
+
+    font-size: 11px;
+    font-weight: 600;
+}
+.p-datepicker .p-datepicker-header .p-datepicker-title {
+    line-height: 2rem;
+    font-size: 13px;
+    font-weight: 600;
+}
+}
+.max_height{
+    max-height: 76vh;
+    overflow: auto;
+}
+.template_head_bg{
+    background: darkkhaki;
+    padding: 4px;
+}
+.inputHeight {
+    width: 290px;
+    height: 35px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.d-i-block {
+    display: inline-block;
+}
+
+.di-ceter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.bg-clr {
+    background: #ffff;
+    padding: 4px 70px;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+}
+.custom-btn {
+    background: #313971;
+    height: auto;
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+.table_scroll {
+    max-height: 70vh;
+    overflow: auto;
+}
+@media screen and (max-width:1100px) {
+    .di-ceter {
+        position: relative;
+        top: 31px;
+    }
+}

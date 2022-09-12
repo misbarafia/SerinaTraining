@@ -1,0 +1,12 @@
+{
+    "userId":1,
+    "host-endpoint":"https://rovedev.centralindia.cloudapp.azure.com/apiv1.1",
+    "bulk_upload_url":"http://13.71.51.87",
+    "accountkey":"I5mSGj5Ak1lTT3AOVwjD8oEdhpHVWPAQxCnv21cj8q0i/agOwjqPR79iQE3VfIVTNwcWYx8DX4i8IyXmdiYAlw==",
+    "loginuser":"rove_admin@1",
+    "loginpass":"rovDev@2022",
+    "appInsightsKey":"InstrumentationKey=763f057b-32b6-4e43-8000-7d03d866d178;IngestionEndpoint=https://southeastasia-1.in.applicationinsights.azure.com/",
+    "mailsender":"serinaplus.dev@datasemantics.co",
+    "mailpassword":"ravager55@rocket",
+    "mailreceiver":"serinaplus.dev@datasemantics.co"
+}

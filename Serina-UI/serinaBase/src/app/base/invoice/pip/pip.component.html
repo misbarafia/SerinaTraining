@@ -1,0 +1,181 @@
+<h6 class="headh6">Payment Status</h6>
+
+<div class="container-fluid" style="overflow: hidden; max-height: 100vh">
+  <div>
+    <div>
+      <ul class="nav nav-tabs" id="tabs-tab" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="tabs-all-tab"
+            data-toggle="pill"
+            href="#tabs-all"
+            role="tab"
+            aria-controls="tabs-all"
+            aria-selected="true"
+            >Invoices({{ paymentDataLength }})</a
+          >
+        </li>
+      </ul>
+
+      <div class="positionCreateUpload">
+        <button class="btnUpload mr-2" (click)="exportExcel()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+        </button>
+        <!-- <button class=" btnUpload mr-2" (click)="toCreateNew()"><span class="f-16">+</span> Create</button> -->
+      </div>
+      <!-- <div class="filter_input">
+        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [showIcon]="true" placeholder="Select dates to Filter" [readonlyInput]="true" inputId="range"></p-calendar>
+        <button class="btnUpload filter_btn_m "> Filter</button>
+      </div> -->
+    </div>
+
+    <div class="tab-content" id="tabs-tabContent">
+      <!-- All Tab -->
+      <div
+        class="tab-pane fade show active"
+        id="tabs-all"
+        role="tabpanel"
+        aria-labelledby="tabs-all-tab"
+      >
+        <div class="tableDataDiv bg-design-all pt-1">
+          <!-- <div>
+            <div class="searchBar">
+              <input
+                class="searchInput"
+                pInputText
+                type="text"
+                placeholder="Search + Enter"
+                (keyup)="searchInvoiceDataV($event.target.value)"
+                (input)="payment.filterGlobal($event.target.value, 'contains')"
+              />
+              <span class="material-icons searchIcon"> search </span>
+            </div>
+            <p-table
+              #payment
+              [value]="paymentData"
+              [paginator]="showPaginator"
+              [rows]="rows"
+              [first]="first"
+              [globalFilterFields]="columnsFields"
+              (onPage)="paginate($event)"
+              styleClass="p-datatable-striped"
+              responsiveLayout="scroll"
+              [columns]="columnsToDisplay"
+              [showFirstLastIcon]="true"
+              [showCurrentPageReport]="true"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10, 25, 50]"
+            >
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th
+                    *ngFor="let col of columns"
+                    [pTooltip]="col.columnDescription"
+                    tooltipPosition="top"
+                    [pSortableColumn]="col.field"
+                  >
+                    {{ col.header }}
+                  </th>
+                  <th class="action_Zindex">Actions</th>
+                </tr>
+                <tr>
+                  <td *ngFor="let col of columns">
+                    <div>
+                      <input
+                        pInputText
+                        type="text"
+                        (input)="
+                          payment.filter(
+                            $event.target.value || ' ',
+                            col.field,
+                            'contains'
+                          )
+                        "
+                        [value]="payment.filters[col.field]?.value"
+                        [placeholder]="'Search by ' + col.header"
+                        class="tableSearchInput"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template
+                pTemplate="body"
+                let-invoiceData
+                let-columns="columns"
+              >
+                <tr>
+                  <td
+                    *ngFor="let col of columns"
+                    [title]="invoiceData[col.field]"
+                  >
+                    <div [ngSwitch]="col.field">
+                      <div
+                        *ngSwitchCase="'documentPaymentStatus'"
+                        style="z-index: 0"
+                      >
+                        <td
+                          class="statusType"
+                          [ngStyle]="{
+                            'background-color':
+                              invoiceData.documentPaymentStatus === 'paid'
+                                ? '#107e3e'
+                                : invoiceData.documentPaymentStatus ===
+                                  'Payment Pending'
+                                ? '#ff9494'
+                                : ''
+                          }"
+                        >
+                          {{ invoiceData.documentPaymentStatus }}
+                        </td>
+                      </div>
+                      <div class="elipse" *ngSwitchDefault>
+                        {{ invoiceData[col.field] }}
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <i
+                      pTooltip="Click here to view ERP Status details"
+                      tooltipPosition="left"
+                      class="fa fa-info-circle ml-2 actionsBtn"
+                      (click)="checkStatus(invoiceData)"
+                    ></i>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td [attr.colspan]="columnLength" class="p-t-30">
+                    <img
+                      src="assets/Group 2691.png"
+                      width="260"
+                      width="260"
+                      alt="imageUrl"
+                    />
+                    <br />
+                    No invoices found.
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft"> </ng-template>
+              <ng-template pTemplate="paginatorright"> </ng-template>
+            </p-table>
+          </div> -->
+        
+          <app-all-invoices
+                [tableData]="paymentData"
+                [invoiceColumns]="columnsToDisplay"
+                [columnsToDisplay]="columnsFields"
+                [showPaginatorAllInvoice]="showPaginator"
+                (sideBarBoolean)="showSidebar($event)"
+                (paginationEvent) = "paginate($event)"
+                [columnLength]="columnLength"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+              ></app-all-invoices>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

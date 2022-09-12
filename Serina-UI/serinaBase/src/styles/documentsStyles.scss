@@ -1,0 +1,185 @@
+@mixin  document {
+    :host{
+        .statusType{
+            color: white;
+            width: 100% !important;
+            padding: 3px !important;
+            border-radius: 20px;
+            text-align: center !important;
+            background: #107e3e;
+            margin: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            justify-content: center;
+        }
+        .statusTypeactive{
+            background-color: #107e3e;
+        }
+        .statusTypepending{
+            background-color: #e0e0e0;
+            color: #0f3f62;
+        }
+        
+        // primeng table
+        // :host ::ng-deep .p-datatable table {
+        //     border-collapse: collapse;
+        //     table-layout: auto !important;
+        //     width: 100%;
+        //     overflow: auto;
+        //   }
+        .p-datatable .p-datatable-tbody > tr > td {
+            text-align: center;
+            border: 1px solid #f5f5f5;
+            border-width: 0 0 1px 0;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #0f3f62;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .p-datatable .p-datatable-thead > tr > th {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0px;
+            text-align: center;
+            border: 1px solid #f5f5f5;
+            border-width: 0 0 1px 0;
+            font-weight: 700;
+            padding: 10px;
+            font-size: 12px;
+            color: #272727 !important;
+            background: #ffffff;
+            transition: box-shadow 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .tableSearchInput{
+            width: 100%;
+            height: 30px;
+            border: 1px solid lightgray;
+            border-radius: 4px;
+            font-size: 12px;
+            padding-left: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+        }
+        .tableSearchInput:focus{
+            outline: 0 !important;
+        }
+        
+        .p-fluid .p-inputtext {
+            width: 100%;
+            height: 30px;
+            font-size: 13px;
+        }
+        .tableDataDiv{
+            box-shadow: none;
+            max-height: 84vh;
+            overflow: auto;
+            margin-top: 0px;
+        }
+
+        
+        // serach
+        .searchInput{
+            background: #ffffff;
+            padding: 8px 14px;
+            width: 70%;
+            height: 30px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+            border: 1px solid #d3d3d3;
+            // transition: width 250ms ease-in-out;
+            // &:focus {
+            //     width: 70%;
+            // }
+          }
+        //   .searchInput:focus{
+        //       outline: 0;
+        //   }
+        .searchBar{
+            position: fixed;
+            z-index: 10;
+            top: 46px;
+            text-align: right;
+            right: 50px;
+        }
+        .searchIcon{
+            position: relative;
+            top: 5px;
+            left: -27px;
+            font-size: 21px;
+            color: #a9a9a9;
+        }
+        .elipse{
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .clor{
+            color:#f2be42; ;
+        }
+        .btnFooterSave{
+            position: fixed;
+            bottom: 20%;
+            left: 16%;
+        }
+        
+        
+        @media screen and (max-width: 800px) {
+        
+            .searchBar {
+                right: 61px;
+                // left: 74%;
+            }
+            .ulTab{
+                max-width: 67% !important;
+            }
+            .tableSearchInput{
+                // font-size: 8px;
+            }
+            .statusType{
+                // font-size: 8px;
+                font-weight: 600;
+                width: 90px !important;
+                padding: 2px 8px !important;
+            }
+        
+            .elipse{
+                // font-size: 8px;
+                font-weight: 600;
+            }
+            .searchInput{
+                width: 60%;
+            }
+          }
+          @media screen and (max-width: 1200px) and (min-width: 800px) { 
+            .searchBar{
+                top: 45px;
+                left: 78%;
+            }
+
+            // .statusType{
+            //     margin: 4px;
+            // }
+            .statusType{
+                // font-size: 10px;
+                font-weight: 600;
+                
+                padding: 2px 8px !important;
+            }
+            .elipse{
+                // font-size: 10px;
+                font-weight: 600;
+            }
+          }
+    }
+}

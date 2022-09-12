@@ -1,0 +1,918 @@
+<div *ngIf="!editable && !grnCreateBoolean" class="pos_rel">
+  <span class="goBackIn ml-3" (click)="backToInvoice()">
+    <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+  </span>
+  <h6 class="headh6 pl-80">View {{ Itype }}</h6>
+</div>
+<div *ngIf="editable || grnCreateBoolean" class="pos_rel">
+  <span class="goBackIn ml-3" (click)="backToInvoice()">
+    <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+  </span>
+  <h6 class="headh6 pl-80">{{ headerName }}</h6>
+</div>
+<div class="row invoice-body">
+  <div class="viewPdf" style="right: 100px;" *ngIf="!isPdfAvailable">
+    <button class="btnUpload" (click)="DownloadPDF()">
+      <i class="fa fa-download" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="viewPdf" *ngIf="!isPdfAvailable">
+    <button class="btnUpload" (click)="viewPdf()">{{ btnText }}</button>
+  </div>
+  <!-- <div *ngIf="submitBtn_boolean || approveBtn_boolean" class="position_rule">
+    <div class="placement-ruleChange f-12 bg-div-rule">
+      Current Selected rule : {{ selectedRule }}
+    </div>
+    <button
+      class="placement-ruleChange btnUpload bg-grn-btn"
+      (click)="open_modal()"
+    >
+      Change
+    </button>
+  </div> -->
+  <div *ngIf="approveBtn_boolean">
+    <div
+      class="placement-ruleChange f-12 bg-div-rule"
+      style="left: inherit; right: 145px; position: absolute"
+    >
+      Current Selected Approval Type : {{ approvalType }}
+    </div>
+  </div>
+
+  <div
+    *ngIf="submitBtn_boolean"
+    class="changePOInput"
+  >
+    <p-autoComplete
+      [(ngModel)]="selectedPONumber"
+      (onSelect)="onSelectPO($event)"
+      placeholder="Select PO Number"
+      [suggestions]="filteredPO"
+      (completeMethod)="filterPO($event)"
+      field="PODocumentID"
+      [dropdown]="true"
+    >
+      <ng-template let-country pTemplate="item">
+        <div class="country-item">
+          <div class="f-12">{{ country.PODocumentID }}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
+  </div>
+  <div
+    class="col-md-12 p-0 pl-1"
+    [ngClass]="showPdf ? 'col-lg-5' : 'col-lg-12'"
+  >
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li
+        class="nav-item mr-2"
+        pTooltip="Vendor details"
+        tooltipPosition="top"
+        (click)="changeTab('vendor')"
+      >
+        <a
+          class="nav-link "
+          id="vendor-tab"
+          data-toggle="tab"
+          href="#vendor"
+          role="tab"
+          aria-controls="vendor"
+          aria-selected="true"
+          [ngClass]="grnCreateBoolean? '':'active'"
+          >Vendor details</a
+        >
+      </li>
+      <li
+        class="nav-item mr-2"
+        pTooltip="Header details"
+        tooltipPosition="top"
+        (click)="changeTab('header')"
+      >
+        <a
+          class="nav-link"
+          id="header-tab"
+          data-toggle="tab"
+          href="#header"
+          role="tab"
+          aria-controls="header"
+          aria-selected="false"
+          >Header details</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        pTooltip="Line details"
+        tooltipPosition="top"
+        (click)="changeTab('line')"
+      >
+        <a
+          class="nav-link"
+          id="line-tab"
+          data-toggle="tab"
+          href="#line"
+          role="tab"
+          aria-controls="line"
+          aria-selected="false"
+          [ngClass]="grnCreateBoolean? 'active':''"
+          >Line details</a
+        >
+      </li>
+      <!-- <button class="raiseAlert" pTooltip="raise an alert" tooltipPosition="top"><i class="fa fa-exclamation-triangle"
+            aria-hidden="true"></i></button> -->
+    </ul>
+    <div class="tabsDiv bg-design-all">
+      <form #form="ngForm" class="tab-content tabDiv" id="myTabContent">
+        <!-- vendor -->
+        <div
+          *ngIf="currentTab == 'vendor'"
+          class="tab-pane fade"
+          [ngClass]="grnCreateBoolean? '':'show active'"
+          id="vendor"
+          role="tabpanel"
+          aria-labelledby="vendor-tab"
+        >
+          <div class="displayFlex">
+            <div *ngFor="let data of vendorData | keyvalue; let i = index">
+              <div>
+                <label class="label-head" style="margin-bottom: -5px"
+                  >{{ data.key }}
+                </label>
+                <input
+                  #inputv
+                  type="text"
+                  [value]="data.value"
+                  [title]="data.value"
+                  [disabled]="!vendorDetalilsEditBoolean"
+                  class="form-control mb-1 inputHeight"
+                  (blur)="method()"
+                />
+                <!-- (click)="drawrectangleonHighlight(i)"                 
+                    [ngStyle]="{'border': (value.isError === 1 ) ? '2px solid red' : (value.isError === 0 && value.IsUpdated === 0  ) ? '1px solid lightgray': (value.IsUpdated === 1 ) ? '2px solid #37dcc7':'' } "
+                  (change)="onChangeValue(value.TagLabel,inputv.value,value)"-->
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+
+        <!-- header -->
+        <div
+          *ngIf="currentTab == 'header'"
+          class="tab-pane fade"
+          id="header"
+          role="tabpanel"
+          aria-labelledby="header-tab"
+        >
+          <div class="displayFlex">
+            <div *ngFor="let value of inputData">
+              <div>
+                <label
+                  class="label-head"
+                  style="margin-bottom: -5px"
+                  (click)="hightlight(value)"
+                  >{{ value.TagLabel }}
+                  <span
+                    *ngIf="value.isError == 1"
+                    [pTooltip]="value.ErrorDesc"
+                    tooltipPosition="top"
+                    ><i
+                      class="fa fa-info-circle info_icon"
+                      aria-hidden="true"
+                    ></i
+                  ></span>
+                </label>
+                <input
+                  #inputv
+                  type="text"
+                  [value]="value.Value"
+                  [title]="value.Value"
+                  [disabled]="!editable || fin_boolean"
+                  [ngStyle]="{
+                    border:
+                      value.isError === 1
+                        ? '2px solid red'
+                        : value.isError === 0 && value.IsUpdated === 0
+                        ? '1px solid lightgray'
+                        : value.IsUpdated === 1
+                        ? '2px solid #37dcc7'
+                        : ''
+                  }"
+                  (change)="onChangeValue(value.TagLabel, inputv.value, value)"
+                  (blur)="saveChanges()"
+                  class="form-control mb-1 inputHeight"
+                />
+                <span
+                  *ngIf="
+                    value.DocumentUpdates && value.DocumentUpdates.OldValue
+                  "
+                >
+                  <span class="old_value"
+                    >Previous Value :
+                    <span style="color: #f38a6b"
+                      >"{{ value.DocumentUpdates.OldValue }}"</span
+                    >
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- line -->
+        <div
+          *ngIf="currentTab == 'line'"
+          class="tab-pane fade"
+          [ngClass]="grnCreateBoolean? 'show active':''"
+          id="line"
+          role="tabpanel"
+          aria-labelledby="line-tab"
+        >
+          <div *ngIf="!grnCreateBoolean">
+            <div class="d-flex justify-content-end">
+              <div class="d-flex mr-3">
+                <div class="represent_color invoice_color"></div>
+                <div class="f-12">Invoice</div>
+              </div>
+  
+              <div class="d-flex mr-3">
+                <div class="represent_color po_color"></div>
+                <div class="f-12">PO</div>
+              </div>
+  
+              <!-- <div class="d-flex">
+                <div class="represent_color grn_color"></div>
+                <div class="f-12">GRN</div>
+              </div> -->
+            </div>
+  
+            <table class="w-100 mt-2">
+              <tr>
+                <td class="f-13" *ngFor="let tagName of lineDisplayData">
+                  <span class="f-13 p-2">{{ tagName.tagname }}</span>
+                  <div *ngFor="let data of tagName.items">
+                    <div *ngFor="let data2 of data.linedetails" class="mb-3">
+                      <div
+                        [ngClass]="
+                          data2.invline[0]?.DocumentLineItems.isError == 1
+                            ? 'error-border'
+                            : ''
+                        "
+                      >
+                        <div
+                          class="f-12 td_padding invoice_color doc_height"
+                          data-text="IN"
+                          [ngClass]="
+                            tagName.tagname == 'Description' ? 'textType' : ''
+                          "
+                        >
+                          <div
+                            class="error-block"
+                            [ngClass]="
+                              data2.invline[0]?.DocumentLineItems.isError == 1
+                                ? 'error-symbol'
+                                : ''
+                            "
+                            [pTooltip]="
+                              data2.invline[0]?.DocumentLineItems.ErrorDesc
+                            "
+                            tooltipPosition="top"
+                          ></div>
+                          <input
+                            type="text"
+                            #lineInput
+                            [title]="data2.invline[0]?.DocumentLineItems.Value"
+                            [value]="data2.invline[0]?.DocumentLineItems.Value"
+                            class="f-12 input_disabled w-fill"
+                            style="text-transform: lowercase"
+                            [disabled]="!editable || fin_boolean"
+                            (change)="
+                              onChangeLineValue(
+                                lineInput.value,
+                                data2.invline[0]?.DocumentLineItems
+                              )
+                            "
+                            (blur)="saveChanges()"
+                            [ngClass]="!editable ? 'input_disabled' : ''"
+                            [ngStyle]="{
+                              width:
+                                tagName.tagname == 'Description'
+                                  ? '-webkit-fill-available'
+                                  : 'auto'
+                            }"
+                          />
+                          <span
+                            *ngIf="data2.invline[0]?.DocumentUpdates"
+                            class="prev_value"
+                            [title]="data2.invline[0]?.DocumentUpdates.OldValue"
+                            >prev:
+                            {{ data2.invline[0]?.DocumentUpdates.OldValue }}</span
+                          >
+                        </div>
+                        <div
+                          class="f-12 td_padding po_color doc_height"
+                          data-text="PO"
+                          [ngClass]="
+                            tagName.tagname == 'Description' ? 'textType' : ''
+                          "
+                        >
+                          <div class="error-block"></div>
+                          <input
+                            type="text"
+                            [title]="data2.poline[0]?.Value"
+                            [value]="data2.poline[0]?.Value"
+                            class="f-12 input_disabled w-fill"
+                            style="text-transform: lowercase"
+                            disabled
+                            [ngClass]="!editable ? 'input_disabled' : ''"
+                          />
+                          <!-- <span *ngIf="(approveBtn_boolean)" class="prev_value">prev: 345</span> -->
+                          <!-- <div class="f-12">
+                        <select class="f-12 input_disabled form-control" placeholder="mapping"
+                          [disabled]="!editable || fin_boolean" (change)="displayErrorDialog = true">
+                          <option class="f-12" *ngFor="let line of totalLineItems" [value]="line">{{line}}</option>
+                        </select>
+                      </div> -->
+                        </div>
+  
+                        <!-- <div
+                          class="f-12 td_padding grn_color doc_height"
+                          data-text="GR"
+                          [ngClass]="
+                            tagName.tagname == 'Description' ? 'textType' : ''
+                          "
+                        >
+                          <div class="error-block"></div>
+                          <input
+                            type="text"
+                            [title]="data2.grnline[0]?.Value"
+                            [value]="data2.grnline[0]?.Value"
+                            class="f-12 input_disabled w-fill"
+                            style="text-transform: lowercase"
+                            disabled
+                            [ngClass]="!editable ? 'input_disabled' : ''"
+                          />
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </td>
+  
+                <td [ngStyle]="{ width: mappedData?.length == 0 ? '' : '35%' }">
+                  <!-- <div class="visiblity_hidden">Dummy Data</div> -->
+                  <span class="f-13 p-2 mapping_line">Line items mapping</span>
+                  <div style="margin-top: -5px">
+                    <div *ngFor="let data of lineCount">
+                      <div *ngFor="let data2 of data.linedetails" class="mb-3">
+                        <div class="f-12 td_padding invoice_color doc_height">
+                          <input
+                            type="text"
+                            [title]="data2.invline[0]?.Value"
+                            [value]="data2.invline[0]?.Value"
+                            class="f-12 input_disabled visiblity_hidden"
+                            style="text-transform: lowercase"
+                            (blur)="displayErrorDialog = true"
+                            [disabled]="!editable || fin_boolean"
+                            [ngClass]="!editable ? 'input_disabled' : ''"
+                          />
+                        </div>
+                        <div class="f-12 td_padding po_color doc_height">
+                          <!-- <div class="error-block error-symbol"></div> -->
+  
+                          <div class="f-12" *ngIf="submitBtn_boolean">
+                            <select
+                              class="f-11 input_disabled form-control sel_drp"
+                              name="lineSelection"
+                              placeholder="mapping"
+                              ngModel
+                              [disabled]="!submitBtn_boolean"
+                              (change)="
+                                lineMapping(
+                                  data.linedetails[0].invline[0]
+                                    ?.DocumentLineItems?.itemCode,
+                                  $event.target.value,
+                                  data.itemcode
+                                )
+                              "
+                            >
+                              <option class="f-11" selected disabled>
+                                Select Line items
+                              </option>
+                              <option
+                                class="f-11"
+                                *ngFor="let line of lineItems"
+                                [value]="line.itemCode"
+                              >
+                                {{ line.Value }}
+                              </option>
+                            </select>
+                            <div
+                              class="d-inline-block display-mapped"
+                              *ngFor="let description of mappedData"
+                            >
+                              <span
+                                class="f-11"
+                                *ngIf="
+                                  description?.ItemUserMap
+                                    ?.mappedinvoiceitemcode ==
+                                  data.linedetails[0].invline[0]
+                                    ?.DocumentLineItems?.itemCode
+                                "
+                              >
+                                {{ description?.ItemMetaData?.description }}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="f-12 td_padding grn_color doc_height">
+                          <input
+                            type="text"
+                            [title]="data2.invline[0]?.Value"
+                            [value]="data2.invline[0]?.Value"
+                            class="f-12 input_disabled visiblity_hidden"
+                            style="text-transform: lowercase"
+                            (blur)="displayErrorDialog = true"
+                            [disabled]="!editable || fin_boolean"
+                            [ngClass]="!editable ? 'input_disabled' : ''"
+                          />
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Create GRN screen Line details -->
+          <div *ngIf="grnCreateBoolean">
+            <table class="invert" style="width: 100%">
+              <tr
+                class="invert_tr"
+                *ngFor="let item of lineDisplayData; let i = index"
+              >
+                <td class="lineName invert_th_td">{{ item.TagName }}</td>
+                <td
+                  class="linevalue invert_th_td"
+                  *ngFor="let line1 of item.linedata"
+                >
+                    <div *ngIf="(item.TagName != 'GRN - Quantity' && item.TagName != 'Comments')">
+                      <span
+                      class="d-flex"
+                      >
+                        <input
+                          type="text"
+                          [ngClass]="
+                            item.TagName == 'Description' ? 'w-des' : 'w-sm'
+                          "
+                          [ngStyle]="{
+                            border:
+                            line1.is_mapped === 1
+                                ? '2px solid #f2be42'
+                                : ''
+                          }"
+                          [name]="item.TagName"
+                          [value]="line1.Value"
+                          [title]="line1.Value"
+                          [disabled]="(item.TagName != 'GRN - Quantity')"
+                          class="form-control mb-1 inputHeight"
+                        />
+                      </span>
+                      <!-- <span [ngStyle]="{'visibility':line1.POValue ? 'visible':'hidden'}">
+                        <span
+                      data-text="PO"
+                      class="d-flex"
+                      [ngClass]="item.TagName == 'Description' ? 'textType' : ''" 
+                      >
+                      <input
+                          type="text"
+                          [ngClass]="
+                            item.TagName == 'Description' ? 'w-des' : 'w-sm'
+                          "
+                          [name]="item.TagName"
+                          [value]="line1.POValue"
+                          [title]="line1.POValue"
+                          [disabled]="(item.TagName != 'GRN - Quantity')"
+                          class="form-control mb-1 inputHeight"
+                        />
+                    </span>
+                        
+                      </span> -->
+                    </div>
+                    <div *ngIf="(!(item.TagName != 'GRN - Quantity') && item.TagName != 'Comments')">
+                      <span>
+                        <input
+                          #inputval
+                          type="text"
+                          [ngClass]="
+                            item.TagName == 'Description' ? 'w-des' : 'w-sm'
+                          "
+                          [name] = "line1.idDocumentLineItems"
+                          [value]="line1.Value"
+                          [title]="line1.Value"
+                          class="form-control mb-1 inputHeight"
+                          (change)="onChangeGrn(line1,inputval.value)"
+                          [(ngModel)]="line1.Value"                          
+                        />
+                      </span>
+                      <!-- <span style="visibility: hidden;">
+                        <input
+                          type="text"
+                          class="form-control mb-1 inputHeight"
+                        />
+                      </span> -->
+                    </div>
+                    <div *ngIf="(item.TagName == 'Comments')">
+                      <span>
+                        <input
+                          #inputval
+                          type="text"
+                          style="width:150px ;"
+                          [ngClass]="
+                            item.TagName == 'Description' ? 'w-des' : 'w-sm'
+                          "
+                          [ngModelOptions]="{standalone: true}"
+                          [value]="line1.ErrorDesc"
+                          [title]="line1.ErrorDesc"
+                          class="form-control mb-1 inputHeight"
+                          (change)="onChangeGrn(line1,inputval.ErrorDesc)"
+                          [(ngModel)]="line1.ErrorDesc"                          
+                        />
+                      </span>
+                      <!-- <span style="visibility: hidden;">
+                        <input
+                          type="text"
+                          class="form-control mb-1 inputHeight"
+                        />
+                      </span> -->
+                    </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div
+          *ngIf="editable && !grnCreateBoolean"
+          class="btnFooter"
+          mat-dialog-actions
+        >
+          <!-- <button mat-button class="btn btnVender mr-4" type="button">Change attachment</button> -->
+          <button
+            class="btn btnVender bg-btn-cancel mr-3"
+            type="button"
+            (click)="backToInvoice()"
+          >
+            Cancel
+          </button>
+          <button
+          *ngIf="submitBtn_boolean"
+          class="btn btnVender bg-btn-cancel mr-3"
+          (click)="displayrejectDialog = true"
+        >
+          Reject
+        </button>
+          <button
+            *ngIf="submitBtn_boolean && financeapproveDisplayBoolean"
+            class="btn btnVender bg-btn-success mr-3"
+            (click)="reviewManualApprove()"
+          >
+            Review to Manual Approval
+          </button>
+          <!-- <button
+            *ngIf="submitBtn_boolean"
+            class="btn btnVender bg-btn-success"
+            (click)="send_review_modal()"
+          >
+            Review to Batch
+          </button> -->
+          <button
+            *ngIf="approveBtn_boolean && financeapproveDisplayBoolean"
+            class="btn btnVender bg-btn-success mr-3"
+            (click)="approveChangesManual()"
+          >
+            Send to Manual Approval
+          </button>
+          <button
+            *ngIf="submitBtn_boolean"
+            class="btn btnVender bg-btn-success"
+            (click)="approveChangesBatch()"
+          >
+            Send to Batch
+          </button>
+
+          <!-- <button *ngIf="financeApproveBoolean && fin_boolean" class="btn btnVender" style="min-width: fit-content;"
+          (click)="financeApprove()">Finance
+          Approve</button> -->
+          <!-- <button *ngIf=" flipBoolean" class="btn btnVender mr-2 " (click)="Create()" >Create</button>
+            <button *ngIf="!tabChangeLINEBoolean && flipBoolean"  class="btn btnVender mr-2" (click)="displayAddLabelDialog = true" pTooltip="Add Label" tooltipPosition="top" >Add Label</button>
+            <button *ngIf="tabChangeLINEBoolean && flipBoolean" class="btn btnVender " (click)="addLine()" >Add Line</button> -->
+        </div>
+
+        <div *ngIf="grnCreateBoolean" class="GRN_btn_position">
+          <button
+          class="btn btnVender bg-btn-cancel mr-3"
+          type="button"
+          (click)="backToInvoice()"
+          >
+            Cancel
+          </button>
+          <button
+          class="btn btnVender bg-btn-success mr-3"
+          type="submit"
+          (click)="onSave_submit(form.value,false,'GRN data saved successfully')"
+          >
+          Save
+          </button>
+          <button
+            class="btn btnVender bg-btn-success mr-3"
+            type="submit"
+            (click)="onSave_submit(form.value,true,'GRN created successfully')"
+          >
+            Create GRN
+          </button>
+        </div>
+      </form>
+      <ngx-spinner
+            bdColor="rgba(251, 251, 251, 0.8)"
+            size="medium"
+            color="#070900"
+            [fullScreen]="false"
+            type="ball-spin-clockwise"
+          >
+            <p style="color: rgb(0, 0, 0)"></p>
+          </ngx-spinner>
+    </div>
+  </div>
+  <div *ngIf="showPdf" class="col-lg-7 col-12 maxPage ShowInvoiceTypeSize">
+    <div>
+      <section>
+        <div *ngIf="isImgBoolean" class="canvasConatiner_height">
+          <!-- *ngFor="let img of imgArray; let i = index " -->
+          <div style="visibility: hidden">
+            <div *ngIf="editable">
+              <span
+                [ngClass]="isRect ? 'btnInvoiceType1' : 'btnInvoiceType'"
+                (click)="drawrectangle()"
+                style="cursor: pointer"
+                >Tag</span
+              >
+            </div>
+            <div *ngIf="!editable">
+              <span class="btnInvoiceType" style="cursor: not-allowed"
+                >Tag</span
+              >
+            </div>
+          </div>
+          <div id="parentDiv">
+            <!-- <img [src]="showInvoice"> -->
+            <canvas #canvas id="canvas1"></canvas>
+          </div>
+          <span class="zoom zoom_pos_img">
+            <span class="zoom-in" (click)="zoomin()"
+              ><i class="fa fa-plus" aria-hidden="true"></i></span
+            ><br />
+            <span class="zoom-out" (click)="zoomout()"
+              ><i class="fa fa-minus" aria-hidden="true"></i
+            ></span>
+          </span>
+        </div>
+        <div *ngIf="!isImgBoolean" style="position: relative;">
+          <div
+            *ngIf="isLoaded"
+            style="text-align: center; position: fixed; z-index: 100; left: 70%"
+          >
+            <div>
+              <button
+                (click)="prevPage()"
+                [disabled]="page === 1"
+                class="preBtn"
+              >
+                Prev
+              </button>
+              <span class="totalPages">{{ page }} / {{ totalPages }}</span>
+              <button
+                (click)="nextPage()"
+                [disabled]="page === totalPages"
+                class="preBtn"
+              >
+                Next
+              </button>
+            </div>
+
+            <!-- <div class="rotate_text">
+              <button class="preBtn" (click)="rotate(-90)"><i class="fa fa-undo" aria-hidden="true"></i></button>
+              <div class="f-12 ml-1">Rotate</div>
+              <button class="preBtn mr-1" (click)="rotate(90)"><i class="fa fa-repeat" aria-hidden="true"></i></button>
+            </div> -->
+
+            <span class="zoom zoom_pos_pdf">
+              <span class="zoom-in" (click)="zoomIn()"
+                ><i class="fa fa-plus" aria-hidden="true"></i></span
+              ><br />
+              <span class="zoom-out" (click)="zoomOut()"
+                ><i class="fa fa-minus" aria-hidden="true"></i
+              ></span>
+            </span>
+          </div>
+
+          <pdf-viewer
+            #pdfviewer
+            [src]="showInvoice"
+            style="width: 100%; overflow: auto"
+            [show-all]="true"
+            [zoom]="zoomdata"
+            [original-size]="false"
+            [fit-to-page]="true"
+            [page]="page"
+            [rotation]="rotation"
+            [render-text]="true"
+            [render-text-mode]="2"
+            (after-load-complete)="afterLoadComplete($event)"
+            (text-layer-rendered)="textLayerRendered($event)"
+            (mouseup)="selectedText()"
+          >
+          </pdf-viewer>
+        </div>
+      </section>
+      <!-- <img [src]="imageUrl" style="width: 100%;height: 80vh;"><br/> -->
+    </div>
+  </div>
+</div>
+
+<!-- Rule selection modal-->
+<p-dialog
+  header="Change Rule For Batch "
+  [(visible)]="displayRuleDialog"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '31vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div>
+    <mat-radio-group
+      class="example-radio-group"
+      [(ngModel)]="SelectRuleOption.value"
+    >
+      <mat-radio-button
+        class="example-radio-button f-13"
+        *ngFor="let rule of givenRules"
+        [value]="rule"
+        [disabled]="rule.IsActive == 0"
+      >
+        {{ rule.Name }}
+        <span *ngIf="rule.IsActive == 0" class="f-11 ml-1 glow"
+          >Coming soon</span
+        >
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center">
+      <button
+        type="button"
+        class="btn btnVender bg-btn-cancel"
+        (click)="displayRuleDialog = false"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="!save_rule_boolean"
+        type="button"
+        class="btn btnVender bg-btn-success"
+        (click)="sendReview()"
+      >
+        Send for Review Batch
+      </button>
+      <button
+        *ngIf="save_rule_boolean"
+        type="button"
+        class="btn btnVender bg-btn-success"
+        (click)="save_rule()"
+      >
+        Save
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- edit type selection modal-->
+<p-dialog
+  header="Select Error type "
+  [(visible)]="displayErrorDialog"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '31vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div>
+    <mat-radio-group
+      class="example-radio-group"
+      [(ngModel)]="SelectErrorOption"
+    >
+      <mat-radio-button
+        class="example-radio-button f-13"
+        *ngFor="let rule of givenErrors"
+        [value]="rule.idbatcherrortypes"
+      >
+        {{ rule.name }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center">
+      <button
+        type="button"
+        class="btn btnVender bg-btn-cancel"
+        (click)="cancelSelectErrorRule()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btnVender bg-btn-success"
+        (click)="updateLine()"
+      >
+        Save Changes
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Reject modal-->
+<p-dialog
+  header="ADD Rejection Comments "
+  [(visible)]="displayrejectDialog"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '31vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div>
+    <!-- <label class="label-head">
+      <input
+        type="radio"
+        name="addLabel"
+        [(ngModel)]="rejectOption.value"
+        value="IT_reject"
+        required
+      />
+      <span class="ml-2 f-13">IT Reject</span>
+    </label>
+    <br />
+
+    <label class="label-head" *ngIf="!isServiceData">
+      <input
+        type="radio"
+        name="addLabel"
+        [(ngModel)]="rejectOption.value"
+        value="vendor_reject"
+        required
+      />
+      <span class="ml-2 f-13"> Vendor Reject</span>
+    </label>
+    <br /> -->
+
+    <label class="label-head mt-2 mb-0">Comments</label>
+    <textarea
+      name="comments"
+      class="form-control"
+      style="font-size: 13px"
+      minlength="10"
+      [(ngModel)]="rejectionComments"
+      cols="50"
+      rows="2"
+      ngModel
+      #comments="ngModel"
+      required
+    ></textarea>
+    <small class="noteCss">NOTE: Add atleast 10 characters</small>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center">
+      <button
+        type="button"
+        class="btn btnVender bg-btn-cancel"
+        (click)="displayrejectDialog = false"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btnVender bg-btn-success"
+        [disabled]="comments.invalid"
+        [ngStyle]="{ cursor: comments.invalid ? 'not-allowed' : 'pointer' }"
+        (click)="Reject()"
+      >
+        Send for Rejection
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+<p-toast></p-toast>

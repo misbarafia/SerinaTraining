@@ -1,0 +1,6 @@
+<div *ngIf="ready" class="container-fluid">
+<app-taggingtool (changeTab)="getTab($event)" *ngIf="showtab.show1" [modelData]="modelData" [frConfigData]="frConfigData"></app-taggingtool>
+<app-trainingtool (changeTab)="getTab($event)" *ngIf="showtab.show2" [modelData]="modelData" [frConfigData]="frConfigData"></app-trainingtool>
+<app-testingtool (changeTab)="getTab($event)" *ngIf="showtab.show4" [modelData]="modelData" [frConfigData]="frConfigData"></app-testingtool>
+<app-composingtool (changeTab)="getTab($event)" *ngIf="showtab.show3" [modelData]="modelData" [frConfigData]="frConfigData"></app-composingtool>
+</div>        

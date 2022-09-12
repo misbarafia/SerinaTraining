@@ -1,0 +1,307 @@
+.rolespage{
+    overflow: auto;
+    max-height: 100vh;
+    min-height: 70vh;
+    overflow-x: hidden;
+}
+// .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+//     color: #272727 !important;
+//     background-color: #f2be42 !important;
+// }
+// .active{
+//     color: #272727 !important;
+//     background-color: #f2be42 !important;
+//     border-radius: 10px;
+// }
+// a{
+//     color: #272727 !important;
+// }
+// .nav-pills .nav-link {
+//     border-radius: 10px;
+//     font-weight: 600;
+//     font-size: 12px;
+//     padding: 4px 14px;
+//     border: none;
+//     cursor: pointer;
+// }
+
+.btnFooter{
+    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+  }
+
+:host ::ng-deep .mat-elevation-z8 {
+    box-shadow: none;
+    max-height: 84vh;
+    overflow: auto;
+}
+.btnUpload-width{
+    width: 120px;
+}
+.f-16{
+    font-size: 16px;
+}
+// .positionCreateUpload{
+//     position: absolute;
+//     right: 2%;
+//     top: 65px;
+//     z-index: 11;
+// }
+.mt-user {
+    position: absolute;
+    top: 141px;
+    left: 375px;
+    transition: all 0.5s ease;
+    font-size: 20px;
+}
+.statusType {
+    color: white !important;
+}
+
+// primeng Table
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    border: 1px solid #f5f5f5;
+    border-width: 0 0 1px 0;
+    padding: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #0f3f62 !important;
+    text-overflow: ellipsis;
+}
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    text-align: left;
+    border: 1px solid #f5f5f5;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    padding: 10px;
+    font-size: 12px;
+    color: #495057;
+    background: #ffffff;
+    transition: box-shadow 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+:host ::ng-deep .p-paginator {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+:host ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page {
+    border: 0 none;
+    color: #6c757d;
+    min-width: 30px;
+    font-size: 12px;
+    height: 30px;
+    margin: 5px;
+    transition: box-shadow 0.2s;
+    border-radius: 3px;
+}
+:host ::ng-deep .pi-chevron-down:before {
+    content: "\e902";
+    font-size: 13px;
+}
+:host ::ng-deep .p-paginator .p-paginator-current{
+    font-size: 13px;
+}
+
+
+
+  // serach
+.searchInput{
+    background: #ffffff;
+    padding: 8px 14px;
+    width: 70%;
+    height: 30px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    margin-top: 10px;
+    border: 1px solid #d3d3d3;
+  }
+  .searchInput:focus{
+      outline: 0;
+  }
+.searchBar{
+    position: fixed;
+    z-index: 10;
+    top: 47px;
+    right: 94px;
+}
+.searchIcon{
+    position: relative;
+    top: 5px;
+    left: -27px;
+    font-size: 21px;
+    color: #a9a9a9;
+}
+.tableSearchInput{
+    width: 100%;
+    height: 30px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    font-size: 12px;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // text-align: center;
+}
+.tableSearchInput:focus{
+    outline: 0 !important;
+}
+.f-12{
+    font-size: 12px !important;
+    font-weight: 600;
+}
+.label-head{
+    font-size: 12px;
+    font-weight: 600;
+    color: #9a9a9a;
+    white-space: nowrap; 
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+}
+.form-control:focus {
+    color: #495057;
+    border-color: lightgray;
+    box-shadow: none;
+}
+
+.f-14B{
+    font-size: 14px;
+    font-weight: 600;
+}
+.clrDes{
+    color: #9c9c9c;
+}
+.roleAccess{
+    margin-left: 25px !important;
+    font-weight: 700;
+}
+.createDivht{
+    height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.inviteLabel{
+    font-size: 12px;
+    font-weight: 600;
+    color: #a29f9f;
+    margin-bottom: 0px;
+}
+.inputBox{
+    border: 1px solid #d3d3d3;
+    background: white;
+    font-size: 12px;
+    height: 35px;
+    margin-bottom: 8px
+}
+
+// confirm dailog
+:host ::ng-deep .p-dialog .p-dialog-header{
+    padding: 0.5rem;
+}
+:host ::ng-deep.p-dialog .p-dialog-footer{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 40px;
+}
+.deleteDiv{
+    display: flex;
+    align-items: center;
+    margin-top: 0px;
+    flex-direction: column;
+}
+
+
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+    font-size: 16px;
+    padding-left: 16px;
+}
+@media screen and (max-width: 800px) {
+    .searchBar {
+        position: fixed;
+        z-index: 10;
+        top: 55px;
+        left: 64%;
+    }
+    .ulTab{
+        max-width: 67% !important;
+    }
+    .statusType{
+        width: 40px !important;
+        margin: 0;
+        padding: 2px 8px !important;
+    }
+    // :host ::ng-deep .nav-pills .nav-link{
+    //     font-size: 9px !important;
+    // }
+    // :host ::ng-deep.p-datatable .p-datatable-thead > tr > th{
+    //     font-size: 8px !important;
+    // }
+    // :host ::ng-deep .p-datatable .p-datatable-thead > tr > td{
+    //     font-size: 8px;
+    // }
+    .searchInput{
+        width: 60%;
+    }
+    .inputForm{
+        width: 90%;
+    }
+    :host ::ng-deep .p-autocomplete-dd .p-autocomplete-input, .p-autocomplete-dd .p-autocomplete-multiple-container {
+
+        width:288px;
+        height: 35px;
+        // font-size: 10px;
+    }
+    :host ::ng-deep .minWidthOverride {
+        width: 120px !important;
+    }
+    .listEntity{
+        width: 94%;
+        // font-size: 9px;
+    }
+    .f-13 {
+        // font-size: 9px;
+        font-weight: 600;
+    }
+    .f-12{
+        // font-size: 9px !important;
+        font-weight: 600;
+    }
+  }
+  @media screen and (max-width: 1100px) and (min-width: 800px) { 
+    .searchBar{
+        top: 55px;
+        left: 71%;
+    }
+    .statusType{
+        margin: 4px;
+    }
+    .listEntity{
+        width: 89%;
+        // font-size: 11px;
+    }
+    .f-13 {
+        // font-size: 11px;
+        font-weight: 600;
+    }
+    .f-12{
+        // font-size: 11px !important;
+        font-weight: 600;
+    }
+    
+  }

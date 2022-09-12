@@ -1,0 +1,61 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: server
+  namespace: production
+spec: 
+  selector: 
+    matchLabels: 
+      app: server
+  replicas: 5 # tells deployment to run 2 pods matching the template 
+  template:
+    metadata: 
+      labels: 
+        app: server
+    spec: 
+      containers: 
+      - name: server 
+        image: regserinaplus.azurecr.io/serina-server:release
+        imagePullPolicy: Always
+        ports: 
+        - containerPort: 8000 
+        resources:
+          requests:
+            cpu: 200m
+          limits:
+            cpu: 400m
+        env:
+        - name: DATABASE_HOST
+          value: 'serina-mysql-prod.mysql.database.azure.com'
+        - name: DATABASE_USER
+          value: serina
+        - name: DATABASE_PASS
+          value: dsserina
+        - name: DATABASE_DB
+          value: serina
+        - name: Azure_conn_str
+          value: DefaultEndpointsProtocol=https;AccountName=serinablob;AccountKey=9eOFPkLlYKYHm+rm0RLZ0NuvQ/D01WVjDjDSFTGRmABeUZEYoZsMflRL7c3evwtDLCwXhKW3Fjo0Ps3feRdt/A==;EndpointSuffix=core.windows.net
+        - name: WAIT_HOSTS
+          value: serina-mysql-prod.mysql.database.azure.com:3306 
+        - name: WAIT_HOSTS_TIMEOUT
+          value: "300"
+        - name: WAIT_SLEEP_INTERVAL   
+          value: "30"
+        - name: WAIT_HOST_CONNECT_TIMEOUT
+          value: "30"
+      imagePullSecrets:
+      - name: deploymentsecret
+--- 
+# https://kubernetes.io/docs/concepts/services-networking/service/#defining-a-service  
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-cluster
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: server

@@ -1,0 +1,25 @@
+.formDiv {
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+:host ::ng-deep{
+    .p-chips {
+        display: inline-flex;
+        width: 100%;
+    }
+    .p-chips .p-chips-multiple-container {
+        padding: 1px 6px;
+        min-width: 100% !important;
+        font-size: 12px !important;
+        font-weight: 600;
+    }
+    .p-chips-input-token input {
+        font-size: 13px !important;
+        font-weight: 600;
+    }
+    .p-chips .p-chips-multiple-container .p-chips-token .p-chips-token-icon {
+        font-size: 12px;
+    }
+}

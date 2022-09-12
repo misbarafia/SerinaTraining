@@ -1,0 +1,36 @@
+.chart_title {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background-color: #fde0d0;
+    z-index: 12;
+  }
+  .charts_height {
+    max-height: 74vh;
+    overflow: auto;
+  }
+  .center-card-text {
+    text-align: center;
+    position: absolute;
+    top: 100px;
+    left: 0px;
+    width: 100%;
+  }
+  @media screen and (max-width:1300px) {
+    .filter_inputDash {
+      top: 83px;
+    }
+    .filters_div {
+      top: 82px;
+    }
+    .tableDtDiv {
+      position: relative;
+      top: 27px;
+    }
+    .charts_height {
+      position: relative;
+      top: 20px;
+    }
+  }

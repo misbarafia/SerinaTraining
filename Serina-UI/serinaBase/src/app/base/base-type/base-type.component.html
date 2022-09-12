@@ -1,0 +1,700 @@
+<!-- <div style="display: flex">
+
+
+</div> -->
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav sideBar d-flex" mode="side" opened>
+    <div class="d_mobile">
+      <!-- <div class="tittleVendor">
+              Customer Portal
+          </div> -->
+      <div class="logotitle">
+        <div class="logoPlaceholder">
+          <img
+            class="logo_img"
+            src="assets/serina.png"
+            alt="logo"
+            width="42"
+            height="42"
+          />
+        </div>
+        <div class="placeLogo">
+          Serina Plus
+          <span class="portalName">Customer Portal</span>
+        </div>
+      </div>
+      <div class="routeLinks">
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Dashboard"
+          [routerLink]="'home'"
+        >
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            home
+          </span>
+          Dashboard
+        </div>
+
+        <div
+          *ngIf="uploadPermissionBoolean"
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Upload"
+          [routerLink]="'uploadInvoices'"
+        >
+          <!-- <i class="fa fa-cloud-upload f-18 ml-r-12" aria-hidden="true"></i> -->
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            upload_file
+          </span>
+          Upload
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Summary"
+          [routerLink]="'documentSummary'"
+        >
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            receipt
+          </span>
+          Summary
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Document Status"
+          [routerLink]="'invoice'"
+        >
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            receipt
+          </span>
+          Document Status
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Exceptions"
+          [routerLink]="'ExceptionManagement'"
+          (click)="showInnerException()"
+          *ngIf="excpetionPageAccess"
+        >
+          <i
+            class="fa fa-pencil-square f-18 ml-r-12"
+            aria-hidden="true"
+            routerLinkActive="ml-9"
+          ></i>
+
+          Exceptions
+        </div>
+        <ul *ngIf="openBooleanException" class="showHide f-13">
+          <li
+            class="navLink"
+            id="ex_sub"
+            [routerLink]="'ExceptionManagement'"
+            [ngClass]="
+              router.url == '/customer/ExceptionManagement'
+                ? 'active'
+                : 'navLink'
+            "
+          >
+            Vendor Based
+          </li>
+          <li
+            class="navLink"
+            id="ex_sub"
+            [routerLink]="'ExceptionManagement/Service_ExceptionManagement'"
+            [ngClass]="
+              router.url ==
+              '/customer/ExceptionManagement/Service_ExceptionManagement'
+                ? 'active'
+                : 'navLink'
+            "
+          >
+            Service Based OCR
+          </li>
+        </ul>
+
+        <div
+          *ngIf="financeapproveDisplayBoolean"
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Approval"
+          [routerLink]="'approved'"
+        >
+          <!-- <i class="fa fa-certificate f-18 ml-r-12" aria-hidden="true"></i> -->
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            verified
+          </span>
+          Approval
+        </div>
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Create GRN"
+          [routerLink]="'Create_GRN_inv_list'"
+          *ngIf="GRNPageAccess"
+        >
+          <!-- <i class="fa fa-certificate f-18 ml-r-12" aria-hidden="true"></i> -->
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            verified
+          </span>
+          Create GRN
+        </div>
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Vendors"
+          [routerLink]="'vendor'"
+          *ngIf="vendor_SP_PageAccess"
+          (click)="sideMenuVendor()"
+        >
+          <!-- <i class="fa fa-user f-18 ml-r-12" aria-hidden="true"></i> -->
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            business_center
+          </span>
+          Vendors
+        </div>
+        <ul *ngIf="openBooleanVendor" class="showHide f-13">
+          <li
+            class="navLink"
+            id="ex_sub"
+            [routerLink]="'vendor'"
+            [ngClass]="router.url == '/customer/vendor' ? 'active' : 'navLink'"
+          >
+            List
+          </li>
+          <li
+            class="navLink"
+            id="ex_sub"
+            [routerLink]="'vendor/item_master'"
+            [ngClass]="
+              router.url.includes('item_master') ? 'active' : 'navLink'
+            "
+          >
+            Item Master
+          </li>
+        </ul>
+
+        <div
+          class="navLink"
+          [routerLink]="'serviceProvider'"
+          routerLinkActive="active"
+          data-text="Service Provider"
+          (click)="showInner()"
+          *ngIf="vendor_SP_PageAccess"
+        >
+          <i
+            class="fa fa-user-secret f-18 ml-r-12"
+            aria-hidden="true"
+            routerLinkActive="ml-9"
+          ></i>
+          <!-- <span class="material-icons f-18 ml-r-12">
+                      supervised_user_circle
+                      </span> -->
+          Service Provider
+        </div>
+        <ul *ngIf="openBoolean" class="showHide f-13">
+          <li
+            class="navLink"
+            id="sp_sub"
+            [routerLink]="'serviceProvider'"
+            [ngClass]="
+              router.url == '/customer/serviceProvider' ? 'active' : 'navLink'
+            "
+          >
+            List
+          </li>
+          <li
+            class="navLink"
+            id="sp_sub"
+            [routerLink]="'serviceProvider/UtilityInvokeBatch'"
+            [ngClass]="
+              router.url == '/customer/serviceProvider/UtilityInvokeBatch'
+                ? 'active'
+                : 'navLink'
+            "
+          >
+            Utility Invoice Batch
+          </li>
+          <!-- <li class="navLink" id="sp_sub" [routerLink]="'serviceProvider/summary'"
+                      [ngClass]="router.url == '/customer/serviceProvider/summary'?'active':'navLink'">Summary </li> -->
+          <!-- <li class="navLink" id="sp_sub" [routerLink]="'serviceProvider/invoices'"
+                      [ngClass]="router.url == '/customer/serviceProvider/invoices'?'active':'navLink'">invoices</li> -->
+          <!-- <li
+            class="navLink"
+            id="sp_sub"
+            [routerLink]="'serviceProvider/bulk_upload'"
+            [ngClass]="
+              router.url == '/customer/serviceProvider/bulk_upload'
+                ? 'active'
+                : 'navLink'
+            "
+          >
+            Bulk Upload
+          </li> -->
+          <li
+            *ngIf="isAGIUser"
+            class="navLink"
+            id="sp_sub"
+            [routerLink]="'serviceProvider/EtisalatCostAllocation'"
+            [ngClass]="
+              router.url == '/customer/serviceProvider/EtisalatCostAllocation'
+                ? 'active'
+                : 'navLink'
+            "
+          >
+            Upload Etisalat
+          </li>
+        </ul>
+
+        <div
+          *ngIf="addUsersBoolean"
+          class="navLink"
+          data-text="Roles"
+          routerLinkActive="active"
+          [routerLink]="'roles'"
+        >
+          <!-- <i class="fa fa-user-plus f-18 ml-r-12" aria-hidden="true"></i> -->
+          <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+            manage_accounts
+          </span>
+          Roles
+        </div>
+
+        <div
+          class="navLink"
+          routerLinkActive="active"
+          data-text="Settings"
+          [routerLink]="'settings'"
+          *ngIf="settingsPageAccess"
+        >
+          <i
+            class="fa fa-cogs f-18 ml-r-12"
+            aria-hidden="true"
+            routerLinkActive="ml-9"
+          ></i>
+          Settings
+        </div>
+      </div>
+
+      <div class="copy">Copyrights 2021</div>
+    </div>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <div class="bodyContent">
+      <div class="d_mobile">
+        <i
+          class="fa fa-bars menu_icon f-16"
+          aria-hidden="true"
+          (click)="drawer.toggle()"
+        ></i>
+        <div class="f-right">
+          <span class="userName last_log f-11">
+            <span>Last login :&nbsp; </span>
+            {{ last_login1 | date: "medium" }} &nbsp; &nbsp;
+          </span>
+          <span
+            class="b-right"
+            style="padding-right: 14px; cursor: pointer"
+            [routerLink]="'notifications'"
+          >
+            <i
+              class="pi pi-bell p-mr-4 p-text-secondary f-18"
+              [value]="numberOfNotify"
+              pBadge
+            ></i
+          ></span>
+
+          <span class="ml-2 dropdown">
+            <!-- <span class="material-icons top-9 ">
+                      keyboard_arrow_down
+                  </span> -->
+            <i class="fa fa-user-circle-o profileIcon" aria-hidden="true"></i>
+            <!-- <img src="/assets/maskGroup89.png" alt="Logo" width="40" height="40" style="border-radius: 50px;"> -->
+          </span>
+          <span class="b-left-sky clr userName"
+            >{{ userDetails.userdetails.firstName }}
+          </span>
+          <!-- <span class="material-icons " title="Sign Out" >
+                  power_settings_new
+                  </span> -->
+          <span (clickOutside)="onClickedOutside($event)">
+            <mat-icon
+              class="sign_out dropdown"
+              svgIcon="logout"
+              title="Sign Out"
+              (click)="isActive()"
+            ></mat-icon>
+            <!-- <i class="fa fa-power-off "  aria-hidden="true"></i> -->
+            <div
+              [ngStyle]="{ display: showLogout ? 'block' : 'none' }"
+              class="dropdown-content"
+            >
+              <a (click)="openDialog()">Change Password</a>
+              <a (click)="displayResponsivepopup = true">Logout</a>
+            </div>
+          </span>
+        </div>
+      </div>
+
+      <nav class="d_desk">
+        <div class="logotitle">
+          <div class="logoPlaceholder">
+            <img
+              class="logo_img"
+              src="assets/serina.png"
+              alt="logo"
+              width="35"
+              height="35"
+            />
+          </div>
+          <div class="placeLogo">
+            Serina Plus
+            <span class="portalName">Customer Portal</span>
+          </div>
+        </div>
+        <div class="f-right mr-3 mob_menu" (click)="onClickMenu()">
+          <!-- <i class="fa fa-bars menu_icon f-16 text-light" aria-hidden="true"></i> -->
+          <input type="checkbox" name="toggle-nav" />
+          <label for="toggle-nav">
+            <span class="menu-icon"></span>
+          </label>
+        </div>
+        <section class="pos_rel" *ngIf="menubarBoolean">
+          <div class="routeLinks route_mobile">
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Dashboard"
+              [routerLink]="'home'"
+            >
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                home
+              </span>
+              Dashboard
+            </div>
+
+            <div
+              *ngIf="uploadPermissionBoolean"
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Upload"
+              [routerLink]="'uploadInvoices'"
+            >
+              <!-- <i class="fa fa-cloud-upload f-18 ml-r-12" aria-hidden="true"></i> -->
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                upload_file
+              </span>
+              Upload
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Summary"
+              [routerLink]="'documentSummary'"
+            >
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                receipt
+              </span>
+              Summary
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Document Status"
+              [routerLink]="'invoice'"
+            >
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                receipt
+              </span>
+              Document Status
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Exceptions"
+              [routerLink]="'ExceptionManagement'"
+              (click)="showInnerException()"
+              *ngIf="excpetionPageAccess"
+            >
+              <i
+                class="fa fa-pencil-square-o f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+
+              Exceptions
+            </div>
+            <ul *ngIf="openBooleanException" class="showHide f-13">
+              <li
+                class="navLink"
+                id="ex_sub"
+                [routerLink]="'ExceptionManagement'"
+                [ngClass]="
+                  router.url == '/customer/ExceptionManagement'
+                    ? 'active'
+                    : 'navLink'
+                "
+              >
+                Vendor Based
+              </li>
+              <li
+                class="navLink"
+                id="ex_sub"
+                [routerLink]="'ExceptionManagement/Service_ExceptionManagement'"
+                [ngClass]="
+                  router.url ==
+                  '/customer/ExceptionManagement/Service_ExceptionManagement'
+                    ? 'active'
+                    : 'navLink'
+                "
+              >
+                Service Based OCR
+              </li>
+            </ul>
+
+            <div
+              *ngIf="financeapproveDisplayBoolean"
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Approval"
+              [routerLink]="'approved'"
+            >
+              <!-- <i class="fa fa-certificate f-18 ml-r-12" aria-hidden="true"></i> -->
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                verified
+              </span>
+              Approval
+            </div>
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Create GRN"
+              [routerLink]="'Create_GRN_inv_list'"
+              *ngIf="GRNPageAccess"
+            >
+              <!-- <i class="fa fa-certificate f-18 ml-r-12" aria-hidden="true"></i> -->
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                verified
+              </span>
+              Create GRN
+            </div>
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Vendors"
+              [routerLink]="'vendor'"
+              *ngIf="vendor_SP_PageAccess"
+              (click)="sideMenuVendor()"
+            >
+              <!-- <i class="fa fa-user f-18 ml-r-12" aria-hidden="true"></i> -->
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                business_center
+              </span>
+              Vendors
+            </div>
+            <ul *ngIf="openBooleanVendor" class="showHide f-13">
+              <li
+                class="navLink"
+                id="ex_sub"
+                [routerLink]="'vendor'"
+                [ngClass]="
+                  router.url == '/customer/vendor' ? 'active' : 'navLink'
+                "
+              >
+                List
+              </li>
+              <li
+                class="navLink"
+                id="ex_sub"
+                [routerLink]="'vendor/item_master'"
+                [ngClass]="
+                  router.url.includes('item_master') ? 'active' : 'navLink'
+                "
+              >
+                Item Master
+              </li>
+            </ul>
+
+            <div
+              class="navLink"
+              [routerLink]="'serviceProvider'"
+              routerLinkActive="active"
+              data-text="Service Provider"
+              (click)="showInner()"
+              *ngIf="vendor_SP_PageAccess"
+            >
+              <i
+                class="fa fa-user-secret f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              <!-- <span class="material-icons f-18 ml-r-12">
+                          supervised_user_circle
+                          </span> -->
+              Service Provider
+            </div>
+            <ul *ngIf="openBoolean" class="showHide f-13">
+              <li
+                class="navLink"
+                id="sp_sub"
+                [routerLink]="'serviceProvider'"
+                [ngClass]="
+                  router.url == '/customer/serviceProvider'
+                    ? 'active'
+                    : 'navLink'
+                "
+              >
+                List
+              </li>
+              <li
+                class="navLink"
+                id="sp_sub"
+                [routerLink]="'serviceProvider/UtilityInvokeBatch'"
+                [ngClass]="
+                  router.url == '/customer/serviceProvider/UtilityInvokeBatch'
+                    ? 'active'
+                    : 'navLink'
+                "
+              >
+                Utility Invoice Batch
+              </li>
+              <!-- <li class="navLink" id="sp_sub" [routerLink]="'serviceProvider/summary'"
+                          [ngClass]="router.url == '/customer/serviceProvider/summary'?'active':'navLink'">Summary </li> -->
+              <!-- <li class="navLink" id="sp_sub" [routerLink]="'serviceProvider/invoices'"
+                          [ngClass]="router.url == '/customer/serviceProvider/invoices'?'active':'navLink'">invoices</li> -->
+              <!-- <li
+                class="navLink"
+                id="sp_sub"
+                [routerLink]="'serviceProvider/bulk_upload'"
+                [ngClass]="
+                  router.url == '/customer/serviceProvider/bulk_upload'
+                    ? 'active'
+                    : 'navLink'
+                "
+              >
+                Bulk Upload
+              </li> -->
+              <li
+                *ngIf="isAGIUser"
+                class="navLink"
+                id="sp_sub"
+                [routerLink]="'serviceProvider/EtisalatCostAllocation'"
+                [ngClass]="
+                  router.url ==
+                  '/customer/serviceProvider/EtisalatCostAllocation'
+                    ? 'active'
+                    : 'navLink'
+                "
+              >
+                Upload Etisalat
+              </li>
+            </ul>
+
+            <div
+              *ngIf="addUsersBoolean"
+              class="navLink"
+              data-text="Roles"
+              routerLinkActive="active"
+              [routerLink]="'roles'"
+            >
+              <!-- <i class="fa fa-user-plus f-18 ml-r-12" aria-hidden="true"></i> -->
+              <span class="material-icons f-18 ml-r-12" routerLinkActive="ml-9">
+                manage_accounts
+              </span>
+              Roles
+            </div>
+
+            <div
+              class="navLink"
+              routerLinkActive="active"
+              data-text="Settings"
+              [routerLink]="'settings'"
+              *ngIf="settingsPageAccess"
+            >
+              <i
+                class="fa fa-cogs f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              Settings
+            </div>
+            <div
+              class="navLink"
+              data-text="Change Password"
+              (click)="openDialog()"
+            >
+              <i
+                class="fa fa-lock f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              Change Password
+            </div>
+
+            <div
+              class="navLink"
+              data-text="Logout"
+              (click)="displayResponsivepopup = true"
+            >
+              <i
+                class="fa fa-sign-out f-18 ml-r-12"
+                aria-hidden="true"
+                routerLinkActive="ml-9"
+              ></i>
+              Logout
+            </div>
+          </div>
+        </section>
+      </nav>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</mat-drawer-container>
+
+<!-- Cnfirmation Dialog -->
+<p-dialog
+  header=" "
+  [(visible)]="displayResponsivepopup"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '30vw' }"
+  [baseZIndex]="10000"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="text-center">
+    <div>
+      <i
+        class="pi pi-exclamation-triangle"
+        style="font-size: 4rem; color: red"
+      ></i>
+    </div>
+    <div class="deleteDivText">
+      {{ BtnText }}
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center mb-3">
+      <button class="btn btnVender bg-btn-success mr-3" (click)="logout()">
+        Yes
+      </button>
+      <button
+        class="btn btnVender bg-btn-cancel"
+        (click)="displayResponsivepopup = false"
+      >
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-toast></p-toast>

@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dyninvpull
+  namespace: rovedev
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '0 * * * *'
+  failedJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: dyninvpull
+            image: roveregistry.azurecr.io/serina-server:dyninvpull
+            imagePullPolicy: Always
+          restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: deploymentsecret

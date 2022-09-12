@@ -1,0 +1,63 @@
+.notify-div{
+    width: 99%;
+    border: 0;
+    margin-top: 3px;
+    margin-left: 10px;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 20%);
+}
+.displayF{
+    display: flex;
+    justify-content: space-between;
+}
+.closeBtn{
+    cursor: pointer;
+    font-size: 13px;
+    border: 2px solid #ebebeb;
+    padding: 0px 6px;
+    color: lightgray;
+    border-radius: 4px;
+}
+.timeSpan{
+    font-size: 13px;
+    font-weight: 400;
+    color: #272727;
+}
+.userIcon{
+    font-size: 19px;
+    color: #f5e4b6;
+    position: relative;
+    top: 2px;
+}
+.type{
+    font-size: 12px;
+    padding: 0px 16px;
+    border-radius: 5px;
+    width: 93px;
+    text-align: center;
+    color: white;
+    height: 20px;
+    font-weight: 500;
+}
+.msgHead{
+    font-size: 13px;
+    font-weight: 700;
+}
+.msgBody{
+    font-size: 12px;
+    font-weight: 400;
+    width: 62%;
+}
+.notify-body{
+    height: 91vh;
+    overflow: auto;
+}
+.empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: 20px;
+    font-style: oblique;
+    font-weight: 500;
+    margin-top: 20%;
+}

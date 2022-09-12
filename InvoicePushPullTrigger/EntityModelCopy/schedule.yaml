@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: copymodels
+  namespace: rovedev
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '0 12 * * *'
+  failedJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: copymodels
+            image: roveregistry.azurecr.io/serina-server:copymodels
+            imagePullPolicy: Always
+          restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: deploymentsecret

@@ -1,0 +1,693 @@
+<div>
+    
+    <div class="centerAll mt-3" id="cont">
+        <div style="display: flex;justify-content: space-between;">
+            <h6 class="font_weight">
+            </h6>
+            
+            <h6 class="font_weight vendorNameCss">
+                {{vendorName}}
+            </h6>
+        </div>
+        
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active f-13" id="Updatefr-tab" data-toggle="tab" href="#Updatefr" role="tab"
+                    aria-controls="Updatefr" aria-selected="true">Update FR Config</a>
+            </li>
+            <li class="nav-item" [ngClass]="!enableTabsBoolean ? 'opaque' : 'clearopaque'">
+                <a class="nav-link f-13" [ngClass]="!enableTabsBoolean ? 'disabled':''" id="mob-tab" data-toggle="tab"
+                    href="#mob" role="tab" aria-controls="mob" aria-selected="false">Training Samples</a>
+            </li>
+            <li class="nav-item" [ngClass]="!enableMetaDataBoolean ? 'opaque' : 'clearopaque'">
+                <a class="nav-link f-13" [ngClass]="!enableMetaDataBoolean ? 'disabled':''" id="meta-tab" data-toggle="tab"
+                    href="#meta" role="tab" aria-controls="meta" aria-selected="false">Meta Data</a>
+            </li>
+            
+        </ul>
+    
+        <div class="tab-content tabDiv p-4" id="myTabContent">
+            <div class="tab-pane fade show active font_weight headings" id="Updatefr" role="tabpanel" aria-labelledby="Updatefr-tab">
+                <button class="btn btn-info f-13 btn-sm" style="float: right;margin-left: 10px;" data-toggle="modal"
+                data-target="#AccuracyModal"> <i class="fa fa-eye"></i> View Confidence Scores</button>
+
+                <button class="btn btn-info f-13 btn-sm" style="float: right;margin-left: 10px;" data-toggle="modal"
+                data-target="#FieldsModal"> <i class="fa fa-eye"></i> View Tagged Info</button>
+    
+                <button class="btn btn-default f-13 btn-sm" style="float: right;box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);" data-toggle="modal"
+                data-target="#myModal"> <i class="fa fa-plus"></i> Add Template</button>
+                Form Recogniser configurations
+                <div *ngIf="frLoadBoolean else spinner">
+                    <div class="mt-4" *ngFor="let frData of FRConfigData;">
+                        
+                        <form #updateFrConfig = "ngForm" (ngSubmit)="updateFr(updateFrConfig.value)">
+                            <table style="width: 80%;">
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">Template Name<span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <select  id="template" class="form-control f-13"
+                                            (change)="selectTemplate($event.target.value)">
+                                            <option value="selected" [selected]="checkselect" disabled>Select vendor Template</option>
+                                            <option [value]="modal.idDocumentModel" *ngFor="let modal of modalList">
+                                                {{modal.modelName}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">Endpoint <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <!-- <input type="text" class="form-control f-13"> -->
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text f-13">https://</span>
+                                            </div>
+                                            <input type="text" class="form-control f-13" 
+                                                placeholder="End Point" name="Endpoint" [(ngModel)] ="frData.Endpoint"  readonly>
+                                        </div>
+                                    </td>
+                                </tr>
+        
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">Connection String <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <input type="text" class="form-control f-13" name="ConnectionString" [(ngModel)]="frData.ConnectionString" [value]="frData.ConnectionString" readonly>
+                                    </td>
+                                </tr>
+        
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">Keys <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <!-- <input type="text" class="form-control f-13"> -->
+                                        <div class="d-flex">
+                                            <div class="input-group mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text f-13">Key 1</span>
+                                                </div>
+                                                <input type="text" name="Key1" class="form-control f-13" [value]="frData.Key1" readonly
+                                                    placeholder="" [(ngModel)]="frData.Key1">
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text f-13">Key 2</span>
+                                                </div>
+                                                <input type="text" name="Key2" class="form-control f-13" [(ngModel)]="frData.Key2" [value]="frData.Key2" readonly
+                                                    placeholder="">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+        
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">Container Name <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <input type="text" name="ContainerName" class="form-control f-13"  [(ngModel)]="frData.ContainerName" [value]="frData.ContainerName"
+                                            placeholder="Blob Container Name" readonly>
+                                    </td>
+                                </tr>
+        
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">SAS Token <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <input type="text" name="SasToken" class="form-control f-13" [(ngModel)]="frData.SasToken" [value]="frData.SasToken"
+                                            placeholder="SAS Token" readonly>
+                                    </td>
+                                </tr>
+        
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">SAS Url <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <input type="text" name="SasUrl" class="form-control f-13" [(ngModel)]="frData.SasUrl" [value]="frData.SasUrl"
+                                            placeholder="SAS Url" readonly>
+                                    </td>
+                                </tr>
+        
+                                <tr class="trHeight" style="display: none;">
+                                    <td class="tdLeft f-13">SAS Expiry <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <input type="date" name="SasExpiry" class="form-control f-13"
+                                            [value]="frData.SasExpiry |  date: 'yyyy-MM-dd'" (input)="frData.SasExpiry=parseDate($event.target.value)">
+                                    </td>
+                                </tr>
+        
+                                <tr class="trHeight">
+                                    <td class="tdLeft f-13">API <span class="colon">:</span></td>
+                                    <td class="tdRight">
+                                        <!-- <input type="text" class="form-control f-13"> -->
+                                        <div class="d-flex">
+                                            <div class="input-group mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text f-13">version</span>
+                                                </div>
+                                                <input type="text" name="ApiVersion" class="form-control f-13" [value]="frData.ApiVersion" [(ngModel)]="frData.ApiVersion"
+                                                    readonly placeholder="">
+                                            </div>
+                                            <div class="input-group mr-2">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text f-13">calls/min</span>
+                                                </div>
+                                                <input type="text" name="CallsPerMin" class="form-control f-13" [(ngModel)]="frData.CallsPerMin" [value]="frData.CallsPerMin"
+                                                    readonly placeholder="">
+                                            </div>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text f-13">pg/mnth</span>
+                                                </div>
+                                                <input type="text" name="PagesPerMonth" class="form-control f-13" [(ngModel)]="frData.PagesPerMonth" [value]="frData.PagesPerMonth"
+                                                    readonly placeholder="">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+        
+                            </table>
+        
+                            <div class="mt-4 d-flex">
+                                <button class="btn btnbg f-13 mr-3" [disabled]="!(updateFrConfig.touched && updateFrConfig.valid && updateFrConfig.dirty)">Update Configurations</button>
+                                <button class="btn btncancel f-13" type="button" (click)="onCancel()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <ng-template #spinner>
+                    <div class="loader"></div>
+                </ng-template>
+            </div>
+            <div class="tab-pane fade font_weight headings" id="mob" role="tabpanel" aria-labelledby="mob-tab">
+                <div>
+                 <ng-container #outlet >
+                    <app-mob [modelData]="modelData" [frConfigData]="FRConfigData" (updateStatus)="statusUpdate($event)" (enableTab)="enableMetaDataTab($event)"></app-mob>
+                    <div class="container p-2">
+                        <button class="btn btnbg f-13" [disabled]="!enableMetaDataBoolean" data-toggle="tab" href="#meta" role="tab" (click)="changeActiveTab()">Next</button>
+                        <button class="btn btncancel f-13 ml-3">Cancel</button>
+                    </div>
+                 </ng-container>
+               </div>
+           
+               <ng-template #content>
+                
+               </ng-template>
+             </div>
+            <div class="tab-pane fade font_weight headings" id="meta" role="tabpanel" aria-labelledby="meta-tab">
+                Template Meta Data Configurations
+                <div class="f-right" style="display: none;">
+                    <div class=" mb-3">
+                        <div class="permisionDiv">
+                          <div> <span class="f-13 mr-3">Batch Process</span>
+                            <span class="f-right">
+                              <label class="switch">
+                                <input type="checkbox" [checked]="batchBoolean" (change)="batchProcessToggle($event.target.checked)"
+                                        name="batchmap" ngModel #batchmap="ngModel"
+                                />
+                                <span class="slider round"></span>
+                              </label>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="mt-3">
+                    <form #updateMetaData ="ngForm" (ngSubmit)="updateMetainfo(updateMetaData.value)">
+                        <table style="width: 80%;">
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Date Format <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <select name="DateFormat" id="DateFormat" class="form-control max_width f-13"
+                                        [(ngModel)]="selected_template"  ngModel #DateFormat="ngModel" >
+                                        <option value="" selected disabled>Select Date format</option>
+                                        <option [value]="format" *ngFor="let format of dateFormats">{{format}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Folder Path <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <input type="text" class="form-control max_width f-13" name="FolderPath" id="FolderPath" ngModel #FolderPath="ngModel" placeholder="Blob Folder"  readonly>
+                                </td>
+                            </tr>
+    
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Accuracy Threshold <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <!-- <input type="text" class="form-control f-13" [value]="frData.ConnectionString" disabled> -->
+                                    <div class="d-flex">
+                                            <div class=" w-100">
+                                                <label for="AccuracyOverall" class=" w-100">Overall Model
+                                                <input type="text" class="form-control max_width1 f-13 mr-2 w-100" id="AccuracyOverall" name="AccuracyOverall" ngModel #AccuracyOverall="ngModel" placeholder="Overall Model">
+                                                </label>
+                                            </div>
+                                            <div class=" w-100">
+                                                <label for="AccuracyFeild" class=" w-100">Field Wise
+                                                <input type="text" class="form-control max_width1 f-13" name="AccuracyFeild" id="AccuracyFeild" ngModel #AccuracyFeild="ngModel" placeholder="Field Wise">
+                                                </label>
+                                            </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Tolerance Threshold <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <!-- <input type="text" class="form-control f-13" [value]="frData.ConnectionString" disabled> -->
+                                    <div class="d-flex">
+                                        <div class=" w-100">
+                                            <label for="AccuracyOverall" class=" w-100">UnitPrice Tolerance percent
+                                                <input type="number" min="0" max="100" class="form-control max_width1 f-13 mr-2" id="unitprice_tol" name="UnitPriceTol_percent" ngModel #UnitPriceTol_percent="ngModel" >
+                                            </label>
+                                        </div>
+                                        <div class=" w-100">
+                                            <label for="AccuracyFeild" class=" w-100">Quantity Tolerance percent
+                                                <input type="number" min="0" max="100" class="form-control max_width1 f-13" name="QtyTol_percent" id="quantity_tol" ngModel #QtyTol_percent="ngModel" >
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+    
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Invoice Format <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <input type="text" name="InvoiceFormat" id="InvoiceFormat" class="form-control max_width f-13" ngModel #invoiceFormat="ngModel" placeholder="">
+    
+                                </td>
+                            </tr>
+    
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Currency <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <select name="Units" id="Units" ngModel #Units="ngModel" class="form-control max_width f-13"
+                                         >
+                                        <option value="USD" selected>US Dollars</option>
+                                        <option value="AED">AED</option>
+                                        <option value="INR">INR</option> 
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Select Vendor type <span class="req_clr">*</span> <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <select name="vendorType" id="vendorType" ngModel #vendorType="ngModel" class="form-control max_width f-13" [(ngModel)]="selectedVendorType" (change)="onChangeVndrType(selectedVendorType)"
+                                         required>
+                                        <option value="" selected disabled>Select Vendor type</option>
+                                        <option *ngFor="let rule of vendorTypeData" [value]="rule.value">{{rule.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="trHeight" *ngIf="isPObasedVendor">
+                                <td class="tdLeft f-13">Select ERP API Rule <span class="req_clr">*</span> <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <select name="erprule" id="erprule" ngModel #erprule="ngModel" class="form-control max_width f-13" [(ngModel)]="selectErpRule"
+                                         required>
+                                        <option value="" selected disabled>Select Amount Rule</option>
+                                        <option *ngFor="let rule of amountRulesData" [value]="rule.iderprules" [ngClass]="rule.IsActive == 0 ? 'opaque' : 'clearopaque'">{{rule.Name}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="trHeight" *ngIf="isPObasedVendor">
+                                <td class="tdLeft f-13">Select GRN type <span class="req_clr">*</span> <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <select name="GrnCreationType" id="GRN_TYPE" ngModel #GrnCreationType="ngModel" class="form-control max_width f-13" [(ngModel)]="selectedGRNType" (change)="onSelectGRNType(selectedGRNType)"
+                                         required>
+                                        <option value="" selected disabled>Select GRN type</option>
+                                        <option *ngFor="let rule of GRN_TYPE" [value]="rule.id">{{rule.value}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="trHeight" *ngIf="isPObasedVendor">
+                                <td class="tdLeft f-13">Select Rule <span class="req_clr">*</span> <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <select name="ruleID" id="ruleID" ngModel #ruleID="ngModel" class="form-control max_width f-13" [(ngModel)]="selectedRuleId" required
+                                         >
+                                        <option value=""  selected >Select Rule</option>
+                                        <option *ngFor="let rule of rulesData" [value]="rule.idDocumentRules" [disabled]="rule.IsActive == 0" [ngClass]="rule.IsActive == 0 ? 'opaque' : 'clearopaque'">{{rule.Name}}</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">
+                                    <div> <span class="f-13 mr-3">TRN is Mandatory? <span class="req_clr">*</span> </span>
+                                        <span class="f-right">
+                                          <label class="switch">
+                                            <input type="checkbox" [checked]="trnboolean" (change)="trnMandatoryToggle($event.target.checked)"/>
+                                            <span class="slider round"></span>
+                                          </label>
+                                        {{switchLabel}}
+                                        </span>
+                                    
+                                      </div>
+                                </td>     
+                            </tr>
+                            <tr class="trHeight" >
+                                <td class="tdLeft f-13">Select Header Mandatory Tags <span class="colon">:</span></td>
+                                <td class="tdRight" style="position: relative;">
+                                    <!-- <p-multiSelect 
+                                        [options]="headerTags" 
+                                        [(ngModel)]="headerArray1" 
+                                        defaultLabel="Select Tags" 
+                                        optionLabel="Name"
+                                        name="Name"
+                                        optionDisabled ="Ismendatory" 
+                                        (onChange)="showHeaderCheckboxes($event)"
+                                        display="chip">
+                                    </p-multiSelect> -->
+                                    <div class="multipleSelection">
+                                        <div class="selectBox w-100">
+                                                    <ul class="ulTags max_width">
+                                                        <li class="listData" *ngFor="let tag of headerArray; let i = index;">{{tag}} 
+                                                            <span  (click)="removeHeaderTag(i,tag)">
+                                                                <i class="fa fa-times-circle-o ml-2" style="cursor: pointer;" aria-hidden="true" ></i>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                            <div class="downArrow" (click)="showHeaderCheckboxes()">
+                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                              
+                                        <div id="checkBoxes" *ngIf="showCheckboxHeaderDiv" >
+                                            <label *ngFor="let header of headerTags">
+                                                <input type="checkbox" (change)="selectHeader($event.target.checked,header.Name)" [checked]="header.Ismendatory" [disabled]="header.Ismendatory" />
+                                                {{header.Name}} <span *ngIf="header.Ismendatory == 1" style="color: red;">*</span>
+                                            </label>
+                                              
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="trHeight" >
+                                <td class="tdLeft f-13">Select Header optional Tags <span class="colon">:</span></td>
+                                <td class="tdRight" style="position: relative;">
+                                    <div class="multipleSelection">
+                                        <div class="selectBox w-100">
+                                                    <ul class="ulTags max_width">
+                                                        <li class="listData" *ngFor="let tag of headerOptTags; let i = index;">{{tag}} 
+                                                            <span  (click)="removeHeaderOptTag(i,tag)">
+                                                                <i class="fa fa-times-circle-o ml-2" style="cursor: pointer;" aria-hidden="true" ></i>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                            <div class="downArrow" (click)="showHeaderOptionalCheckboxes()">
+                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                              
+                                        <div id="checkBoxes" *ngIf="showCheckboxOptHeaderDiv" >
+                                            <label *ngFor="let header of headerOptionalArray">
+                                                <input type="checkbox" (change)="selectHeaderoptional($event.target.checked,header)" />
+                                                {{header}}
+                                            </label>
+                                              
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="trHeight" >
+                                <td class="tdLeft f-13">Select Lineitem Mandatory Tags <span class="colon">:</span></td>
+                                <td class="tdRight" style="position: relative;">
+                                    <div class="multipleSelection">
+                                        <div class="selectBox w-100">
+                                            <!-- <select class="form-control f-13">
+                                                <option>{{Linestr}}</option>
+                                            </select>
+                                            <div class="overSelect"></div> -->
+                                            <ul class="ulTags max_width" [title]="LineArray.toString()">
+                                                <li class="listData" *ngFor="let tag of LineArray; let i = index;">{{tag}} 
+                                                    <span  (click)="removeLineTag(i,tag)">
+                                                        <i class="fa fa-times-circle-o ml-2" style="cursor: pointer;" aria-hidden="true" ></i>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                            <div class="downArrow" (click)="showLineCheckboxes()">
+                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                              
+                                        <div id="checkBoxes" *ngIf="showCheckboxLineDiv" >
+                                            <label *ngFor="let line of LineTags">
+                                                <input type="checkbox" (change)="selectLineTag($event.target.checked,line.Name)" [checked]="line.Ismendatory" [disabled]="line.Ismendatory" />
+                                                {{line.Name}} <span *ngIf="line.Ismendatory == 1" style="color: red;">*</span>
+                                            </label>
+                                              
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="trHeight" >
+                                <td class="tdLeft f-13">Select Lineitem Optional Tags <span class="colon">:</span></td>
+                                <td class="tdRight" style="position: relative;">
+                                    <div class="multipleSelection">
+                                        <div class="selectBox w-100">
+                                            <!-- <select class="form-control f-13">
+                                                <option>{{Linestr}}</option>
+                                            </select>
+                                            <div class="overSelect"></div> -->
+                                            <ul class="ulTags max_width">
+                                                <li class="listData" *ngFor="let tag of LineOptTags; let i = index;">{{tag}} 
+                                                    <span  (click)="removeLineOptTag(i,tag)">
+                                                        <i class="fa fa-times-circle-o ml-2" style="cursor: pointer;" aria-hidden="true" ></i>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                            <div class="downArrow" (click)="showLineOptCheckboxes()">
+                                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                              
+                                        <div id="checkBoxes" *ngIf="showCheckboxLineOptDiv" >
+                                            <label *ngFor="let line of LineArrayOptinal">
+                                                <input type="checkbox" (change)="selectLineOptTag($event.target.checked,line)"/>
+                                                {{line}}
+                                            </label>
+                                              
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="trHeight">
+                                <td class="tdLeft f-13">Template unique keywords <span class="req_clr">*</span> <span class="colon">:</span></td>
+                                <td class="tdRight">
+                                    <p-chips [(ngModel)]="templateKeys" name="synonyms" separator=","></p-chips>
+                                </td>
+                            </tr>
+                        </table>
+    
+                        <div class="mt-4 d-flex">
+                            <button type="submit" class="btn btnbg f-13 mr-3" [disabled]="saving">Proceed to Onboarding <div *ngIf="saving" class="spinner-border spinner-border-sm" role="status"></div></button>
+                            <button type="button" class="btn btncancel f-13">Cancel</button>&nbsp;
+                            <div id="notify" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                  <div class="toast-body">
+                                    <i class="fa fa-check"></i> {{msg}}
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    
+            
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header b-0">
+                <h5 class="modal-title font_weight">Add New Template</h5>
+                <button type="button" class="close" data-dismiss="modal" id="closeBtn">×</button>
+            </div>
+
+            <form #createTemplate = "ngForm" (ngSubmit)="createModel(createTemplate.value)">
+            <!-- Modal body -->
+            <div class="modal-body b-0">
+                <div>
+                    <label class="f-14">Select Vendor Account</label>
+                    <select class="form-control f-13 inputBox selectpicker"
+                        name="idVendorAccount" ngModel #idVendorAccount="ngModel"
+                        (change)="selectVendorAccont($event.target.value)" required>
+                        <option value="" selected disabled>Select vendor account</option>
+                        <option *ngFor="let vendor of vendorAccountList" [value]="vendor.idVendorAccount">
+                            {{vendor.AccountType}}</option>
+                    </select>
+
+                    <label class="f-14 mt-2">Template Name</label>
+                    <input type="text" class="form-control inputBox f-13" name="modelName" ngModel
+                        #modelName="ngModel" [(ngModel)]="templateName" (change)="removealert()" required>
+
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btnbg f-13 mr-3" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btnbg f-13"
+                    [ngStyle]="{'cursor':(createTemplate.invalid)? 'not-allowed':'pointer'}"
+                    [disabled]="createTemplate.invalid" >Add
+                    Template</button>
+                <div *ngIf="modaladderr" class="alert alert-danger" role="alert">
+                    Model with the same name exists!!
+                </div>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- The Fields Modal -->
+<div class="modal fade" id="FieldsModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header b-0">
+                <span class="modal-title" style="font-size: small;"><b>All Fields Vs Tagged</b></span>
+                <button type="button" class="close" data-dismiss="modal" id="closeBtn">×</button>
+            </div>
+
+            <div class="modal-body b-0">
+                <span style="font-size: small;color: #2d3436">{{vendorName}}</span>
+                <button type="button" class="btn btncancel btn-sm" style="float: right;" (click)="downloadDoc('vendor')"><i *ngIf="!downloading" class="fa fa-download"></i><div *ngIf="downloading" class="spinner-border spinner-border-sm" role="status"></div> Download Entity Level Tagging Info</button> 
+                <ul class="nav nav-tabs" id="myTab1" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active f-13" id="header-tab" data-toggle="tab" href="#headertg" role="tab"
+                            aria-controls="headertg" aria-selected="true">Header Tags</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link f-13" id="line-tab" data-toggle="tab"
+                            href="#linetg" role="tab" aria-controls="linetg" aria-selected="false">Line Item Tags</a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="font-size: small;">
+                    <div class="tab-pane fade show active font_weight" id="headertg" role="tabpanel" aria-labelledby="headertg-tab">
+                        <div *ngIf="headerTags.length == 0">No Header Fields Tagged!</div>
+                        <ul class="list-group" *ngFor="let h of headerTags">
+                            <li *ngIf="h.Ismendatory != 1" class="list-group-item d-flex align-items-center" style="justify-content: space-between;">
+                                {{h.Name}}
+                                <span *ngIf="checkHeaderTagged(h.Name)" class="badge bg-success rounded-pill" style="color: #ffffff;padding: 5px;">{{getHeaderStatus(h.Name)}}</span>
+                                <span *ngIf="!checkHeaderTagged(h.Name)" class="badge bg-light rounded-pill" style="padding: 5px;">Not Tagged</span></li>
+                            <li *ngIf="h.Ismendatory == 1" class="list-group-item d-flex align-items-center list-group-item-danger" style="justify-content: space-between;">
+                                {{h.Name}}
+                                <span *ngIf="checkHeaderTagged(h.Name)" class="badge bg-danger rounded-pill" style="color: #ffffff;padding: 5px;">Mandatory</span>
+                                </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade font_weight" id="linetg" role="tabpanel" aria-labelledby="linetg-tab">
+                        <div *ngIf="LineTags.length == 0">No Line Item Fields Tagged!</div>
+                        <ul class="list-group" *ngFor="let l of LineTags">
+                            <li *ngIf="l.Ismendatory != 1" class="list-group-item d-flex align-items-center" style="justify-content: space-between;">
+                                {{l.Name}}
+                                <span *ngIf="checkLineTagged(l.Name)" class="badge bg-success rounded-pill" style="color: #ffffff;padding: 5px;">{{getLineStatus(l.Name)}}</span>
+                                <span *ngIf="!checkLineTagged(l.Name)" class="badge bg-light rounded-pill" style="padding: 5px;">Not Tagged</span></li>
+                            <li *ngIf="l.Ismendatory == 1" class="list-group-item d-flex align-items-center list-group-item-danger" style="justify-content: space-between;">
+                                {{l.Name}}
+                                <span *ngIf="checkLineTagged(l.Name)" class="badge bg-danger rounded-pill" style="color: #ffffff;padding: 5px;">Mandatory</span>
+                                </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div>
+           
+        </div>
+    </div>
+</div>
+<!-- The Accuracy Modal -->
+<div class="modal fade" id="AccuracyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header b-0">
+                <span class="modal-title" style="font-size: small;"><b>Train Vs Test Confidence Scores Vs Actual Accuracy</b></span>
+                <button type="button" class="close" data-dismiss="modal" id="closeBtn">×</button>
+            </div>
+
+            <div class="modal-body b-0">
+                <p style="font-size: small;">{{vendorName}}</p>
+                <p style="font-size:small">Total Invoices Processed: <b>{{documentCount}}</b></p>
+                <ul class="list-group">
+                    <li class="list-group-item home-flex active">
+                        <div class="item"></div>
+                        <div class="item">Train Confidence Score</div>
+                        <div class="item">Test Confidence Score</div>
+                        <div class="item">Actual OCR Accuracy</div>
+                    </li>
+                    <li class="list-group-item home-flex">
+                        <div class="item"><b>Overall</b></div>
+                        <div class="item"><b>{{trainingAverageAccuracy}}</b></div>
+                        <div class="item"><b>{{testingAverageAccuracy}}</b></div>
+                        <div class="item"><b>{{fieldsaccavg}}</b></div>
+                    </li>
+                    <div  *ngFor="let f of trainingFields">
+                    <li class="list-group-item home-flex"  *ngIf="!checkincludes(f.fieldName)">
+                        <div class="item">{{f.fieldName}}</div>
+                        <div class="item">{{f.accuracy*100}} %</div>
+                        <div class="item">{{getValue(f.fieldName)}}</div>
+                        <div class="item">{{getAccValue(f.fieldName)}}</div>
+                    </li>
+                    </div>
+                </ul>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+  
+<!-- <p-dialog header="Add New Template" [(visible)]="displayAddTemplateDialog" [breakpoints]="{'960px': '75vw'}"
+  [style]="{width: '31vw'}" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div>
+    <label class="inviteLabel">Select Vendor</label>
+    <select class="form-control inputBox selectpicker" [(ngModel)]="select_vendorAccount" name="vendrCreate" ngModel #vendrCreate="ngModel"
+      (change)="selectVendorAccont(select_vendorAccount)" required>
+      <option value="" selected disabled>Select vendor account</option>
+      <option *ngFor="let vendor of vendorAccountList" [value]="vendor.VendorName">{{vendor.VendorName}}</option>
+    </select>
+    <div *ngIf="vendrCreate.errors &&(vendrCreate.touched || vendrCreate.dirty)" class="alertDiv">
+      <div [hidden]="!vendrCreate.errors.required">
+        **Required field
+      </div>
+    </div>
+
+
+    <label class="inviteLabel">Template Name</label>
+    <input type="text" class="form-control inputBox" name="fnameCreate" ngModel #fnameCreate="ngModel"
+      [(ngModel)]="templateName" required>
+
+    <div *ngIf="fnameCreate.errors &&(fnameCreate.touched || fnameCreate.dirty)" class="alertDiv">
+      <div [hidden]="!fnameCreate.errors.required">
+        **Required field
+      </div>
+    </div>
+
+  </div>
+  <ng-template pTemplate="footer">
+    <button type="button" class="btn btnVender mr-3" (click)="displayAddTemplateDialog = false">Cancel</button>
+    <button type="button" class="btn btnVender"
+      [ngStyle]="{'cursor':(vendrCreate.invalid  || fnameCreate.invalid )? 'not-allowed':'pointer'}"
+      [disabled]="vendrCreate.invalid || fnameCreate.invalid"
+      (click)="createTemplate()">Add Template</button>
+
+  </ng-template>
+</p-dialog>
+
+<p-toast></p-toast> -->
+
+<p-toast></p-toast>

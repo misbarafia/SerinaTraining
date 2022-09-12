@@ -1,0 +1,89 @@
+<h6 class="font_weight mt-2"> 
+    <span class="ml-3"> Mail Listener Settings</span>
+</h6>
+<div class="row">
+    <div class="col-md-7">
+        <form [formGroup]="configData" (ngSubmit)="saveConfigData()" class="formDiv" autocomplete="off" >
+
+            <table style="width: 100%;">
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Email Host <span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <select formControlName="host" name="host"  class="form-control f-13">
+                            <option value="imap-mail.outlook.com">Outlook.com</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Email ID <span style="color: red;">*</span><span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="email" autocomplete="off" name="username" formControlName="username"   class="form-control f-13"/>
+                    </td>
+                </tr>
+
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Password <span style="color: red;">*</span><span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="password" formControlName="password" class="form-control f-13" autocomplete="disabled"/>
+                    </td>
+                </tr>
+
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Folder Name <span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="text" formControlName="folder" class="form-control f-13"/>
+                    </td>
+                </tr>
+                <h6 class="font_weight mt-2"> 
+                    <span class="ml-3"> Access control</span>
+                </h6>
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Accepted Domain <span class="colon">:</span></td>
+                    <td class="tdRight f-13">
+                        <p-chips formControlName="acceptedDomains" name="acceptedDomains" separator="," placeholder="Eg. @abc.com"></p-chips>
+                    </td>
+                </tr>
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Accepted Emails <span class="colon">:</span></td>
+                    <td class="tdRight f-13">
+                        <p-chips formControlName="acceptedEmails" name="acceptedEmails" separator="," placeholder="Eg. abc@gmail.com"></p-chips>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="mt-4 d-flex">
+                <button class="btn btnbg-s f-13 mr-3" type="submit" data-toggle="modal" data-target="#exampleModalCenter">Save</button>
+                <button class="btn btncancel f-13" type="button">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Please verify your Identity</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closebtn">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <label for="loginuser">Username</label>
+            <input class="form-control form-control-sm" type="text" name="loginuser" id="loginuser" autocomplete="disabled">
+            <label for="loginpass">Password *</label>
+            <input class="form-control form-control-sm" type="password" name="loginpass" id="loginpass" autocomplete="disabled">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="SavePassword()"><div *ngIf="saving" class="spinner-border spinner-border-sm" role="status"></div>Verify</button>
+            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+            <div *ngIf="!exception && msg != ''" class="alert alert-success" role="alert">
+                {{msg}}
+              </div>
+              <div *ngIf="exception && err != ''" class="alert alert-danger" role="alert">
+                {{err}}
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>

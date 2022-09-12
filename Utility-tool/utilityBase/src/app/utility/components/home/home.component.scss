@@ -1,0 +1,83 @@
+.title{
+  position: absolute;
+  left: 2%;
+  top: 5px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #222f3e;
+}
+.container-fluid{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.pl-4{
+  padding-left: 0 !important;
+}
+.btnbg{
+  color: #ffffff;
+  background-color: #273c75;
+}
+
+.btncancel{
+  background-color: #ffffff;
+  color: #273c75;
+  border: 1px solid #273c75;
+}
+:host ::ng-deep {
+  .p-dialog .p-dialog-header {
+      padding: 0.5rem;
+  }
+  .p-badge {
+      background: #f2be42;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 15px;
+      color: #272727;
+      height: 15px;
+      line-height: 1;
+  }
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 4%;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: small;
+    font-weight: 600;
+  }
+  
+  li a:hover:not(.active) {
+    text-decoration: underline;
+    color: #f2be42;
+    transition: 300ms;
+  }
+  li a:not(.active){
+    text-decoration: none;
+    color: #222f3e;
+  }
+  
+  .active {
+    text-decoration: underline;
+    text-decoration-color: #f2be42;
+    color: #f2be42;
+  }
+  .router_body{
+    height: 100vh;
+    max-height: 100vh;
+    flex-wrap: wrap;
+  }

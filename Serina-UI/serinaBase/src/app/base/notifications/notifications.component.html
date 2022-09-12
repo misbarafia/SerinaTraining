@@ -1,0 +1,80 @@
+<h6 class="headh6">All Notifications</h6>
+<div class="container-fluid">
+  <div class="notify-body bg-design-all b-top-left">
+    <div *ngIf="notifyArray.length != 0; else noMsg">
+      <div class="f-right mr-3">
+        <a class="f-12" (click)="clearAll()" style="cursor: pointer"
+          >Clear All</a
+        >
+      </div>
+      <div
+        *ngFor="let value of notifyArray; let i = index"
+        class="card notify-div mb-2"
+      >
+        <div class="card-body">
+          <div class="displayF mb-2">
+            <div
+              class="type"
+              *ngIf="value.notificationPriorityID === 1"
+              style="background-color: #f5c342"
+            >
+              Low
+            </div>
+            <div
+              class="type"
+              *ngIf="value.notificationPriorityID === 2"
+              style="background-color: #50cb64"
+            >
+              Medium
+            </div>
+            <div
+              class="type"
+              *ngIf="value.notificationPriorityID === 3"
+              style="background-color: #f66565"
+            >
+              High
+            </div>
+            <div
+              class="type"
+              *ngIf="value.notificationPriorityID === 4"
+              style="background-color: #e23737"
+            >
+              Critical
+            </div>
+            <div class="d-flex">
+              <div *ngFor="let ele of notificationType;">
+                <div class="mr-5" *ngIf="value.notificationTypeID === ele.id">
+                    <i class="fa fa-circle-o mr-2 userIcon" aria-hidden="true"></i
+                    ><span class="timeSpan" style="font-weight: 600"
+                      >{{ele.name}}</span
+                    >
+                  </div>
+              </div>
+              <div class="mr-5">
+                <i class="fa fa-clock-o mr-2 userIcon" aria-hidden="true"></i>
+                <span class="timeSpan">{{
+                  value.CreatedOn + "Z" | date: "medium"
+                }}</span>
+              </div>
+              <div
+                class="closeBtn"
+                (click)="removeNotify(value.idPullNotification, i)"
+              >
+                X
+              </div>
+            </div>
+          </div>
+          <div class="msgBody">
+            {{ value.notificationMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noMsg>
+      <div class="p-t-30 f-12 text-center">
+        <img src="assets/Group 2691.png" width="260" alt="imageUrl" /> <br />
+        No Messages found.
+      </div>
+    </ng-template>
+  </div>
+</div>

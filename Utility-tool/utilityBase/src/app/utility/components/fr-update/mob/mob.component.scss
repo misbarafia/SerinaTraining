@@ -1,0 +1,115 @@
+:host ::ng-deep {
+    .stepper-header .steps .step .step-bullet {
+        height: 30px !important;
+        width: 30px !important;
+        font-size: 1.1rem !important;
+    }
+    .stepper-header .steps .step {
+        font-size: 0.9em !important;
+        pointer-events: none !important;
+    }
+    .stepper-body{
+        margin: 25px auto;
+        margin-top: 40px !important;
+        padding: 1rem;
+    }
+    .file-upload{
+      background-color: #fafafa;
+    }
+    .file-over {
+        margin: 15px 50px 30px 50px;
+        text-align: center;
+        border-radius: 15px;
+        cursor: pointer;
+        outline: 3px dashed green;
+      }
+      .fileText {
+        font-size: 15px;
+        font-weight: 700;
+        color: #000000;
+      }
+      .underdropIcon {
+        font-size: 20px;
+        font-weight: 600;
+        color: #000000;
+      }
+      .f-12 {
+        font-size: 12px;
+        font-weight: 600;
+        color: #000000;
+      }
+      .dashed-border {
+        border: 2px dashed #bdc3c7;
+        border-radius: 5px;
+        margin: 10px 0;
+        margin-left: 20%;
+        text-align: center;
+        overflow: hidden;
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50vw;
+      }
+      .f-80 {
+        font-size: 80px;
+        color: #74b9ff;
+      }
+      .img-browse {
+        background-color: #f2be42;
+        color: #272727;
+        padding: 0.4rem;
+        border-radius: 0.3rem;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1rem;
+        opacity: 1;
+      }
+      .img-disabled{
+        background-color: #bec5e6;
+        color: #273c75;
+        padding: 0.4rem;
+        border-radius: 0.3rem;
+        font-size: 13px;
+        font-weight: 600;
+        pointer-events: none;
+        margin-top: 1rem;
+        opacity: 0.6;
+      }
+      .btnbg{
+        color: #ffffff;
+        background-color: #273c75;
+    }
+    .btnbg1{
+        margin-top: -0.2rem;
+        background-color: #f2be42;
+        color: #272727; 
+    }
+    .btncancel{
+        background-color: #ffffff;
+        color: #273c75;
+        border: 1px solid #273c75;
+    }
+    .ngx-json-viewer .segment .segment-main .segment-key {
+        font-size: 13px !important;
+    }
+    .ngx-json-viewer .segment-type-string > .segment-main > .segment-value {
+        font-size: 13px !important;
+    }
+    .ngx-json-viewer .segment-type-array > .segment-main > .segment-value, .ngx-json-viewer .segment-type-function > .segment-main > .segment-value, .ngx-json-viewer .segment-type-object > .segment-main> .segment-value {
+        font-size: 13px !important;
+    }
+}
+.m-r-5{
+    margin-right: 5vw;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.max_height_div{
+    max-height: clamp(40vh,40vh,60vh);
+    overflow: auto;
+    margin-bottom: 20px;
+}

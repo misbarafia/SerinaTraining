@@ -1,0 +1,211 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css"; 
+
+* {
+    font-family: "Segoe UI Regular", "Segoe UI", Arial;
+    box-sizing: border-box;
+}
+html,
+body {
+    overflow: hidden;
+    height: 100vh;
+    background-color: #fafafa;
+}
+body {
+    margin: 0;
+}
+
+
+.btnbg {
+    background: #f2be42;
+    color: #272727;
+    border: 0;
+}
+.f-18 {
+    font-size: clamp(16px, 1.32vw, 30px);
+    font-weight: 600;
+}
+.f-13 {
+    font-size: clamp(10px, 0.952vw, 17px);
+    font-weight: 600;
+}
+.f-14 {
+    font-size: clamp(11px, 1.05vw, 18px);
+    font-weight: 600;
+}
+
+.font_weight {
+    font-weight: 600;
+}
+.centerAll{
+    width: clamp(80%,70%,90%);
+    margin: auto;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #f2be42;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  .bg-design-all {
+    background: white;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #efefef;
+}
+
+// custom toggle
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 18px;
+  margin-top: 3px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(39, 39, 39, 0.2);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 1px;
+  background-color: #ffffff;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider:before {
+  background-color: #ffffff;
+}
+
+input:checked + .slider {
+  background-color: #f2be42;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(17px);
+  -ms-transform: translateX(17px);
+  transform: translateX(17px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.permisionDiv{
+  background: rgba(49, 57, 113, 0.03);
+  padding: 8px;
+  // margin: 10px 10px 0px 25px;
+  border: 1px solid #D3D3D3;
+  border-bottom: 0;
+  border-radius: 10px 10px 0px 0px;
+  
+}
+.permisionDivdescription{
+  background: #ffffff;
+  font-size: 12px;
+  padding: 8px;
+  color: #9c9c9c;
+  // margin: 0px 10px 10px 25px;
+  border: 1px solid #d3d3d3;
+  border-top: 0;
+  border-radius: 0px 0px 10px 10px;
+}
+.permisionDiv12{
+  background-color: #ffffff;
+  padding: 8px 12px;
+  // margin: 10px 10px 10px 25px;
+  font-size: 12px;
+  border: 1px solid #d3d3d3;
+  border-bottom: 0;
+  border-top: 1px solid #d4d4d44d;
+}
+.f-right{
+  float: right;
+}
+
+
+.colon{
+  float: right;
+  margin-right: 40px;
+}
+.tdLeft {
+  color: #5d5a5a;
+  font-weight: 600;
+  width: 30%;
+  padding: 10px;
+}
+.tdRight {
+  color: #5d5a5a;
+  font-weight: 600;
+}
+.trHeight {
+  height: 35px !important;
+  margin-bottom: 5px !important;
+}
+
+.btnbg-s{
+  color: #ffffff;
+  background-color: #273c75;
+}
+.btncancel{
+  background-color: #ffffff;
+  color: #273c75;
+  border: 1px solid #273c75;
+}
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+html, body { height: 120vh; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

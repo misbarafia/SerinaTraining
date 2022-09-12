@@ -1,0 +1,15 @@
+@import "src/styles/sharedStyles";
+@include auth;
+
+:host ::ng-deep .p-badge {
+    background: #f2be42;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 15px;
+    color: #272727;
+    height: 15px;
+    line-height: 1;
+}
+.ml-9 {
+    margin-left: 9px !important;
+}

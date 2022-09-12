@@ -1,0 +1,178 @@
+<div>
+  <!-- <h6 *ngIf="stringDate == ''" class="headh6">Service Invoice Stats -{{displayEntityName}}</h6>
+  <h6 *ngIf="stringDate != ''" class="headh6">Service Invoice Stats -{{displayEntityName}}-{{stringdate1}}</h6> -->
+
+<div class="totalPage pl-2 pr-2">
+  <div class="f-13 btn_type">Selected Month for data displaying - {{selectedMonth}}</div>
+  <div class="d-flex justify-content-between">
+
+    <div class="card-div d-flex bg-1">
+      <div class="img-wrapper ">
+        <!-- <i class="fa fa-check"></i> -->
+        <mat-icon class="placement" svgIcon="total_success"></mat-icon>
+      </div>
+      <div >
+        <div class="f-12">Total Success</div>
+        <div class="f-15">{{totalSuccess}}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-2">
+      <div class="img-wrapper">
+        <!-- <i class="fa fa-exclamation-triangle"></i> -->
+        <mat-icon class="placement" svgIcon="total_fail"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Total failed</div>
+        <div class="f-15">{{totalFail}}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-3">
+      <div class="img-wrapper">
+        <mat-icon class="placement" svgIcon="total_active"></mat-icon>
+      </div>
+      <div >
+        <div class="f-12">Total active accounts</div>
+        <div class="f-15">{{active_accounts}}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-4">
+      <div class="img-wrapper">
+        <mat-icon class="placement" svgIcon="total_pending"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Total Pending</div>
+        <div class="f-15">{{total_pending}}</div>
+      </div>
+    </div>
+
+    <div class="card-div d-flex bg-5">
+      <div class="img-wrapper">
+        <mat-icon class="placement" svgIcon="total_download"></mat-icon>
+      </div>
+      <div>
+        <div class="f-12">Total Invoice downloads</div>
+        <div class="f-15">{{totalDownloads}}</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div class="d-flex justify-content-end mt-2">
+    <div class="mr-2">
+      <select class="form-control inputHeight w-100"
+        (change)="selectServiceFilter($event.target.value)">
+        <option value="0" selected disabled>Filter ServiceProvider</option>
+        <option *ngFor="let city of serviceProviderNames" [value]="city.idServiceProvider">{{city.ServiceProviderName}}</option>
+      </select>
+    </div>
+
+    <div class="mr-2">
+      <select class="form-control inputHeight w-100" 
+        (change)="selectEntityFilter($event.target.value)">
+        <option value="0" disabled selected>Filter Entity</option>
+        <option value="all">All</option>
+        <option *ngFor="let city of entity" [value]="city.idEntity">{{city.EntityName}}</option>
+      </select>
+    </div>
+
+    <div>
+      <p-calendar [(ngModel)]="selectDate" view="month" dateFormat="mm/yy" [showIcon]="true" [yearNavigator]="true" [minDate]="minDate" 
+      [maxDate]="maxDate" [yearRange]='displayYear' placeholder="Select dates to filter.." [readonlyInput]="false"
+      inputId="monthpicker"></p-calendar>
+    <button class="btnUpload filter_btn_m " (click)="applyDatefilter()"> Filter</button>
+    </div>
+
+  </div> -->
+  <div class="filter_inputDash">
+    <p-calendar [(ngModel)]="selectDate" view="month" dateFormat="mm/yy" [showIcon]="true" [yearNavigator]="true" [minDate]="minDate" 
+    [maxDate]="maxDate" [yearRange]='displayYear' placeholder="Select dates to filter.." [readonlyInput]="false"
+    inputId="monthpicker"></p-calendar>
+  <button class="btnUpload filter_btn_m " (click)="applyDatefilter()"> Filter</button>
+</div>
+  <div class="mt-2">
+    <p-table #allInvoice [value]="summaryData" [paginator]="showPaginator" [rows]="10" [showCurrentPageReport]="true"
+      [globalFilterFields]="['Count','ServiceProviderName','ocr_status','voucher_status','EntityName']"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10,25,50]" styleClass="p-datatable-striped">
+
+      <ng-template pTemplate="header">
+        <tr>
+
+
+          <th pSortableColumn="ServiceProviderName">Service Provider Name</th>
+          <th pSortableColumn="EntityName">Entity Name</th>
+          <th pSortableColumn="Count">Count</th>
+          <th pSortableColumn="ocr_status">Ocr Status</th>
+          <th pSortableColumn="voucher_status">Voucher Status</th>
+        </tr>
+        <tr>
+
+          <td>
+            <input pInputText type="text"
+              (input)="allInvoice.filter($event.target.value, 'ServiceProviderName', 'contains')"
+              [value]="allInvoice.filters['ServiceProviderName']?.value" placeholder="Search"
+              class="p-column-filter tableSearchInput">
+          </td>
+          <td>
+            <input pInputText type="text"
+              (input)="allInvoice.filter($event.target.value, 'EntityName', 'contains')"
+              [value]="allInvoice.filters['EntityName']?.value" placeholder="Search"
+              class="p-column-filter tableSearchInput">
+          </td>
+          <td>
+            <input pInputText type="text" (input)="allInvoice.filter($event.target.value, 'Count', 'contains')"
+              [value]="allInvoice.filters['Count']?.value" placeholder="Search"
+              class="p-column-filter tableSearchInput">
+          </td>
+
+          <td>
+            <input pInputText type="text" (input)="allInvoice.filter($event.target.value, 'ocr_status', 'contains')"
+              [value]="allInvoice.filters['ocr_status']?.value" placeholder="Search"
+              class="p-column-filter tableSearchInput">
+          </td>
+          <td>
+            <input pInputText type="text"
+              (input)="allInvoice.filter($event.target.value, 'voucher_status', 'contains')"
+              [value]="allInvoice.filters['voucher_status']?.value" placeholder="Search"
+              class="p-column-filter tableSearchInput">
+
+          </td>
+
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-invoiceData>
+        <tr>
+
+          <td [title]="invoiceData['ServiceProviderName']">{{invoiceData['ServiceProviderName']}}</td>
+          <td [title]="invoiceData['EntityName']">{{invoiceData['EntityName']}}</td>
+          <td [title]="invoiceData.Count">{{invoiceData.Count}}</td>
+
+          <td [title]="invoiceData['ocr_status']"> {{invoiceData['ocr_status']}}</td>
+         
+          <td title="Voucher Created">{{invoiceData['voucher_status']}}</td>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="10" class="p-t-30">
+            <img src="assets/Group 2691.png" width="260" alt="imageUrl"> <br>
+            No Data found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="paginatorleft">
+      </ng-template>
+      <ng-template pTemplate="paginatorright">
+      </ng-template>
+    </p-table>
+  </div>
+  <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="false" type="ball-spin-clockwise">
+    <p style="color: rgb(0, 0, 0)"> </p>
+  </ngx-spinner>
+</div>
+</div>
+<p-toast></p-toast>

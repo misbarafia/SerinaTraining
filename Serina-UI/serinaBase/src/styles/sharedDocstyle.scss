@@ -1,0 +1,381 @@
+@mixin sharedDoc {
+  :host {
+    ul {
+      list-style-type: none;
+      overflow: hidden;
+    }
+
+    li {
+      float: left;
+    }
+    // a {
+    //   color: #272727 !important;
+    // }
+
+    // li a {
+    //   display: block;
+    //   color: white;
+    //   text-align: center;
+    //   font-size: 12px;
+    //   padding: 4px 14px;
+    //   font-weight: 600;
+    //   text-decoration: none;
+    //   cursor: pointer;
+    // }
+    .ulTab {
+      background: #ffefda;
+      padding: 5px 10px !important;
+      width: fit-content;
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 12px;
+    }
+    .activeType {
+      color: #272727 !important;
+      background-color: #f2be42 !important;
+      border-radius: 10px;
+    }
+    .f-12 {
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .removeBtn {
+      padding: 2px 6px;
+      font-size: 14px;
+    }
+    .tableDataDiv {
+      box-shadow: none;
+      max-height: 78vh;
+      overflow: auto;
+      margin-top: -5px;
+    }
+    .positionCreateUpload {
+      position: absolute;
+      right: 10px;
+      top: 56px;
+      z-index: 11
+    }
+    .p-sidebar {
+      background: #272727;
+      color: #f2be42;
+      overflow: auto;
+      overflow-x: hidden;
+    }
+    .clor {
+      color: #f2be42;
+    }
+    .allCols {
+      display: block;
+      float: none;
+      font-size: 13px;
+      padding-top: 12px;
+      border-bottom: 1.3px solid #f2be4266;
+      font-weight: 600;
+    }
+    .labelCols {
+      position: relative;
+      top: -2px;
+    }
+    .dragCols {
+      float: right;
+      margin-right: 14px;
+      font-size: 11px;
+      position: relative;
+      top: -20px;
+      cursor: move;
+    }
+    .btnFooterSave {
+      position: relative;
+      left: 14%;
+      margin-top: 50px;
+    }
+    .sidebar_height {
+      height: 71vh;
+      overflow: auto;
+    }
+
+    :host ::ng-deep {
+      .p-orderlist .p-orderlist-controls {
+        padding: 1rem;
+        display: none;
+      }
+      .p-orderlist .p-orderlist-list {
+        border: 0;
+        background: transparent;
+        color: #f2be42 !important;
+      }
+      .p-orderlist .p-orderlist-list .p-orderlist-item {
+        color: #f2be42;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 4px;
+      }
+    }
+    // custom checkbox
+    /* The container */
+    .container {
+      display: block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    /* Hide the browser's default checkbox */
+    .container input {
+      position: absolute;
+      opacity: 1;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    /* Create a custom checkbox */
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 18px;
+      width: 18px;
+      background-color: #212727;
+      border: 1px solid #f2be42;
+      border-radius: 5px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input ~ .checkmark {
+      background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container input:checked ~ .checkmark {
+      background-color: #f2be42;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container .checkmark:after {
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 11px;
+      border: solid white;
+      border-width: 0 2px 3px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+
+    .label-head {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: -5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .inputAddLabel {
+      font-size: 12px;
+      height: 35px;
+      // margin-right: 5px;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background-color: #f7f7f7;
+      border: 0;
+    }
+    .file-over {
+      margin: 15px 50px 30px 50px;
+      text-align: center;
+      border-radius: 15px;
+      cursor: pointer;
+      outline: 3px dashed green;
+    }
+
+    .dashed-border {
+      // border: 3px dashed #f2be42;
+      border-radius: 10px;
+      margin: 15px 50px 30px 50px;
+      text-align: center;
+      padding: 15px;
+      overflow: hidden;
+    }
+    .browseType {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .uploadIcon {
+      font-size: 40px;
+      color: #f2be42;
+    }
+    .b-type {
+      border: 1px solid lightgray;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .cls:focus {
+      outline: 0;
+    }
+    .img-type {
+      font-size: 12px;
+      color: #272727;
+      font-weight: 600;
+    }
+    .img-name {
+      color: #272727;
+      font-weight: 600;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .img-type-show {
+      width: auto;
+      height: 200px;
+    }
+    .btn-up-center {
+      padding-bottom: 40px;
+      text-align: center;
+    }
+    .btn-up {
+      width: 50%;
+      border-radius: 20px;
+      background: #f2be42;
+    }
+    .img-browse {
+      background-color: black;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 0.3rem;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+    :host ::ng-deep .p-autocomplete-dd .p-autocomplete-input,
+    .p-autocomplete-dd .p-autocomplete-multiple-container {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      width: 390px;
+      margin-top: 10px;
+      height: 35px;
+      font-size: 12px;
+      background: #f7f6f6;
+      border: 0;
+    }
+    :host ::ng-deep .minWidthOverride {
+      width: 187px !important;
+    }
+    .pdropdown {
+      width: 70% !important;
+      margin-bottom: 0px !important;
+    }
+    :host ::ng-deep .p-button.p-button-icon-only {
+      width: 2.357rem;
+      padding: 0.5rem 0;
+      height: 35px;
+      color: lightgray;
+      margin-top: 10px;
+      background: #f7f6f6;
+      border: 0;
+    }
+    :host ::ng-deep .p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+      margin: 0;
+      padding: 5px 1rem;
+      border: 0 none;
+      color: #495057;
+      background: transparent;
+      transition: box-shadow 0.2s;
+      border-radius: 0;
+      font-size: 12px;
+      font-weight: 400;
+    }
+    :host ::ng-deep .p-inputtext:enabled:hover {
+      border-color: lightgray;
+    }
+    :host ::ng-deep .p-inputtext:enabled:focus {
+      outline: 0 none;
+      outline-offset: 0;
+      box-shadow: none;
+      border-color: lightgray;
+    }
+    :host ::ng-deep .p-dialog .p-dialog-content {
+      min-height: 40vh;
+    }
+    @media screen and (max-width: 800px) {
+      .searchBar {
+        position: fixed;
+        z-index: 10;
+        top: 71px;
+        left: 74%;
+      }
+      li a {
+        font-size: 10px;
+      }
+      .ulTab {
+        max-width: 67% !important;
+      }
+      .statusType {
+        width: 40px !important;
+        margin: 0;
+        padding: 2px 8px !important;
+      }
+      // :host ::ng-deep .nav-pills .nav-link {
+      //   font-size: 9px !important;
+      // }
+      // :host ::ng-deep.p-datatable .p-datatable-thead > tr > th {
+      //   font-size: 8px;
+      // }
+      // :host ::ng-deep .p-datatable .p-datatable-thead > tr > td {
+      //   font-size: 8px;
+      // }
+      .searchInput {
+        width: 60%;
+      }
+      .tableDataDiv {
+        margin-top: 40px;
+      }
+    }
+    @media screen and (max-width: 1200px) and (min-width: 800px) {
+      .searchBar {
+        top: 50px;
+        left: 78%;
+      }
+      .statusType {
+        margin: 4px;
+      }
+      li a {
+        // font-size: 11px;
+      }
+      .ulTab {
+        max-width: 60% !important;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .product-item {
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

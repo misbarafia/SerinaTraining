@@ -1,0 +1,35 @@
+// .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+//     color: #272727 !important;
+//     background-color: #f2be42 !important;
+// }
+// a{
+//     color: #272727 !important;
+// }
+// .nav-pills .nav-link {
+//     border-radius: 10px;
+//     font-weight: 600;
+//     margin-right: 10px;
+//     font-size: 12px;
+//     padding: 4px 14px;
+//     border: none;
+// }
+
+// .positionCreateUpload{
+//     position: absolute;
+//     right: 30px;
+//     top: 53px;
+//     z-index: 11;
+// }
+.statusType {
+  display: flex !important;
+}
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  padding: 10px;
+  width: 100%;
+}
+// .searchBar {
+//     right: 40px !important;
+// }
+// :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td{
+//     padding: 16px !important;
+// }

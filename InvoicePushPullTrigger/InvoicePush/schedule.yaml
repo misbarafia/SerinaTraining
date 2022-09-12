@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: dyninvpush
+  namespace: agi-pov
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '*/30 * * * *' # cron spec of time, here, 8 o'clock
+  failedJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: dyninvpush
+            image: regserinaplus.azurecr.io/serina-server:dyninvpush
+            imagePullPolicy: Always
+          restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: deploymentsecret

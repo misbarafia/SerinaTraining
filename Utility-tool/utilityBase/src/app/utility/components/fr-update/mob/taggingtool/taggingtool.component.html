@@ -1,0 +1,409 @@
+<div class="container-fluid p-2">
+    <div class="flex-container">
+        <div class="item1 bg-white h-md-100 loginarea box" >
+            <ul class="p-3">
+                <li (click)="navigatetoPage('tagging')" class="active text-center" title="Tagging">
+                    <a><i class="fa fa-tags"></i></a>
+                </li>
+                
+                <li (click)="navigatetoPage('training')" class="text-center" title="Training">
+                    <a><i class="fa fa-connectdevelop"></i></a>
+                </li>
+                
+                <li (click)="navigatetoPage('composing')" title="Compose" class="text-center">
+                    <a><i class="fa fa-link"></i></a>
+                </li>
+                <li (click)="navigatetoPage('testing')" title="Test Model" class="text-center">
+                    <a><i class="fa fa-flash"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="item2 bg-white h-md-100 loginarea box p-0">
+            <div *ngIf="loading">
+                <div *ngFor='let in of counter(5)' class="asset-item">
+                    <div class="asset-item-image">
+                        <div class="asset-preview1">
+                            <div class="asset-preview-container" style="height: 120px;width: 120px;">
+                                <div class="text-center">
+                                    <div class="spinner-border spinner-border-sm" role="status" style="margin-top: 40%;">
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="asset-item-metadata">
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!loading">
+                <div *ngFor="let t of thumbnails;let i = index" class="asset-item" id="thumb{{i}}" (click)="SelectDoc(i)">
+                <div *ngFor="let obj of t | keyvalue">
+                    <div class="asset-item-image" style="height: 120px;">
+                        <div class="asset-preview1">
+                            <div class="asset-preview-container"  style="height: 120px;width: 120px;">
+                                <img *ngIf="!loading1" src="{{obj.value}}" alt="{{obj.key}}">
+                                <div *ngIf="loading1" class="text-center">
+                                    <div class="spinner-border spinner-border-sm" role="status" style="margin-top: 40%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="asset-item-metadata">
+                        {{obj.key}}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="item3 bg-white box">
+            <div id="sticky">
+                <div class="root-61">
+                    <div class="primarySet-65"></div>
+                    <div class="primarySet-65 p-2">{{p_name}} <span *ngIf="currentfile != ''">[{{this.currentfile}}]</span></div>
+                    <div class="secondarySet-72">
+                        <!-- <div class="item-66" id="drawdiv" (click)="activateDraw()"><i class="fa fa-pencil-square-o" aria-hidden="true"> Draw Region</i></div> -->
+                        <div class="item-66"><i class="fa fa-trash" title="Reset Tagging" data-toggle="modal" data-target="#confirmModel"> Reset Tagging</i></div>
+                        <div class="item-66"><i class="fa fa-search-minus" (click)="zoomOut()"></i></div>
+                        <div class="item-66"><i class="fa fa-search-plus" (click)="zoomIn()"></i></div>
+                        <div *ngIf="maxpage > 1" class="item-66"><i class="fa fa-arrow-left" (click)="previous()"></i></div>
+                        <div *ngIf="maxpage > 1" class="item-66"><i class="fa fa-arrow-right" (click)="next()"></i></div>
+                        <div class="item-66">{{currentpage}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center" *ngIf="analyzing" style="margin-top: 30%;">
+                <strong>Running Layout</strong>&nbsp;
+                <div class="spinner-border spinner-border-sm" role="status">
+                </div>
+            </div>
+            <div *ngIf="ready">
+            <div *ngFor="let p of counter(maxpage);let i = index">
+                <div class="asset-item-image1" id="Page-{{i+1}}container">
+                    <div class="asset-preview">
+                        <div class="asset-preview-container text-center" id="parentcanvas{{i+1}}" cdkDrag (cdkDragEnded)="DragRemoved($event)" [cdkDragDisabled]="dragdisable" (cdkDragMoved)="DragMoving($event)">
+                            <div id="hidden{{i+1}}" class="card" style="width: 200px;height: auto;max-height: 200px;overflow-y: scroll;display:none">
+                                <div class="list-group" style="color:#000000;background-color: transparent;" *ngFor="let f of fields;let i = index">
+                                    <a class="list-group-item list-group-item-action fieldselect" *ngIf="f.fieldType == 'string'" (click)="SetField(i,f)">{{f.fieldKey}}</a>
+                                </div>
+                            </div>
+                            <canvas id="canvas{{i+1}}"></canvas> 
+                        </div>
+                    </div>
+                </div>
+                <div class="asset-item-metadata text-center">
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="item4 bg-white box" id="tagdiv">
+            <div class="text-center" *ngIf="loading" style="margin-top: 50%;">
+                <strong>Getting Fields</strong>&nbsp;
+                <div class="spinner-border spinner-border-sm" role="status">
+                </div>
+            </div>
+            <div class="tag-input" *ngIf="!loading">
+                <div class="tag-input-header">
+                    <span *ngIf="showtags && !showtabletags" class="tag-input-title">Tags</span>
+                    <div class="tag-input-toolbar" *ngIf="showtags && !showtabletags">
+                        <!-- <button type="button" class="tag-input-toolbar-iconbutton" title="Add new Tag" (click)="addTag()"><i class="fa fa-plus"></i></button>
+                        <button type="button" class="tag-input-toolbar-iconbutton" title="Add new table Tag" (click)="addTableTag()"><i class="fa fa-table"></i></button> -->
+                        <div class="tag-input-toolbar-separator"></div>
+                    </div>
+                </div>
+                <div *ngIf="!showtags && !showtabletags" class="p-2">
+                    <div class="row">
+                        <div style="margin-top: 4%;"></div>
+                        <div class="col-md-12">
+                            <h6>Configure Table Tag</h6>
+                        </div>
+                        <div class="col-md-12">
+                            <a href="https://docs.microsoft.com/en-us/azure/applied-ai-services/form-recognizer/supervised-table-tags" target="_blank">Learn how to use table tags</a>
+                        </div>
+                        <div style="margin-top: 4%;"></div>
+                        <div class="col-md-12">
+                            <label for="tabletag" class="small-font">Name*</label>
+                            <input type="text" class="form-control form-control-sm" id="tabletag" placeholder="Label Tag Name" required> 
+                        </div>
+                        <div style="margin-top: 8%;"></div>
+                        <div class="col-md-12">
+                            <label class="small-font">Type</label>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="fixeddynsized" (change)="updateTableType($event)" id="fixedsized">
+                                <label class="small-font" for="fixedsized">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                    width="24" height="24"
+                                    viewBox="0 0 172 172"
+                                    style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#95a5a6"><path d="M28.66667,14.33333c-7.83362,0 -14.33333,6.49972 -14.33333,14.33333v114.66667c0,7.83362 6.49972,14.33333 14.33333,14.33333h114.66667c7.83362,0 14.33333,-6.49972 14.33333,-14.33333v-114.66667c0,-7.83362 -6.49972,-14.33333 -14.33333,-14.33333zM28.66667,28.66667h28.66667v28.66667h-28.66667zM71.66667,28.66667h28.66667v28.66667h-28.66667zM114.66667,28.66667h28.66667v28.66667h-28.66667zM35.83333,35.83333v14.33333h14.33333v-14.33333zM78.83333,35.83333v14.33333h14.33333v-14.33333zM121.83333,35.83333v14.33333h14.33333v-14.33333zM28.66667,71.66667h28.66667v28.66667h-28.66667zM71.66667,71.66667h28.66667v28.66667h-28.66667zM114.66667,71.66667h28.66667v28.66667h-28.66667zM35.83333,78.83333v14.33333h14.33333v-14.33333zM28.66667,114.66667h28.66667v28.66667h-28.66667zM71.66667,114.66667h28.66667v28.66667h-28.66667zM114.66667,114.66667h28.66667v28.66667h-28.66667zM35.83333,121.83333v14.33333h14.33333v-14.33333z"></path></g></g></svg> Fixed Sized
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="fixeddynsized" (change)="updateTableType($event)" id="dynamicsized" checked>
+                                <label class="small-font" for="dynamicsized">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+width="24" height="24"
+viewBox="0 0 172 172"
+style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#95a5a6"><path d="M28.66667,35.83333c-7.90483,0 -14.33333,6.4285 -14.33333,14.33333v43c0,7.90483 6.4285,14.33333 14.33333,14.33333h7.16667v14.33333h-21.5l28.66667,28.66667l28.66667,-28.66667h-21.5v-14.33333h36.40723c0.72383,-5.06683 2.20386,-9.87567 4.3252,-14.33333h-0.014c8.04817,-16.942 25.27941,-28.66667 45.28157,-28.66667c2.43667,0 4.82317,0.19507 7.16667,0.5319v0.04199c5.06683,0.72383 9.87567,2.20386 14.33333,4.3252v-19.23242c0,-7.90483 -6.4285,-14.33333 -14.33333,-14.33333zM136.16667,78.83333c-19.78717,0 -35.83333,16.04617 -35.83333,35.83333c0,19.78717 16.04617,35.83333 35.83333,35.83333c19.78717,0 35.83333,-16.04617 35.83333,-35.83333c0,-19.78717 -16.04617,-35.83333 -35.83333,-35.83333zM129,93.16667h14.33333v14.33333h14.33333v14.33333h-14.33333v14.33333h-14.33333v-14.33333h-14.33333v-14.33333h14.33333z"></path></g></g></svg> Dynamic Rows
+                                </label>
+                              </div>
+                        </div>
+                        <div style="margin-top: 8%;"></div>
+                        <div class="col-md-12">
+                            <h6>Configure Type and format for:</h6>
+                        </div>
+                        <div style="margin-top: 8%;"></div>
+                        <div class="col-md-12" *ngIf="isFixed">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="colrowfields" id="columnfields" checked>
+                                <label class="small-font" for="columnfields"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                    width="24" height="24"
+                                    viewBox="0 0 172 172"
+                                    style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#95a5a6"><path d="M13.76,13.76v3.44v44.72h144.48v-48.16zM20.64,20.64h130.72v34.4h-130.72zM86,27.52c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,41.28c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM17.2,68.8c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,68.8c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,68.8c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM17.2,82.56c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,82.56c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,82.56c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM17.2,96.32c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,96.32c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,96.32c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM30.96,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM44.72,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM58.48,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM72.24,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM99.76,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM113.52,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM127.28,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM141.04,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM17.2,110.08c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,110.08c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,110.08c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM17.2,123.84c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,123.84c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,123.84c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM17.2,137.6c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,137.6c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,137.6c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM17.2,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM30.96,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM44.72,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM58.48,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM72.24,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM86,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM99.76,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM113.52,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM127.28,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM141.04,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44z"></path></g></g></svg> Column Fields</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="colrowfields" id="rowfields">
+                                <label class="small-font" for="rowfields"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                    width="24" height="24"
+                                    viewBox="0 0 172 172"
+                                    style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#95a5a6"><path d="M13.76,13.76v3.44v141.04h75.68v-144.48zM99.76,13.76c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM113.52,13.76c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM127.28,13.76c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM141.04,13.76c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,13.76c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM20.64,20.64h61.92v130.72h-61.92zM154.8,27.52c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,41.28c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,55.04c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM30.96,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM44.72,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM58.48,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM72.24,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM99.76,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM113.52,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM127.28,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM141.04,58.48c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,68.8c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,82.56c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,96.32c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM30.96,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM44.72,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM58.48,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM72.24,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM99.76,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM113.52,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM127.28,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM141.04,106.64c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,110.08c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,123.84c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,137.6c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM99.76,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM113.52,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM127.28,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM141.04,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM154.8,151.36c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44z"></path></g></g></svg> Row Fields</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 p-1" style="margin-left: 25%;">
+                                <label class="small-font">Column Fields</label>
+                            </div>
+                        </div>
+                        <div style="width: 100%;">
+                            <div style="position: relative;">
+                                <div class="root-103">
+                                    <div class="primarySet-65">
+                                        <div class="item-66">Name</div>
+                                        <div class="item-66"><span><i class="fa fa-arrow-up"></i></span></div>
+                                        <div class="item-66"><span><i class="fa fa-arrow-down"></i></span></div>
+                                        <div class="item-66"><span><i class="fa fa-trash"></i></span></div>
+                                        <div class="item-66"></div>
+                                        <div class="item-66">Type</div>
+                                        <div class="item-66">Format</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row rowcolfields" style="width: 100%;margin-left: 0.3%;margin-top: 1%;" *ngFor="let obj of columnfields;let i = index">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control form-control-sm" value={{obj.fieldKey}} id="columnfield{{i}}" (blur)="setTableFieldKey(i)">    
+                                </div>
+                                <div class="col-md-3" style="margin-right:-30px">
+                                    <select id="columnfieldtype{{i}}" (change)="setTableFieldType($event,i)">
+                                        <option value="string">string</option>
+                                        <option value="number">number</option>
+                                        <option value="date">date</option>
+                                        <option value="time">time</option>
+                                        <option value="integer">integer</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select id="columnfieldformat{{i}}" (change)="setTableFieldFormat($event,i)">
+                                        <option value="not-specified">not-specified</option>
+                                        <option value="alphanumeric">alphanumeric</option>
+                                        <option value="no-whitespaces">no-whitespaces</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 8%;"></div>
+                        <div class="row">
+                            <div class="col-md-12 p-1" style="margin-left: 20%;">
+                                <button type="button" class="btn btn-primary btn-sm" (click)="addColumnFields()"><i class="fa fa-plus"></i> Add Column</button>
+                            </div>
+                        
+                        <div style="margin-top: 8%;" *ngIf="isFixed"></div>
+                        <div *ngIf="isFixed" class="col-md-12 p-1" style="margin-left: 20%;">
+                            <label class="small-font">Row Fields</label>
+                        </div>
+                        </div>
+                        <div style="width: 100%;" *ngIf="isFixed">
+                            <div style="position: relative;">
+                                <div class="root-103">
+                                    <div class="primarySet-65">
+                                        <div class="item-66">Name</div>
+                                        <div class="item-66"><span><i class="fa fa-arrow-up"></i></span></div>
+                                        <div class="item-66"><span><i class="fa fa-arrow-down"></i></span></div>
+                                        <div class="item-66"><span><i class="fa fa-trash"></i></span></div>
+                                        <div class="item-66"></div>
+                                        <div class="item-66">Type</div>
+                                        <div class="item-66">Format</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row rowcolfields" style="width: 100%;margin-left: 0.3%;margin-top: 1%;">
+                                <div class="col-md-7">
+                                    <input type="text" class="form-control form-control-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 8%;" *ngIf="isFixed"></div>
+                        <div class="row" *ngIf="isFixed">
+                            <div class="col-md-12 p-1" style="margin-left: 20%;">
+                                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Row</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 p-1">
+                            <button type="button" class="btn btn-info btn-sm" (click)="cancelTableTag()">Cancel</button>&nbsp;
+                            <button type="button" class="btn btn-success btn-sm" (click)="saveTableTag()">Save</button>
+                        </div>
+                        <div style="margin-top:20%"></div>
+                    </div>
+                   
+                </div>
+                <div *ngIf="showtags && !showtabletags" class="tag-input-body-container">
+                    <div class="tag-input-body">
+                        <div class="tag-input-items" style="display: block" *ngFor="let f of fields;let i = index">
+                            <div class="tag-item-block">
+                                <div class="tag-color" [ngStyle]="{'background-color': getBackgroundColor(f.fieldType)}"></div>
+                                <div class="tag-item-block-2">
+                                    <div class="tag-item"  id="tag-container{{i}}">
+                                        <div class="tag-content pr-2">
+                                            <div class="tag-name-container">
+                                                <div class="tag-name-body" (click)="SetField(i,f)" (mouseenter)="mouseEnter(f.fieldKey)" (mouseleave)="mouseLeave(f.fieldKey)">
+                                                    <span class="tag-name-text px-2 pb-1" *ngIf="f.fieldType == 'string'" title="{{f.fieldKey}}">
+                                                        {{f.fieldKey}}
+                                                    </span>
+                                                    <span class="tag-name-text px-2 pb-1" *ngIf="f.fieldType == 'array'" title="{{f.fieldKey}}">
+                                                        <i class="fa fa-table"></i> {{f.fieldKey}}
+                                                    </span>
+                                                </div>
+                                                <div class="tag-icons-container">
+                                                    <!-- <span class="tag-index-span border border-white rounded-sm" title="Delete Tag" (click)="deleteTag(f)"><i class="fa fa-trash-o" style="color: #f2be42;"></i> </span>
+                                                    <span class="tag-index-span border border-white rounded-sm" title="Rename Tag"><i class="fa fa-edit" style="color: #f2be42;"></i></span> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tag-item-label-container tablehover" *ngIf="f.fieldType == 'string'">
+                                        <div class="tag-item-label-container-item2">
+                                            <div class="tag-item-label flex-center px-2">
+                                                <div class="flex-center" id="field-{{f.fieldKey}}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tag-item-label-container tablehover p-2" *ngIf="f.fieldType == 'array'" (click)="startTableTagging(i,f.fieldKey)">
+                                        <i class="fa fa-tasks"></i> Click to assign Table values
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tag-input-text-input-row" id="newtag">
+                            <input id="newtaginput" type="text" placeholder="New Tag Name" (blur)="setTag()">
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="showtags && showtabletags" class="p-3">
+                    <div class="row">
+                        <div style="margin-top: 4%;"></div>
+                        <div class="col-md-12">
+                            <span class="small-font">Label Table</span>
+                        </div>
+                        <div style="margin-top: 8%;"></div>
+                        <div class="col-md-12">
+                            <span class="small-font">To start labeling your table:</span>
+                        </div>
+                        <ul>
+                            <li style="pointer-events: none;font-size: x-small;">
+                                1. Select the words in the document you want to label.
+                            </li>
+                            <li style="pointer-events: none;font-size: x-small;">
+                                2. Click the table cell you want to label selected words to.
+                            </li>
+                        </ul>
+                        <div style="margin-top: 8%;"></div>
+                        <div class="col-md-12">
+                            <span class="small-font"><b>Table Name:</b> {{currenttable}} </span>
+                        </div>
+                        <div class="table">
+                        <table class="table table-dark" style="margin-bottom: 1rem;margin: .25rem .75rem;font-size: small;">
+                            <thead>
+                            <tr>
+                                <th *ngFor="let obj of currenttableheaders">{{obj.fieldKey}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let row of rows;let i = index">
+                                <td *ngFor="let obj of currenttableheaders" id="{{currenttable}}/{{i}}/{{obj.fieldKey}}" (click)="setTableCellTag(i,obj.fieldKey)" (mouseenter)="mouseEnter($event.target.id)" (mouseleave)="mouseLeave($event.target.id)"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                        <div class="col-md-12" style="margin-left: 5%;">
+                            <button class="btn btn-secondary btn-sm" type="button" (click)="addTableRow()">Add Row</button>&nbsp;
+                            <button class="btn btn-success btn-sm" type="button" (click)="stopTableTagging()">Done</button>
+                        </div>
+                    </div>
+                    <div style="margin-top:20%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="errclick" data-toggle="modal" data-target="#exampleModal" style="visibility: hidden;"></button>
+<div class="modal fade" id="exampleModal" style="margin-top: 10%;"  data-backdrop="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="border: none;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+            <div>
+              <i class="fa fa-exclamation-triangle" style="font-size: 4rem;color:#e74c3c;"></i>
+            </div>
+            <div class="deleteDivText">
+              Duplicate Tagging Values not Allowed!
+            </div>
+          </div><br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="confirmModel" style="z-index: 3001;margin-top: 10%;"  data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="border: none;">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+            <div>
+              <i class="fa fa-exclamation-triangle" style="font-size: 4rem;color:#f2be42;"></i>
+            </div>
+            <div class="deleteDivText">
+              Do you want to completely Delete the existing tag items?
+            </div>
+          </div><br><br>
+          <div class="d-flex justify-content-center mb-3">
+            <button class="btn btnbg mr-3" data-dismiss="modal" (click)="resetTagging()">Yes</button>
+            <button class="btn btncancel" data-dismiss="modal">No</button>
+          </div>
+        </div>
+        
+          
+      </div>
+    </div>
+  </div>
+<!-- <p-dialog header=" " [(visible)]="displayResponsivepopup" [breakpoints]="{'960px': '75vw'}" [style]="{width: '10vw'}"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false" [positionTop]="top">
+  <div class="text-center">
+    
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-center mb-3">
+   
+    </div>
+
+  </ng-template>
+</p-dialog> -->

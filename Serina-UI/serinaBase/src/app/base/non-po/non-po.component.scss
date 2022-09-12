@@ -1,0 +1,626 @@
+.label-head {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.vendor-body {
+    padding: 20px 90px 30px 20px;
+}
+.invoice-body {
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 10%);
+    margin: 10px 5px;
+    border-radius: 10px;
+    padding: 10px;
+    height: 90vh;
+    margin-top: 50px;
+}
+.btnFooter {
+    margin-top: 6%;
+    display: flex;
+    justify-content: center;
+}
+table {
+    width: 100%;
+}
+
+td,
+th {
+    width: 20%;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 0 !important;
+    border: none !important;
+}
+.mat-elevation-z8 {
+    box-shadow: none;
+    max-height: 78vh;
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;
+    top: 26px;
+}
+.table_max_height {
+    max-height: 100vh !important;
+    padding: 0px 0px 0px 10px;
+}
+:host ::ng-deep .mat-sort-header-content {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 13px;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    color: #000000;
+}
+:host ::ng-deep mat-row,
+mat-header-row,
+mat-footer-row,
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    border-bottom-color: #f5f5f5;
+}
+.mat-paginator {
+    display: block;
+    position: fixed;
+    bottom: 10px;
+    right: 25px;
+}
+
+// .filter{
+//     border: 1px solid #f2be42;
+//     padding: 1px 8px 3px;
+//     background: #f2be42;
+//     border-radius: 6px;
+//     cursor: pointer;
+//     color: #0D0B3C;
+//     font-size: 18px;
+//     margin-left: 0;
+//     position: relative;
+//     top: 2px;
+//     z-index: 1000000000000000;
+// }
+.btnInvoiceType {
+    border: 1.95px solid black;
+    font-weight: 500;
+    font-size: 12px;
+    height: 30px;
+    background: white;
+    border-radius: 5px;
+    padding: 0px 8px !important;
+}
+.btnInvoiceType:focus {
+    background-color: #a9a9a9;
+    color: white;
+    border: 0;
+}
+.btnInvoiceType:hover {
+    background-color: #a9a9a9;
+    color: white;
+    border: 0;
+}
+.f-16 {
+    font-size: 16px;
+}
+.positionCreateUpload {
+    position: absolute;
+    right: 5px;
+    top: 63px;
+    z-index: 11;
+}
+tbody {
+    overflow: auto;
+    max-height: 80vh;
+}
+:host ::ng-deep .dataTables_wrapper .dataTables_filter {
+    position: absolute;
+    top: -110px;
+}
+:host ::ng-deep tr.mat-row,
+tr.mat-footer-row {
+    height: 38px;
+}
+:host ::ng-deep .table th,
+.table td {
+    padding: 0 10px !important;
+    vertical-align: middle;
+    border-top: 0 !important;
+    border: none !important;
+}
+.toViewVendor {
+    min-height: 78vh;
+    max-height: 78vh;
+    margin-right: 10px;
+    // box-shadow: 1px 1px 6px rgb(0 0 0 / 10%);
+    // padding: 10px;
+    z-index: -1;
+}
+
+.closeIcon {
+    // font-size: 18px;
+    // border: 1px solid lightgray;
+    // padding: 4px 6px;
+    // border-radius: 21px;
+    float: right;
+    cursor: pointer;
+    margin-right: 3px;
+}
+
+// filter Css ends
+
+.formInvalid {
+    border: 2px solid red;
+}
+.formInvalid1 {
+    border: 1px solid lightgray;
+}
+
+.btnAction {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+    padding-bottom: 30px;
+}
+
+.form-control {
+    width: 70%;
+    margin-bottom: 5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+    background-image: none;
+}
+.Cbody {
+    height: 100vh;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.headNameDetails {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.pdropdown {
+    width: 70% !important;
+    margin-bottom: 0px !important;
+}
+.statusType {
+    width: 100%;
+    padding: 4px !important;
+    display: inline-block;
+    border-radius: 20px;
+    text-align: center !important;
+    background: #107e3e;
+    margin: 4px;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.t-center {
+    text-align: center !important;
+}
+// primeng table
+.activeRow {
+    background-color: #dceefd !important;
+}
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    border: 1px solid #f5f5f5;
+    border-width: 0 0 1px 0;
+    padding: 10px;
+    color: #0f3f62;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    text-align: left;
+    border: 1px solid #f5f5f5;
+    border-width: 0 0 1px 0;
+    font-weight: 700;
+    padding: 10px;
+    width: 100%;
+    font-size: 12px;
+    color: #495057;
+    background: #ffffff;
+    transition: box-shadow 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+:host ::ng-deep .p-fluid .p-inputtext {
+    width: 100%;
+    height: 30px;
+}
+
+// serach
+// .searchInput {
+//     background: #ffffff;
+//     padding: 8px 14px;
+//     width: 70%;
+//     height: 30px;
+//     border-radius: 5px;
+//     margin-bottom: 20px;
+//     font-size: 13px;
+//     margin-top: 10px;
+//     border: 1px solid #f2be42;
+// }
+.searchInput:focus {
+    outline: 0;
+}
+.searchBar {
+    position: fixed;
+    top: 53px;
+    right: -45px;
+}
+.searchBarInvoiceService {
+    top: 117px;
+    right: 104px;
+}
+.searchBarServiceAc {
+    top: 120px;
+    right: 70px;
+}
+.exportIcon {
+    right: 71px;
+    top: 46px;
+}
+.searchIcon {
+    position: relative;
+    top: 0;
+    left: -27px;
+    font-size: 18px;
+    color: #a9a9a9;
+}
+
+
+.tableSearchInput:focus {
+    outline: 0 !important;
+}
+.searchInputInvoce {
+    height: 28px;
+    width: 140px;
+}
+
+// full details
+.colon {
+    float: right;
+    margin-right: 40px;
+}
+.tdLeft {
+    font-size: 12px;
+    color: #5d5a5a;
+    font-weight: 600;
+}
+.tdRight {
+    font-size: 12px;
+    color: #5d5a5a;
+    font-weight: 600;
+}
+.trHeight {
+    height: 35px;
+}
+.DetailsHead {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    color: #000000 !important;
+    background-color: #f2be42 !important;
+}
+.active {
+    color: #272727 !important;
+    background-color: #f2be42 !important;
+}
+.nav-pills .nav-link {
+    border-radius: 0;
+    font-weight: 600;
+    color: #000000;
+    border-right: 1px solid #f2be42;
+    font-size: 11px;
+    cursor: pointer;
+}
+.tabHead {
+    border: 1px solid #f2be42;
+    border-radius: 6px;
+    display: flex;
+    width: fit-content;
+}
+
+.f-15 {
+    font-size: 15px;
+    font-weight: bold;
+}
+.overTexttable {
+    max-height: 58vh;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.w-48 {
+    width: 48% !important;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+.f-13 {
+    font-size: 13px;
+    font-weight: 600;
+}
+.f-12 {
+    font-size: 12px !important;
+    font-weight: 600;
+}
+.editPosition {
+    position: absolute;
+    right: 69%;
+}
+
+label {
+    color: #9a9a9a;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.f-right {
+    float: right;
+    margin-top: 3px;
+    margin-right: 9px;
+}
+.pos-AddAcnt {
+    height: 28px;
+    position: relative;
+    top: -2px;
+    right: 0;
+    z-index: 500;
+}
+.spDetailsDiv {
+    max-height: 70vh;
+    overflow: auto;
+    overflow-x: hidden;
+    z-index: 5668776544;
+}
+
+// modal css
+.modal-header {
+    border-bottom: 0 !important;
+}
+.modal-footer {
+    border-top: 0 !important;
+    justify-content: center !important;
+}
+.modal-content {
+    padding: 10px;
+    width: 90%;
+}
+.inviteLabel {
+    font-size: 12px;
+    font-weight: 600;
+    color: #a29f9f;
+}
+
+.displayFlex {
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: row;
+}
+
+.inputHeight {
+    font-size: 12px;
+    height: 35px;
+    // margin-right: 5px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: white;
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+}
+.inputHeight:focus{
+    border: 1px solid #313971;
+}
+.ml-73 {
+    margin-left: -50px;
+}
+.addAc {
+    float: right;
+    margin-right: 10vw;
+    margin-top: 12px;
+}
+.w-100 {
+    width: 95% !important;
+}
+.addCost {
+    border-radius: 30px;
+    height: 30px;
+    width: 30px;
+    margin-top: 26px;
+}
+.addCostIcon {
+    position: relative;
+    left: -5px;
+}
+.bg-cost {
+    background-color: #ffebeb;
+}
+.btnaddDelac {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.onEditFalse {
+    cursor: not-allowed;
+    background: white;
+    border: 0;
+}
+.onEditTrue {
+    background: white;
+    height: 23px;
+    padding: 10px;
+    padding-top: 9px !important;
+    border: 1px solid lightgray;
+}
+.inputProfile {
+    font-size: 12px !important;
+    padding-top: 18px;
+    height: 24px;
+}
+:host ::ng-deep .p-dialog .p-dialog-header {
+    padding: 0.5rem;
+}
+:host ::ng-deep.p-dialog .p-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 40px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+    font-size: 16px;
+    padding-left: 16px;
+}
+
+.quick_add_div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 13vw;
+    margin-top: 1vh;
+    font-size: 13px;
+    font-weight: 600;
+}
+.quick_add_btn {
+    border: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 25px;
+    background: #f2be42;
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 699px) {
+    .searchBar {
+        position: fixed;
+        top: 53px;
+        // left: 55%;
+    }
+    .ulTab {
+        max-width: 67% !important;
+    }
+    .statusType {
+        width: 40px !important;
+        margin: 0;
+        padding: 2px 8px !important;
+    }
+    // :host ::ng-deep .nav-pills .nav-link {
+    //     font-size: 9px !important;
+    // }
+    // :host ::ng-deep.p-datatable .p-datatable-thead > tr > th {
+    //     font-size: 8px !important;
+    // }
+    // :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    //     font-size: 8px !important;
+    // }
+    .searchInput {
+        width: 60%;
+    }
+    .searchBarInvoiceService {
+        top: 96px;
+        left: 71%;
+    }
+    .searchBarServiceAc {
+        top: 96px;
+        left: 55%;
+    }
+    
+    .serachInAccount {
+        width: 43%;
+        margin-left: 22px;
+        position: relative;
+        right: -106px;
+    }
+    .pos-AddAcnt {
+        width: 122px;
+        overflow: hidden;
+        top: -44px;
+        right: 163px;
+    }
+    .searchIconAccount {
+        // left: 80px;
+        display: none;
+    }
+    .searchIconSpInvoice {
+        top: -46px;
+        left: 115px;
+        display: none;
+    }
+}
+@media screen and (max-width: 1100px) and (min-width: 700px) {
+    // .searchBar {
+    //     top: 53px;
+    //     // left: 61%;
+    // }
+    .statusType {
+        margin: 4px;
+    }
+    // .searchBarServiceAc {
+    //     top: 143px;
+    //     left: 76%;
+    // }
+    .searchBarInvoiceService {
+        top:121px;
+        right: 50px;
+    }
+    .pos-AddAcnt {
+        // height: 28px;
+        // position: relative;
+        top: 24px;
+        // right: -23px;
+        z-index: 500;
+    }
+    .searchInputInvoce {
+        position: relative;
+        /* left: 24px; */
+        right: -111px;
+        top: -6px;
+        width: 100px;
+    }
+    .searchIconAccount {
+        display: none;
+    }
+    .exportIcon {
+        right: 62px;
+        top: 49px;
+    }
+    .searchInputInvoice {
+        position: relative;
+        left: -43px;
+        top: 1px;
+    }
+    .searchIconSpInvoice {
+        top: -45px !important;
+        left: 71px;
+        display: none;
+    }
+    .spDetailsDiv{
+        margin-top: 30px;
+    }
+}

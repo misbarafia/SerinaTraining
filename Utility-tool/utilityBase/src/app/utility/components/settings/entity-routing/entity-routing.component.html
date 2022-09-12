@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-between pageHeader">
+  <div *ngIf="showsuccess" class="alert alert-success" role="alert">
+    Keyword Updated Successfully!
+  </div>
+  <div *ngIf="showfailure" class="alert alert-danger" role="alert">
+    Keyword Updation Failure!
+  </div>
+    <div class="font_weight">
+        <input class="inputField form-control" type="text" name="search" (keyup)="searchEntity($event.target.value)"  placeholder=" Search Entity..." /> 
+    </div>
+    
+  </div>
+<div class="flex-container" style="background-color: #313971;color:#ffffff;">
+    <div><b>Entity Name : Code</b></div>
+    <div style="margin-right: 30%;"><b>Routing Keywords</b></div>
+</div>
+<div *ngFor="let entity of entityList" class="flex-container">
+    <div><i>{{entity.EntityName}}</i> : <b>{{entity.EntityCode}}</b></div>
+    <div style="width: 60%;"><p-chips [(ngModel)]="entity.SynonymList" separator="," (onFocus)="hideAlert()" (onBlur)="SaveKeyWord(entity.idEntity)"></p-chips></div>
+</div>

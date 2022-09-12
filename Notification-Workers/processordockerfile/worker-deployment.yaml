@@ -1,0 +1,40 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: notification-processor
+  namespace: rovedev
+spec: 
+  selector: 
+    matchLabels: 
+      app: notification-processor
+  replicas: 1 # tells deployment to run 2 pods matching the template 
+  revisionHistoryLimit: 0
+  template:
+    metadata: 
+      labels: 
+        app: notification-processor
+    spec: 
+      containers: 
+      - name: notification-processor
+        image: roveregistry.azurecr.io/serina-server:rove-notification-processor
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            cpu: 50m
+        env:
+        - name: MAIL_USERNAME
+          value: serinaplus.dev@datasemantics.co
+        - name: MAIL_PASSWORD
+          value: ravager55@rocket
+        - name: MAIL_FROM
+          value: serinaplus.dev@datasemantics.co
+        - name: Broker_Site
+          value: rovedev.centralindia.cloudapp.azure.com
+        - name: name_ip
+          value: "127.0.0.1"
+        - name: serina_name_server
+          value: serina_agi.queue
+      imagePullSecrets:
+        - name: deploymentsecret 

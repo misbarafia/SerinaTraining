@@ -1,0 +1,1209 @@
+
+<p-toast></p-toast>
+
+<p-sidebar [(visible)]="visibleSPColumns" position="right" [baseZIndex]="10000">
+  <h6 style="font-weight: 600">Select Columns</h6>
+
+  <ul
+    class="pl-3 sidebar_height"
+    cdkDropList
+    (cdkDropListDropped)="onOptionDrop($event)"
+  >
+    <li
+      class="allCols"
+      *ngFor="let displayColumn of allSpInvoiceColumns; let i = index"
+      cdkDrag
+    >
+      <label class="container labelSide" [for]="i" cdkDragHandle
+        >{{ displayColumn.columnName }}
+        <input
+          type="checkbox"
+          [id]="i"
+          (change)="activeColumn($event, displayColumn)"
+          [checked]="displayColumn.isActive == 1"
+        />
+        <span class="checkmark"></span>
+      </label>
+      <i class="fa fa-bars dragCols" aria-hidden="true" cdkDragHandle></i>
+    </li>
+  </ul>
+
+  <div class="btnFooterSave" mat-dialog-actions>
+    <button
+      class="btn btnVender bg-btn-cancel mr-4 clor"
+      type="button"
+      (click)="visibleSPColumns = false"
+    >
+      Cancel
+    </button>
+    <button
+      class="btn btnVender bg-btn-success clor"
+      (click)="updateColumnPosition()"
+      cdkFocusInitial
+    >
+      Save
+    </button>
+  </div>
+</p-sidebar>
+
+<mat-sidenav-container class="example-container" hasBackdrop = "false" (backdropClick)="close('backdrop')">
+  <mat-sidenav #sidenav mode="over"  position="end"  >
+    <h6 style="font-weight: 600">Select Columns</h6>
+
+    <ul
+      class="pl-3 sidebar_height"
+      cdkDropList
+      (cdkDropListDropped)="onOptionDrop($event)"
+    >
+      <li
+        class="allCols"
+        *ngFor="let displayColumn of allSpInvoiceColumns; let i = index"
+        cdkDrag
+      >
+        <label class="container labelSide" [for]="i" cdkDragHandle
+          >{{ displayColumn.columnName }}
+          <input
+            type="checkbox"
+            [id]="i"
+            (change)="activeColumn($event, displayColumn)"
+            [checked]="displayColumn.isActive == 1"
+          />
+          <span class="checkmark"></span>
+        </label>
+        <i class="fa fa-bars dragCols" aria-hidden="true" cdkDragHandle></i>
+      </li>
+    </ul>
+  
+    <div class="btnFooterSave" mat-dialog-actions>
+      <button
+        class="btn btnVender bg-btn-cancel mr-4 clor"
+        type="button"
+        (click)="sidenav.toggle()"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btnVender bg-btn-success clor"
+        (click)="updateColumnPosition()"
+        cdkFocusInitial
+      >
+        Save
+      </button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div *ngIf="vendorList">
+      <h6 *ngIf="spDetails" class="headh6">
+        Service provider Details - {{ spDetails.ServiceProviderName }}
+      </h6>
+      <h6 *ngIf="!spDetails" class="headh6">Service provider Details</h6>
+      <div class="mb-3" style="display: flex">
+        <!-- <div class="positionCreateUpload">
+          <button class="btnUpload mr-2" (click)="showAddSpDialog()">
+            <span class="pos-center">
+              <span class="f-16">+</span>
+              Add Service provider
+            </span>
+          </button>
+        </div> -->
+      </div>
+      <div class="row m-0">
+        <div class="col-sm-3 table_col_height">
+          <div class="bg-design-all tableDataDiv">
+            <p-table
+              #spRead1
+              [value]="serviceproviderreaddata"
+              selectionMode="single"
+              [paginator]="showPaginator"
+              [rows]="10"
+              [showCurrentPageReport]="true"
+              [globalFilterFields]="['ServiceProviderName', 'Email']"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10, 25, 50]"
+            >
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="EntityName">
+                    Entity Name 
+                    <!-- <span style="font-size: 11px">(ERPS code)</span> -->
+                  </th>
+                  <th pSortableColumn="ServiceProviderName">SP name</th>
+                </tr>
+                <tr class="sticky_top">
+                  <td>
+                    <input
+                      pInputText
+                      type="text"
+                      style="text-align: left"
+                      (input)="
+                        spRead1.filter(
+                          $event.target.value,
+                          'EntityName',
+                          'contains'
+                        )
+                      "
+                      [value]="spRead1.filters['EntityName']?.value"
+                      placeholder="Search by"
+                      class="p-column-filter tableSearchInput"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      pInputText
+                      type="text"
+                      style="text-align: left"
+                      (input)="
+                        spRead1.filter(
+                          $event.target.value,
+                          'ServiceProviderName',
+                          'contains'
+                        )
+                      "
+                      [value]="spRead1.filters['ServiceProviderName']?.value"
+                      placeholder="Search by"
+                      class="p-column-filter tableSearchInput"
+                    />
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-users>
+                <tr
+                  [ngClass]="
+                    users.idServiceProvider == spDetails.idServiceProvider
+                      ? 'activeRow'
+                      : 't'
+                  "
+                  (click)="viewFullDetails(users)"
+                  [pSelectableRow]="users"
+                >
+                  <td [title]="users.EntityName" style="padding: 15px">
+                    {{ users.EntityName }}
+                  </td>
+                  <td [title]="users.ServiceProviderName" style="padding: 15px">
+                    {{ users.ServiceProviderName }}
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="2" class="p-t-30">
+                    <!-- <img src="assets/Group 2691.png" alt="imageUrl"> <br> -->
+                    No Data found.
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft"> </ng-template>
+              <ng-template pTemplate="paginatorright"> </ng-template>
+            </p-table>
+          </div>
+        </div>
+    
+        <div class="col-sm-9 pl-1">
+          <ul class="nav nav-tabs">
+            <li class="nav-item mr-1">
+              <a
+                class="nav-link"
+                [class.active]="viewType == 'invoice'"
+                (click)="viewType = 'invoice'"
+                >Invoice Details</a
+              >
+            </li>
+            <li class="nav-item mr-1">
+              <a
+                class="nav-link"
+                [class.active]="viewType == 'accountDetails'"
+                (click)="viewType = 'accountDetails'"
+                >Account Numbers</a
+              >
+            </li>
+            <!-- <li class="nav-item mr-1">
+              <a
+                class="nav-link"
+                [class.active]="viewType == 'itemList'"
+                (click)="viewType = 'itemList'"
+                >Item List</a
+              >
+            </li> -->
+            <li class="nav-item mr-1">
+              <a
+                class="nav-link"
+                [class.active]="viewType == 'SpDetails'"
+                (click)="viewType = 'SpDetails'"
+                >SP Details</a
+              >
+            </li>
+          </ul>
+          <div class="toViewVendor bg-design-all">
+            <div class="f-right" style="margin-top: 10px">
+              <!-- <i  class="fa fa-trash-o actionsBtn mr-2" aria-hidden="true"></i> -->
+              <mat-icon
+                class="closeIcon"
+                (click)="colseDiv()"
+                svgIcon="close"
+              ></mat-icon>
+              <!-- <i class="fa fa-times closeIcon" (click)="colseDiv()" aria-hidden="true"></i> -->
+            </div>
+            <div>
+              <div class="f-15 m-2 mb-3">{{ spDetails.ServiceProviderName }}</div>
+    
+              <div class="tab-content spDetailsDiv pt-2" [ngSwitch]="viewType">
+                <!-- Invoice Details -->
+                <div *ngSwitchCase="'invoice'">
+                  <div>
+                    <div class="searchBar searchBarInvoiceService">
+                      <input
+                        class="searchInput searchInputInvoice"
+                        style="height: 28px; width: 140px"
+                        pInputText
+                        type="text"
+                        (input)="
+                          spInvoice.filterGlobal($event.target.value, 'contains')
+                        "
+                        (keyup)="searchInvoiceDataV($event.target.value)"
+                        placeholder="Search + Enter"
+                      />
+                      <span class="material-icons searchIcon searchIconSpInvoice">
+                        search
+                      </span>
+                      <!-- <i class="fa fa-search searchIcon searchIconSpInvoice" aria-hidden="true"></i> -->
+                    </div>
+                    <div class="positionCreateUpload exportIcon">
+                      <button class="btnUpload mr-2" (click)="exportExcel()">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                      </button>
+                    </div>
+    
+                    <p-table
+                      #spInvoice
+                      [value]="spinvoicereaddata"
+                      [globalFilterFields]="columnstodisplaySpInvoice"
+                      [columns]="spInvoiceColumns"
+                      [paginator]="false"
+                      [showFirstLastIcon]="false"
+                      [rows]="1000"
+                      [showCurrentPageReport]="true"
+                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                      [rowsPerPageOptions]="[10, 25, 50]"
+                    >
+                      <ng-template pTemplate="header" let-columns>
+                        <tr>
+                          <th
+                            style="text-align: center"
+                            *ngFor="let col of columns"
+                            [pTooltip]="col.columnDescription"
+                            tooltipPosition="top"
+                            [pSortableColumn]="col.dbColumnname"
+                          >
+                            {{ col.columnName }}
+                          </th>
+                          <th class="action_Zindex">
+                            Actions
+                            <i
+                              class="fa fa-pencil-square-o actionsBtn"
+                              style="border: 0"
+                              aria-hidden="true"
+                              (click)="sidenav.toggle()"
+                            ></i>
+                          </th>
+                        </tr>
+                        <tr>
+                          <td *ngFor="let col of columns" class="sticky_top">
+                            <input
+                              pInputText
+                              type="text"
+                              (input)="
+                                spInvoice.filter(
+                                  $event.target.value || ' ',
+                                  col.dbColumnname,
+                                  'contains'
+                                )
+                              "
+                              [value]="spInvoice.filters[col.dbColumnname]?.value"
+                              [placeholder]="'Search by ' + col.columnName"
+                              class="tableSearchInput"
+                            />
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template
+                        pTemplate="body"
+                        let-invoiceData
+                        let-columns="columns"
+                      >
+                        <tr>
+                          <td
+                            style="padding:4px"
+                            *ngFor="let col of columns"
+                            [title]="invoiceData[col.dbColumnname]"
+                          >
+                            <div [ngSwitch]="col.dbColumnname">
+                              <div *ngSwitchCase="'docstatus'">
+                                <div *ngFor="let color of bgColorCode">
+                                  <span
+                                    class="statusType"
+                                    *ngIf="invoiceData.documentStatusID == color.id"
+                                    [ngStyle]="{
+                                      'background-color':
+                                        invoiceData.documentStatusID == color.id
+                                          ? color.bgcolor
+                                          : '',
+                                      color:
+                                        invoiceData.documentStatusID == color.id
+                                          ? color.textColor
+                                          : ''
+                                    }"
+                                  >
+                                    {{ invoiceData[col.dbColumnname] }}
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="elipse" *ngSwitchDefault>
+                                {{ invoiceData[col.dbColumnname] }}
+                              </div>
+                            </div>
+                          </td>
+                          <td style="padding:4px">
+                            <i
+                              class="pi pi-eye f-16 showEye mr-2"
+                              (click)="viewInvoice(invoiceData)"
+                            ></i>
+                            <!-- <i class="fa fa-pencil-square-o actionsBtn" aria-hidden="true" (click)="editInvoice(invoiceData)"></i> -->
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="10" class="p-t-30 text-center">
+                            <img
+                              src="assets/Group 2691.png"
+                              width="260"
+                              alt="imageUrl"
+                            />
+                            <br />
+                            No Invoices found.
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="paginatorleft"> </ng-template>
+                      <ng-template pTemplate="paginatorright"> </ng-template>
+                    </p-table>
+                    <ngx-spinner
+                      bdColor="rgba(251, 251, 251, 0.8)"
+                      size="medium"
+                      color="#070900"
+                      [fullScreen]="false"
+                      type="ball-spin-clockwise"
+                    >
+                      <p style="color: rgb(0, 0, 0)"></p>
+                    </ngx-spinner>
+                  </div>
+                </div>
+    
+                <!-- SP Account -->
+                <div *ngSwitchCase="'accountDetails'">
+                  <div>
+                    <div class="searchBar searchBarServiceAc">
+                      <input
+                        class="searchInput searchInputInvoce serachInAccount"
+                        pInputText
+                        type="text"
+                        placeholder="Search..."
+                        (input)="
+                          spAccount1.filterGlobal($event.target.value, 'contains')
+                        "
+                      />
+                      <span class="material-icons searchIcon searchIconAccount">
+                        search
+                      </span>
+                      <!-- <i class="fa fa-search searchIcon searchIconAccount " aria-hidden="true"></i> -->
+    
+                      <button
+                        class="btnUpload mr-2 pos-AddAcnt"
+                        (click)="toCreateNewAccount()"
+                      >
+                        <span class="f-16">+</span> Add Account
+                      </button>
+                    </div>
+    
+                    <p-table
+                      #spAccount1
+                      [value]="spaccountreaddata"
+                      [paginator]="false"
+                      [rows]="10"
+                      [showCurrentPageReport]="true"
+                      [globalFilterFields]="displayAccountColumn"
+                      [columns]="columnSPAccont"
+                      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                      [rowsPerPageOptions]="[10, 25, 50]"
+                    >
+                      <ng-template pTemplate="header" let-columns>
+                        <tr>
+                          <th
+                            class="f-12 text-center"
+                            *ngFor="let column of columns"
+                            [pTooltip]="column.header"
+                            tooltipPosition="top"
+                            [pSortableColumn]="column.field"
+                          >
+                            {{ column.header }}
+                          </th>
+                          <th class="action_Zindex" class="f-12 text-center">Actions</th>
+                        </tr>
+                        <tr>
+                          <td *ngFor="let col of columns" class="sticky_top">
+                            <input
+                              pInputText
+                              type="text"
+                              (input)="
+                                spAccount1.filter(
+                                  $event.target.value || ' ',
+                                  col.field,
+                                  'contains'
+                                )
+                              "
+                              [value]="spAccount1.filters[col.field]?.value"
+                              [placeholder]="'Search by ' + col.field"
+                              class="tableSearchInput p-column-filter"
+                            />
+    
+                            <!-- <p-columnFilter placeholder="Search by ID" type="text"  [field]="col.field"></p-columnFilter> -->
+                          </td>
+                          <td></td>
+                        </tr>
+                      </ng-template>
+                      <ng-template
+                        pTemplate="body"
+                        let-spAccount
+                        let-columns="columns"
+                      >
+                        <tr >
+                          <td
+                            class="text-center"
+                            *ngFor="let col of columns"
+                            [title]="spAccount[col.field]"
+                          >
+                            {{ spAccount[col.field] }}
+                          </td>
+                          <td class="f-12 text-center">
+                            <i
+                              class="fa fa-pencil-square-o actionsBtn"
+                              (click)="updateSpAccount(spAccount)"
+                              aria-hidden="true"
+                            ></i>
+                          </td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="emptymessage">
+                        <tr>
+                          <td colspan="7">No Accounts found.</td>
+                        </tr>
+                      </ng-template>
+                      <ng-template pTemplate="paginatorleft"> </ng-template>
+                      <ng-template pTemplate="paginatorright"> </ng-template>
+                    </p-table>
+                    <ngx-spinner
+                      bdColor="rgba(251, 251, 251, 0.8)"
+                      size="medium"
+                      color="#070900"
+                      [fullScreen]="false"
+                      type="ball-spin-clockwise"
+                    >
+                      <p style="color: rgb(0, 0, 0)"></p>
+                    </ngx-spinner>
+                  </div>
+                </div>
+    
+                <!-- Item List   -->
+                <div *ngSwitchCase="'itemList'" class="p-2">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h6 class="f-13">Service Provider</h6>
+                      <div class="d-flex">
+                        <select class="form-control w-48 f-12">
+                          <option class="f-12" value="" disabled selected>
+                            item Code
+                          </option>
+                          <option
+                            class="f-12"
+                            *ngFor="let item of items"
+                            [value]="item"
+                          >
+                            {{ item }}
+                          </option>
+                        </select>
+                        <select class="form-control w-48 f-12">
+                          <option class="f-12" value="" disabled selected>
+                            Description
+                          </option>
+                          <option
+                            class="f-12"
+                            *ngFor="let item of items"
+                            [value]="item"
+                          >
+                            {{ item }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <h6 class="f-13">Customer</h6>
+                      <div class="d-flex">
+                        <select class="form-control w-48 f-12">
+                          <option class="f-12" value="" disabled selected>
+                            item Code
+                          </option>
+                          <option
+                            class="f-12"
+                            *ngFor="let item of items"
+                            [value]="item"
+                          >
+                            {{ item }}
+                          </option>
+                        </select>
+                        <select class="form-control w-48 f-12">
+                          <option class="f-12" value="" disabled selected>
+                            Description
+                          </option>
+                          <option
+                            class="f-12"
+                            *ngFor="let item of items"
+                            [value]="item"
+                          >
+                            {{ item }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <ngx-spinner
+                      bdColor="rgba(51, 51, 51, 0.8)"
+                      size="default"
+                      [fullScreen]="false"
+                      type="ball-fussion"
+                    >
+                      <p style="color: white">Please Wait.</p>
+                    </ngx-spinner>
+                  </div>
+                </div>
+    
+                <!-- SP Details -->
+                <div *ngSwitchCase="'SpDetails'" class="p-2">
+                  <div class="editPosition">
+                    <i
+                      class="fa fa-pencil-square-o actionsBtn mr-2"
+                      aria-hidden="true"
+                      (click)="onEdit()"
+                    ></i>
+                  </div>
+                  <div>
+                    <div class="DetailsHead">Personal Details:</div>
+                    <table style="width: 100%" *ngFor="let item of spbyidreaddata">
+                      <tr class="trHeight">
+                        <td class="tdLeft">Name <span class="colon">:</span></td>
+                        <td class="tdRight">
+                          <input
+                            type="text"
+                            class="form-control inputProfile"
+                            [disabled]="!editable"
+                            [(ngModel)]="spUpdateName"
+                            [ngClass]="!editable ? 'onEditFalse' : 'onEditTrue'"
+                            [value]="item.ServiceProviderName"
+                          />
+                        </td>
+                      </tr>
+                      <tr class="trHeight">
+                        <td class="tdLeft">
+                          Company Name <span class="colon">:</span>
+                        </td>
+                        <td class="tdRight">
+                          <input
+                            type="text"
+                            class="form-control inputProfile"
+                            [(ngModel)]="spUpdateCompany"
+                            [disabled]="!editable"
+                            [ngClass]="!editable ? 'onEditFalse' : 'onEditTrue'"
+                            [value]="item.ServiceProviderName"
+                          />
+                        </td>
+                      </tr>
+                      <tr class="trHeight">
+                        <td class="tdLeft">
+                          Location Code <span class="colon">:</span>
+                        </td>
+                        <td class="tdRight">
+                          <input
+                            type="text"
+                            class="form-control inputProfile"
+                            [(ngModel)]="spUpdateLocationCode"
+                            [disabled]="!editable"
+                            [ngClass]="!editable ? 'onEditFalse' : 'onEditTrue'"
+                            [value]="item.LocationCode"
+                          />
+                        </td>
+                      </tr>
+                      <tr class="trHeight">
+                        <td class="tdLeft">
+                          Service Provider Email <span class="colon">:</span>
+                        </td>
+                        <td class="tdRight">
+                          <input
+                            type="text"
+                            class="form-control inputProfile"
+                            [(ngModel)]="spUpdateEmail"
+                            [disabled]="!editable"
+                            [ngClass]="!editable ? 'onEditFalse' : 'onEditTrue'"
+                            [value]=""
+                          />
+                        </td>
+                      </tr>
+                      <tr class="trHeight">
+                        <td class="tdLeft">
+                          Service Provider City <span class="colon">:</span>
+                        </td>
+                        <td class="tdRight">
+                          <input
+                            type="text"
+                            class="form-control inputProfile"
+                            [(ngModel)]="spUpdateCity"
+                            [disabled]="!editable"
+                            [ngClass]="!editable ? 'onEditFalse' : 'onEditTrue'"
+                            [value]="item.City"
+                          />
+                        </td>
+                      </tr>
+                      <tr class="trHeight">
+                        <td class="tdLeft">
+                          Service Provider Country <span class="colon">:</span>
+                        </td>
+                        <td class="tdRight">
+                          <input
+                            type="text"
+                            class="form-control inputProfile"
+                            [(ngModel)]="spUpdateCountry"
+                            [disabled]="!editable"
+                            [ngClass]="!editable ? 'onEditFalse' : 'onEditTrue'"
+                            [value]="item.Country"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                    <div *ngIf="savebooleansp" class="btnAction">
+                      <button
+                        class="btn btnVender bg-btn-cancel mr-3"
+                        type="button"
+                        (click)="onCancel()"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        class="btn btnVender bg-btn-success"
+                        type="submit"
+                        (click)="updatesp()"
+                      >
+                        Save
+                      </button>
+                    </div>
+                    <ngx-spinner
+                      bdColor="rgba(251, 251, 251, 0.8)"
+                      size="medium"
+                      color="#070900"
+                      [fullScreen]="false"
+                      type="ball-spin-clockwise"
+                    >
+                      <p style="color: rgb(0, 0, 0)"></p>
+                    </ngx-spinner>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ADD SP Account -->
+    <div *ngIf="createspAccount" class="Cbody">
+      <div class="headh6"  *ngIf="addSpAccountBoolean">
+        <span class="goBackIn ml-2" (click)="onCancelAccount()">
+          <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+        </span>
+        <span class="ml-35">Add Service Provider Account</span>
+      </div>
+      <div class="headh6" *ngIf="EditSpAccountBoolean">
+        <span class="goBackIn ml-2" (click)="onCancelAccount()">
+          <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+        </span>
+        <span class="ml-35">Edit Service Provider Account</span>
+      </div>
+    
+      <!-- <div *ngIf="addSpAccountBoolean" class="quick_add_div"> Quick Add
+        <button class="quick_add_btn" (click)="quickAdd()">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+      </div> -->
+      <div class="ac_height px-2 bg-design-all mt-2">
+        <form [formGroup]="SpAccountDatails" (ngSubmit)="toCreateNewSPAccount()">
+          <div class="d-flex justify-content-between">
+            <div class="f-14 mt-1 mb-1 header_design">Master Template</div>
+            <div style="margin-right: 13%">
+              <span class="f-12 mr-3">Account activate/deactivate toggle</span>
+              <span class="f-right">
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    formControlName="isActive"
+                    (change)="accontAtiveToggle($event.target.checked)"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </span>
+            </div>
+          </div>
+          <div class="cost_div mt-0">
+            <div>
+              <label class="label-head"
+                >Select Entity <span class="req_clr">*</span></label
+              >
+              <select
+                class="form-control inputHeight w-250"
+                formControlName="entityID"
+                [ngClass]="{ 'is-invalid': submitted && f.EntityName.errors }"
+                (change)="selectedEntity($event.target.value)"
+              >
+                <option *ngFor="let entity of entityList" [value]="entity.idEntity">
+                  {{ entity.EntityName }}
+                </option>
+              </select>
+              <div
+                *ngIf="submitted && f.EntityName.errors"
+                class="invalid-feedback"
+              >
+                <div class="f-12" *ngIf="f.EntityName.errors.required">
+                  **Required field
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="label-head"
+                >Account <span class="req_clr">*</span></label
+              >
+              <input
+                type="text"
+                formControlName="Account"
+                class="form-control w-250 inputHeight"
+              />
+            </div>
+            <div>
+              <label class="label-head">Meter number</label>
+              <input
+                type="text"
+                formControlName="MeterNumber"
+                class="form-control w-250 inputHeight"
+              />
+            </div>
+            <div>
+              <label class="label-head"
+                >Select Service Provider <span class="req_clr">*</span></label
+              >
+              <!-- <select class="form-control inputHeight w-250" formControlName="serviceProviderNameAccount"
+                    placeholder="Payment Terms">
+                    <option *ngFor="let sp of serviceproviderreaddata" [value]="sp.ServiceProviderName">
+                      {{sp.ServiceProviderName}}</option>
+                  </select> -->
+              <input
+                type="text"
+                formControlName="serviceProviderNameAccount"
+                class="form-control inputHeight w-250"
+              />
+            </div>
+            <div>
+              <label class="label-head"
+                >Service Provider Url <span class="req_clr">*</span></label
+              >
+              <input
+                type="text"
+                formControlName="URL"
+                class="form-control inputHeight w-250"
+              />
+            </div>
+            <div>
+              <label class="label-head"
+                >SP UserName <span class="req_clr">*</span></label
+              >
+              <input
+                type="text"
+                formControlName="UserName"
+                class="form-control inputHeight w-250"
+              />
+            </div>
+            <div>
+              <label class="label-head"
+                >SP Password <span class="req_clr">*</span></label
+              >
+              <input
+                type="password"
+                formControlName="LogSecret"
+                class="form-control inputHeight w-250"
+              />
+            </div>
+    
+            <div>
+              <label class="label-head">Email-ID</label>
+              <input
+                type="email"
+                formControlName="Email"
+                class="form-control inputHeight w-250"
+              />
+            </div>
+    
+            <div>
+              <label class="label-head">Address</label>
+              <input
+                type="text"
+                formControlName="Address"
+                class="form-control w-250 inputHeight"
+              />
+            </div>
+            <!-- <div>
+                <label class="label-head">Day:</label>
+                <input type="date" formControlName="day" class="form-control w-250 inputHeight">
+                <div class="p-field p-col-12 p-md-4">
+                <label for="icon" class="label-head">Day:</label>
+                
+            </div>
+              </div> -->
+            <div>
+              <label class="label-head"
+                >Location <span class="req_clr">*</span></label
+              ><br />
+              <input
+                type="text"
+                formControlName="LocationCode"
+                class="form-control inputHeight w-250"
+              />
+            </div>
+            <div>
+              <label class="label-head"
+                >Schedule Date <span class="req_clr">*</span></label
+              ><br />
+              <input
+                type="date"
+                formControlName="ScheduleDateTime"
+                class="form-control inputHeight w-250"
+              />
+              <!-- <p-calendar formControlName="ScheduleDateTime" [showIcon]="true" class="form-control w-250 inputHeight" inputId="icon"></p-calendar> -->
+            </div>
+            <div>
+              <label class="label-head"
+                >Operating Unit </label
+              ><br />
+              <input
+                type="text"
+                list="op_units"
+                formControlName="operatingUnit"
+                class="form-control inputHeight w-250"
+              />
+              <datalist id="op_units">
+                <option *ngFor="let data of OPUnits" [value]="data">
+              </datalist>
+              <!-- <p-autoComplete
+                (onSelect)="selectOP_unit($event)"
+                [group]="false"
+                formControlName="operatingUnit"
+                [suggestions]="filteredOP_unit"
+                (completeMethod)="filterOP_unit($event)"
+                field="operatingUnit"
+                inputStyleClass="form-control inputBox selectpicker"
+                [dropdown]="true"
+              >
+                <ng-template let-group pTemplate="group">
+                  <div class="flex align-items-center">
+                    <span class="f-12">{{ group.operatingUnit }}</span>
+                  </div>
+                </ng-template>
+              </p-autoComplete> -->
+            </div>
+          </div>
+    
+          <div class="addAc" *ngIf="!disableCostAllocationBoolean">
+            <button class="btnUpload" type="button" (click)="addcostDetails()">
+              Add cost allocation
+            </button>
+          </div>
+    
+          <div formArrayName="costDetails">
+            <div
+              *ngFor="let quantity of costDetails().controls; let i = index"
+              [formGroupName]="i"
+            >
+              <div class="f-14 mt-4 mb-1 header_design d-inline-block mr-4">
+                Cost category allocation - {{ i + 1 }}
+              </div>
+              <div class="d-inline-block b-active ml-4 mt-4 mb-1">
+                <span class="f-12 mr-3"> Activate/Deactivate</span>
+                <span>
+                  <label class="switch" style="top: 4px">
+                    <input type="checkbox" formControlName="isActive_Alloc" />
+                    <span class="slider round"></span>
+                  </label>
+                </span>
+              </div>
+    
+              <div class="cost_div">
+                <div>
+                  <span class="label-head"
+                    >Select EntityBody <span class="req_clr">*</span></span
+                  >
+                  <select
+                    class="form-control w-250 inputHeight bg-cost"
+                    formControlName="entityBodyID"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.EntityBodyName.errors
+                    }"
+                    (change)="selectedEntityBody($event.target.value)"
+                  >
+                    <option
+                      *ngFor="let entityBody of entityBodyList"
+                      [value]="entityBody.idEntityBody"
+                    >
+                      {{ entityBody.EntityBodyName }}
+                    </option>
+                  </select>
+                  <!-- <div *ngIf="submitted && f.EntityBodyName.errors" class="invalid-feedback">
+                    <div class="f-12" *ngIf="f.EntityBodyName.errors.required">**Required field</div>
+                  </div> -->
+                </div>
+                <div>
+                  <span class="label-head">Select Element <span class="req_clr">*</span> </span>
+                  <select
+                    class="form-control w-250 inputHeight bg-cost"
+                    formControlName="Element"
+                  >
+                    <option
+                      *ngFor="let element of elementList"
+                      [value]="element.name"
+                    >
+                      {{ element.name }}
+                    </option>
+                  </select>
+                  <!-- <div *ngIf="submitted && f.entityDeparment.errors" class="invalid-feedback">
+                    <div class="f-12" *ngIf="f.entityDeparment.errors.required">**Required field</div>
+                  </div> -->
+                </div>
+                <div>
+                  <span class="label-head">CostCenter <span class="req_clr">*</span> </span>
+                  <input
+                    type="text"
+                    formControlName="costCenter"
+                    class="form-control w-250 inputHeight bg-cost"
+                    data-mask="(999) 999-9999"
+                    placeholder=""
+                  />
+                </div>
+                <div>
+                  <span class="label-head">Product</span>
+                  <input
+                    type="text"
+                    formControlName="product"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                <div>
+                  <span class="label-head">Project</span>
+                  <input
+                    type="text"
+                    formControlName="project"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                <div>
+                  <span class="label-head"
+                    >Interco </span
+                  >
+                  <input
+                    type="text"
+                    formControlName="interco"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                <div>
+                  <span class="label-head"
+                    >Segments </span
+                  >
+                  <input
+                    type="text"
+                    formControlName="segments"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                <div>
+                  <span class="label-head"
+                    >BSMovements </span
+                  >
+                  <input
+                    type="text"
+                    formControlName="bsMovements"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                <div>
+                  <span class="label-head"
+                    >FixedAssetDepartment </span
+                  >
+                  <input
+                    type="text"
+                    formControlName="fixedAssetDepartment"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                <div>
+                  <span class="label-head"
+                    >FixedAssetGroup </span
+                  >
+                  <input
+                    type="text"
+                    formControlName="fixedAssetGroup"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                
+                <div *ngIf="source != 'EBS'">
+                  <span class="label-head"
+                    >Main Account <span class="req_clr">*</span></span
+                  >
+                  <input
+                    type="text"
+                    formControlName="mainAccount"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+                <div *ngIf="source == 'EBS'">
+                  <span class="label-head"
+                    >Main Account Electricity <span class="req_clr">*</span></span
+                  >
+                  <input
+                    type="text"
+                    [textMask]="{ mask: mask }"
+                    formControlName="mainAccount"
+                    placeholder="11-1111-11-11-111111-00-000"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                  <!-- <p-inputMask mask="19-1042-12-21-813620-00-000" class="form-control w-250 inputHeight bg-cost"  formControlName="naturalAccountWater" placeholder="19-1042-12-21-813620-00-000"></p-inputMask> -->
+                </div>
+                <div *ngIf="source == 'EBS'">
+                  <span class="label-head"
+                    >Main Account Water <span class="req_clr">*</span></span
+                  >
+                  <input
+                    type="text"
+                    [textMask]="{ mask: mask }"
+                    formControlName="naturalAccountWater"
+                    placeholder="11-1111-11-11-111111-00-000"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                  <!-- <p-inputMask mask="19-1042-12-21-813620-00-000" class="form-control w-250 inputHeight bg-cost"  formControlName="naturalAccountWater" placeholder="19-1042-12-21-813620-00-000"></p-inputMask> -->
+                </div>
+                <div *ngIf="source == 'EBS'">
+                  <span class="label-head"
+                    >Main Account Housing <span class="req_clr">*</span></span
+                  >
+                  <input
+                    type="text"
+                    [textMask]="{ mask: mask }"
+                    formControlName="naturalAccountHousing"
+                    placeholder="11-1111-11-11-111111-00-000"
+                    class="form-control w-250 inputHeight bg-cost"
+                  />
+                </div>
+    
+                <div>
+                  <span class="label-head">Element Factor </span>
+                  <input
+                    type="number"
+                    formControlName="elementFactor"
+                    class="form-control w-250 inputHeight bg-cost"
+                    min="1"
+                    max="100"
+                    maxlength="3"
+                  />
+                </div>
+                <div>
+                  <button
+                    class="btnUpload addCost"
+                    type="button"
+                    (click)="removecostDetails(i)"
+                  >
+                    <span class="addCostIcon"
+                      ><i class="fa fa-trash" aria-hidden="true"></i
+                    ></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+    
+            <!-- <tr *ngFor="let quantity of costDetails().controls; let i=index" [formGroupName]="i">
+              <td>
+                <span class="label-head">Cost Category :</span>
+                <input type="text" formControlName="category" class="form-control w-250 inputHeight bg-cost">
+              </td>
+              <td>
+                <span class="label-head">Department:</span>
+                <input type="text" formControlName="department" class="form-control w-250 inputHeight bg-cost">
+              </td>
+              <td>
+                <span class="label-head">Division:</span>
+                <input type="text" formControlName="division" class="form-control w-250 inputHeight bg-cost">
+              </td>
+              <td>
+                <span class="label-head">Natural:</span>
+                <input type="text" formControlName="natural" class="form-control w-250 inputHeight bg-cost">
+              </td>
+              <td>
+                <span class="label-head">Percentage:</span>
+                <input type="text" formControlName="percentage" class="form-control w-250 inputHeight bg-cost">
+              </td>
+              <td>
+                <button class="btnUpload addCost" type="button" (click)="removecostDetails(i)"><span class="addCostIcon"><i
+                      class="fa fa-trash" aria-hidden="true"></i></span></button>
+              </td>
+            </tr> -->
+          </div>
+          <div class="btnAction">
+            <button
+              class="btn btnVender bg-btn-cancel mr-3"
+              type="button"
+              (click)="onCancelAccount()"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn btnVender bg-btn-success"
+              type="submit"
+              [disabled]="SpAccountDatails.invalid"
+              [ngStyle]="{
+                cursor: SpAccountDatails.invalid ? 'not-allowed' : 'pointer'
+              }"
+              *ngIf="addSpAccountBoolean"
+            >
+              Save
+            </button>
+            <button
+              class="btn btnVender bg-btn-success"
+              type="submit"
+              [disabled]="
+                !(
+                  SpAccountDatails.touched &&
+                  SpAccountDatails.valid &&
+                  SpAccountDatails.dirty
+                )
+              "
+              *ngIf="EditSpAccountBoolean"
+            >
+              Update
+            </button>
+            <!-- <button *ngIf="!savedatabooleansp" class="btn btnVender" type="button" (click)='updatesp()'>Update</button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

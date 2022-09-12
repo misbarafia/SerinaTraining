@@ -1,0 +1,14 @@
+version: '3'
+services:
+    serina-server:
+        depends_on:
+            - serina-mysql
+        build: ./app
+        restart: always
+        ports: 
+            - 8000:8000
+    serina-mysql:
+        build: ./mysql
+        restart: always
+        volumes: 
+            - /var/lib/mysql

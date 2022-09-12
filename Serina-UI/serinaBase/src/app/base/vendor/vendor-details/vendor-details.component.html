@@ -1,0 +1,430 @@
+
+
+<p-sidebar [(visible)]="visibleVendorColumns" position="right" [baseZIndex]="10000">
+
+
+</p-sidebar>
+
+<mat-sidenav-container class="example-container" hasBackdrop = "false" (backdropClick)="close('backdrop')">
+  <mat-sidenav #sidenav mode="over"  position="end"  >
+    <h6 style="font-weight: 600;">Select Columns</h6>
+
+    <ul class="pl-3 sidebar_height" cdkDropList (cdkDropListDropped)="onOptionDrop($event)">
+      <li class="allCols" *ngFor=" let displayColumn of allVendorInvoiceColumns; let i = index" cdkDrag>
+        <label class="container" [for]="i" cdkDragHandle>{{displayColumn.columnName}}
+          <input type="checkbox" [id]="i" (change)="activeColumn($event,displayColumn)"
+            [checked]="displayColumn.isActive == 1">
+          <span class="checkmark"></span>
+        </label>
+        <i class="fa fa-bars dragCols" aria-hidden="true" cdkDragHandle></i>
+      </li>
+    </ul>
+  
+    <div class="btnFooterSave" mat-dialog-actions>
+      <button class="btn btnVender bg-btn-cancel mr-4 clor" type="button" (click)="sidenav.toggle()">Cancel</button>
+      <button class="btn btnVender bg-btn-success clor" (click)="updateColumnPosition()" cdkFocusInitial>Save</button>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <h6 *ngIf="!venderdetails" class="headh6">Vendor Details</h6>
+    <h6 *ngIf="venderdetails" class="headh6">Vendor Details - {{venderdetails.VendorName}}</h6>
+    <div *ngIf="vendorList" class="row m-0">
+    
+    
+      <div class="col-sm-3 table_col_height">
+    
+        <div class="bg-design-all tableDataDiv">
+          <p-table #vdR [value]="vendorreaddata" [paginator]="showPaginator" selectionMode="single" [rows]="rows"
+            [pageLinks]="5" (onPage)="paginate($event)" [first]="first" [last]="last" [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [rowsPerPageOptions]="[10,25,50]">
+    
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="VenderCode">Vendor code</th>
+                <th pSortableColumn="VendorName">Vendor Name</th>
+              </tr>
+              <tr class="sticky_top">
+                <td>
+                  <input style="text-align: left;" pInputText type="text"
+                    (input)="vdR.filter($event.target.value, 'VenderCode', 'contains')"
+                    [value]="vdR.filters['VenderCode']?.value" placeholder="Search"
+                    class="p-column-filter tableSearchInput">
+                </td>
+                <td>
+                  <input style="text-align: left;" pInputText type="text"
+                    (input)="vdR.filter($event.target.value, 'VendorName', 'contains')"
+                    [value]="vdR.filters['VendorName']?.value" placeholder="Search"
+                    class="p-column-filter tableSearchInput">
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-users>
+              <tr [ngClass]="users.idVendor == venderdetails.idVendor ? 'activeRow': 't' " (click)="viewFullDetails(users)" [pSelectableRow]="users">
+                <td [title]="users.VendorCode" style="padding: 15px;">{{users.VendorCode}}</td>
+                <td [title]="users.VendorName" style="padding: 15px;">{{users.VendorName}}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="2" class="p-t-30 text-center">
+                  <!-- <img src="assets/Group 2691.png" alt="imageUrl"> <br> -->
+                  No vendors found.</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    
+      <div class="col-sm-9 pl-1">
+        <ul class="nav nav-tabs" id="tabs-tab" role="tablist">
+          <li class="nav-item mr-1">
+            <a class="nav-link active" id="tabs-InvoiceDetails-tab" data-toggle="pill" href="#tabs-InvoiceDetails"
+              role="tab" aria-controls="tabs-InvoiceDetails" aria-selected="true">Invoices</a>
+          </li>
+          <li class="nav-item mr-1">
+            <a class="nav-link" id="tabs-mails-tab" data-toggle="pill" href="#tabs-mails" role="tab"
+              aria-controls="tabs-mails" aria-selected="false">Vendor Sites</a>
+          </li>
+          <li class="nav-item mr-1">
+            <a class="nav-link" id="tabs-vendorDetails-tab" data-toggle="pill" href="#tabs-vendorDetails" role="tab"
+              aria-controls="tabs-vendorDetails" aria-selected="false">Vendor Details</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="tabs-ItemList-tab" data-toggle="pill" href="#tabs-ItemList" role="tab"
+              aria-controls="tabs-ItemList" aria-selected="false">Item List</a>
+          </li>
+        </ul>
+        <div class="toViewVendor bg-design-all">
+          <div class="f-right">
+            <!-- <i  class="fa fa-trash-o actionsBtn mr-2" aria-hidden="true"></i> -->
+            <mat-icon class="closeIcon" (click)="colseDiv()" svgIcon="close"></mat-icon>
+    
+            <!-- <i class="fa fa-times closeIcon" (click)="colseDiv()" aria-hidden="true"></i> -->
+          </div>
+          <!-- <div class="positionCreateUpload" style="right: 3%;">
+            <button class=" btnUpload mr-2"><i class="fa fa-download" aria-hidden="true"></i></button>
+          </div> -->
+          <!-- Full Details -->
+          <!-- <app-full-view></app-full-view> -->
+          <div>
+            <div [ngStyle]="{ 'visibility' :!venderdetails.VendorName ? 'hidden':'visible'}" style="height: 20px;"
+              class="f-15 m-2 mb-3">{{venderdetails.VendorName}}</div>
+    
+    
+    
+    
+    
+            <div class="tab-content overTexttable pt-2" id="tabs-tabContent">
+    
+              <!-- invoice -->
+              <div class="tab-pane fade show active" id="tabs-InvoiceDetails" role="tabpanel"
+                aria-labelledby="tabs-InvoiceDetails-tab">
+    
+    
+                <div>
+                  <div class="searchBar searchBarInvoice ">
+                    <input class="searchInput  searchInputInvoice" style="height: 28px; width: 140px;" pInputText type="text" placeholder="Search + Enter"
+                      (input)="vdinvoce.filterGlobal($event.target.value, 'contains')" (keyup)="searchInvoiceDataV($event.target.value)"/>
+                    <span class="material-icons searchIcon searchIconInvoice">
+                      search
+                    </span>
+                  </div>
+                  <div class="positionCreateUpload exportIcon">
+                    <button class=" btnUpload mr-2" (click)="exportExcel()"><i class="fa fa-download"
+                        aria-hidden="true"></i></button>
+                  </div>
+                  <p-table #vdinvoce [value]="readVendorInviceDisplayArray"
+                    [globalFilterFields]='columnstodisplayVendorInvoice' [columns]="VendorinvoiceColumns"
+                    [paginator]="false" [showFirstLastIcon]="false" [rows]="1000" [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[10,25,50]">
+    
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+                        <th style="text-align: center;" *ngFor="let col of columns" [pTooltip]="col.columnDescription"
+                          tooltipPosition="top" [pSortableColumn]="col.dbColumnname">
+                          {{col.columnName}}
+                        </th>
+                        <th class="action_Zindex">Actions <i class="fa fa-pencil-square-o actionsBtn" style="border: 0;"
+                            aria-hidden="true" (click)="showSidebar()"></i></th>
+                      </tr>
+                      <tr>
+                        <td *ngFor="let col of columns" class="sticky_top">
+                          <input pInputText type="text"
+                            (input)='vdinvoce.filter(($event.target.value || " "), col.dbColumnname, "contains")'
+                            [value]="vdinvoce.filters[col.dbColumnname]?.value"
+                            [placeholder]="'Search by ' + col.columnName" class=" tableSearchInput" />
+                        </td>
+                      </tr>
+    
+                    </ng-template>
+                    <ng-template pTemplate="body" let-invoiceData let-columns="columns">
+                      <tr>
+                        <td *ngFor="let col of columns" [title]="invoiceData[col.dbColumnname]">
+                          <div [ngSwitch]="col.dbColumnname">
+                            <div *ngSwitchCase="'docstatus'">
+                              <div *ngFor="let color of bgColorCode">
+                                <td class="statusType" *ngIf="invoiceData.documentStatusID == color.id" [ngStyle]="{'background-color' : (invoiceData.documentStatusID == color.id) ? color.bgcolor : '',
+                                    'color' : (invoiceData.documentStatusID == color.id) ? color.textColor : '' }">
+                                  {{invoiceData[col.dbColumnname]}}
+                                </td>
+                              </div>
+                            </div>
+                            <div class="elipse" *ngSwitchDefault>
+                              {{invoiceData[col.dbColumnname]}}
+                            </div>
+                          </div>
+    
+                        </td>
+                        <td>
+                          <i class="pi pi-eye f-16 showEye mr-2" (click)="viewInvoice(invoiceData)"></i>
+                          <!-- <i class="fa fa-pencil-square-o actionsBtn" aria-hidden="true" (click)="editInvoice(invoiceData)"></i> -->
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="10" class="p-t-30 text-center">
+                          <img src="assets/Group 2691.png"  width="260" alt="imageUrl"> <br>
+                          No Invoices found.</td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                    </ng-template>
+                    <ng-template pTemplate="paginatorright">
+                    </ng-template>
+                  </p-table>
+    
+                  <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="false" type="ball-spin-clockwise">
+                    <p style="color: rgb(0, 0, 0)"> </p>
+                 </ngx-spinner>
+    
+                </div>
+    
+              </div>
+    
+              <!-- vendor sites -->
+              <div class="tab-pane fade" id="tabs-mails" role="tabpanel" aria-labelledby="tabs-mails-tab">
+          
+                <div>
+                  <div class="searchBar searchBarV ">
+                    <input class="searchInput searchInputInvoce serachInAccount" pInputText type="text" placeholder="Search..."
+                      (input)="vdAcont.filterGlobal($event.target.value, 'contains')" />
+                    <span class="material-icons searchIcon">
+                      search
+                    </span>
+                  </div>
+                  <p-table #vdAcont [value]="vendoraccountreaddata" [paginator]="false" [rows]="10" [showCurrentPageReport]="true"
+                    [globalFilterFields]="columnVenderSite.field" [columns]="columnVenderSite"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[10,25,50]">
+    
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+                        <th class="f-12 t-center" *ngFor=" let column of columns" [pTooltip]="column.header" tooltipPosition="top"
+                          [pSortableColumn]="column.field">
+                          {{column.header}}
+                        </th>
+                      </tr>
+                      <tr>
+                        <td *ngFor="let col of columns" class="sticky_top">
+                          <input pInputText type="text"
+                            (input)='vdAcont.filter(($event.target.value || " "), col.field, "contains")'
+                            [value]="vdAcont.filters[col.field]?.value" [placeholder]="'Search by ' + col.field"
+                            class=" tableSearchInput p-column-filter" />
+                        </td>
+                        <td>
+    
+                        </td>
+                      </tr>
+    
+                    </ng-template>
+                    <ng-template pTemplate="body" let-VendorAccount let-columns="columns">
+                      <tr>
+                        <td class="f-12 t-center" *ngFor="let col of columns;" [title]="VendorAccount[col.field]">
+                          {{VendorAccount[col.field]}}
+                        </td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="7">No Vendor sites found.</td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                    </ng-template>
+                    <ng-template pTemplate="paginatorright">
+                    </ng-template>
+                  </p-table>
+                  <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="false" type="ball-spin-clockwise">
+                    <p style="color: rgb(0, 0, 0)"> </p>
+                  </ngx-spinner>
+                </div>
+    
+              </div>
+    
+              <!-- vendor Details -->
+              <div class="tab-pane fade p-2" id="tabs-vendorDetails" role="tabpanel" aria-labelledby="tabs-vendorDetails-tab">
+                <!-- <div class="editPosition">
+                  <i *ngIf="editBtnBoolean" class="fa fa-pencil-square-o actionsBtn mr-2" aria-hidden="true"
+                    (click)='onEdit()'></i>
+                </div> -->
+                <div>
+                  <div class="DetailsHead">Personal Details:</div>
+                  <table style="width: 100%;" *ngFor="let item of vendorbyidreaddata">
+                    <tr class="trHeight">
+                      <td class="tdLeft">Vendor Name <span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable" style="cursor:text"
+                          [ngClass]="!editable? 'onEditFalse':'onEditTrue'" [value]="item.VendorName">
+                      </td>
+                    </tr>
+                    <!-- <tr class="trHeight">
+                      <td class="tdLeft">Company Name<span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable"
+                          [(ngModel)]="vendorUpdateCompany" [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                          [value]="item.Company">
+                      </td>
+                    </tr> -->
+                    <tr class="trHeight">
+                      <td class="tdLeft">Vendor Code<span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable" style="cursor:text"
+                           [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                          [value]="item.VendorCode">
+                      </td>
+                    </tr>
+                    <!-- <tr class="trHeight">
+                      <td class="tdLeft">Vendor Email <span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable"
+                          [(ngModel)]="vendorUpdateEmail" [ngClass]="!editable? 'onEditFalse':'onEditTrue'" [value]="item.Email">
+                      </td>
+                    </tr> -->
+                    <tr class="trHeight">
+                      <td class="tdLeft">TRN Number <span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable"  style="cursor:text"
+                          [ngClass]="!editable? 'onEditFalse':'onEditTrue'" [value]="item.TRNNumber">
+                      </td>
+                    </tr>
+                    <tr class="trHeight">
+                      <td class="tdLeft">Vendor Contact <span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable" style="cursor:text"
+                           [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                          [value]="item.Contact">
+                      </td>
+                    </tr>
+                    <!-- <tr class="trHeight">
+                      <td class="tdLeft">Vendor Address <span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable"
+                          [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                          [value]="item.Address">
+                      </td>
+                    </tr> -->
+                    <!-- <tr class="trHeight">
+                      <td class="tdLeft">Vendor City <span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable" [(ngModel)]="vendorUpdateCity"
+                          [ngClass]="!editable? 'onEditFalse':'onEditTrue'" [value]="item.City">
+                      </td>
+                    </tr> -->
+                    <!-- <tr class="trHeight">
+                      <td class="tdLeft">Vendor Country <span class="colon">:</span></td>
+                      <td class="tdRight">
+                        <input type="text" class="form-control inputProfile" [disabled]="!editable"
+                          [(ngModel)]="vendorUpdateCountry" [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                          [value]="item.Country">
+                      </td>
+                    </tr> -->
+    
+                  </table>
+                  <div *ngIf="savebooleansp" class="btnAction">
+                    <button class="btn btnVender bg-btn-cancel mr-3" type="button" (click)="onCancel()">Cancel</button>
+                    <button class="btn btnVender bg-btn-success" type="submit" (click)="updatevendor(vendorbyidreaddata)">Save</button>
+    
+                  </div>
+                  <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="false" type="ball-spin-clockwise">
+                    <p style="color: rgb(0, 0, 0)"> </p>
+                  </ngx-spinner>
+                </div>
+    
+              </div>
+    
+              <!-- Item LIst -->
+              <div class="tab-pane fade p-2" id="tabs-ItemList" role="tabpanel" aria-labelledby="tabs-ItemList-tab">
+                <div class="row">
+                  
+                  <div class="col-sm-6">
+                    <h6 class="f-13">Customer</h6>
+                    <div class="d-flex" *ngFor="let item of itemsList">
+                      <!-- <select class="form-control w-48 f-12">
+                        <option class="f-12" value="" disabled selected>item Code</option>
+                        <option class="f-12" *ngFor="let item of items" [value]="item">{{item}}
+                        </option>
+                      </select>
+                      <select class="form-control w-48 f-12">
+                        <option class="f-12" value="" disabled selected>Description</option>
+                        <option class="f-12" *ngFor="let item of items" [value]="item">{{item}}
+                        </option>
+                      </select> -->
+                        <input type="text" class="form-control w-30 f-12"  [value]="item?.ItemMetaData?.itemcode">
+                        <input type="text" class="form-control f-12" [title]="item?.ItemMetaData?.description" [value]="item?.ItemMetaData?.description">
+                        
+                    </div>
+                    <div class="d-flex">
+                      <!-- <p-dropdown [options]="items"  placeholder="item Code" [showClear]="false"></p-dropdown>
+                                <p-dropdown [options]="items"  placeholder="Description" [showClear]="false"></p-dropdown> -->
+                      <input type="text" class="form-control w-30 f-12" placeholder="item Code">
+                      <input type="text" class="form-control f-12" placeholder="Description">
+                    </div>
+                    <!-- <div class="d-flex">
+                                <input type="text" class="form-control w-48" placeholder="item Code">
+                                <input type="text" class="form-control w-48" placeholder="Description">
+                              </div> -->
+                  </div>
+                  <div class="col-sm-6">
+                    <h6 class="f-13">Vendor</h6>
+                    <div class="d-flex" *ngFor="let item of itemsList">
+                      <!-- <select class="form-control w-48 f-12">
+                        <option class="f-12" value="" disabled selected>item Code</option>
+                        <option class="f-12" *ngFor="let item of items" [value]="item">{{item}}
+                        </option>
+                      </select>
+                      <select class="form-control w-48 f-12">
+                        <option class="f-12" value="" disabled selected>Description</option>
+                        <option class="f-12" *ngFor="let item of items" [value]="item">{{item}}
+                        </option>
+                      </select> -->
+                        <input type="text" class="form-control f-12" [title]="item?.ItemUserMap?.mappedinvoitemdescription" [value]="item?.ItemUserMap?.mappedinvoitemdescription">
+                    </div>
+                    <div class="d-flex">
+                      <!-- <input type="text" class="form-control w-48" placeholder="item Code"> -->
+                      <input type="text" class="form-control f-12" placeholder="Description">
+                    </div>
+                    <!-- <div class="d-flex">
+                                <input type="text" class="form-control w-48" placeholder="item Code">
+                                <input type="text" class="form-control w-48" placeholder="Description">
+                              </div> -->
+                  </div>
+                  <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="false" type="ball-spin-clockwise">
+                    <p style="color: rgb(0, 0, 0)"> </p>
+                  </ngx-spinner>
+                </div>
+              </div>
+      </div>
+    
+    </div>
+    </div>
+    </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

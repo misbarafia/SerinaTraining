@@ -1,0 +1,116 @@
+  <!--Edit user  -->
+  <div>
+    <div>
+      <h6 class="headh6">Edit User</h6>
+    </div>
+    <div class="row" style="min-height: 66vh;">
+      <div class="col-sm-5">
+        <div>
+          <div>
+            <label class="label-head">User Name</label>
+            <input type="text" class="form-control inputForm mb-3 f-13" name="userName" ngModel #UserName="ngModel"
+              [(ngModel)]="userName" placeholder="UserName" required>
+
+            <!-- <label class="label-head">Role Name</label>
+                <input type="text" 
+                class="form-control inputForm mb-3 f-13"
+                [(ngModel)]="designation"
+                placeholder="Designation"  
+                required> -->
+
+            <label class="label-head">User Email</label>
+            <input type="text" name="mail" ngModel #mail="ngModel" class="form-control inputForm mb-3 f-13"
+              [(ngModel)]="userEmail" placeholder="email" required>
+
+
+            <label class="label-head">Role Name</label>
+            <select class="form-control inputForm f-12 mb-3" name="editRole" ngModel #editRole="ngModel"
+              [(ngModel)]="editRoleName" (change)="selectRole(editRoleName)" required>
+              <option *ngFor="let role of DisplayRoleName" [value]="role.NameOfRole">{{role.NameOfRole}}</option>
+            </select>
+
+            <label class="label-head">Amount</label>
+            <input type="text" class="form-control inputForm mb-3 f-13" [(ngModel)]="Flevel" name="fLevel" ngModel
+              #fLevel="ngModel" placeholder="Financial Level" required>
+            <!-- <select class="form-control inputForm f-12 mb-3" [(ngModel)]="Flevel">
+              <option *ngFor="let role of FlevelData" [value]="role">{{role}}</option>
+            </select> -->
+            <!-- <div class="mb-3">
+                    <label class="label-head">Role Name</label>
+                  <p-dropdown #fd [options]="TotalRoles" [(ngModel)]="editRoleName" (onChange)="selectedRole(fd)" placeholder="Select a City" [showClear]="true"></p-dropdown>
+                  </div> -->
+
+
+
+            <!-- <p-dropdown #fd [options]="FlevelData" [(ngModel)]="Flevel" (onChange)="selectedFlevel(fd)" [showClear]="true"></p-dropdown> -->
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col-sm-7">
+
+        <div>
+          <div class="f-13 label-head">Select Entity</div>
+          <p-autoComplete [(ngModel)]="selectedEntityName" (onSelect)="onSelectEntity($event)"
+            [suggestions]="filteredEntities" (completeMethod)="filterEntity($event)" field="EntityName"
+            [dropdown]="true">
+            <ng-template let-country pTemplate="item">
+              <div class="country-item">
+                <div>{{country.EntityName}}</div>
+              </div>
+            </ng-template>
+          </p-autoComplete>
+        </div>
+        <div class="d-flex mt-2 mb-3">
+          <div class="mr-2">
+            <div class="f-13 label-head">Select Entitybody</div>
+            <p-autoComplete [(ngModel)]="selectedEntityBodyName" inputStyleClass="minWidthOverride"
+              (onSelect)="onSelectEntityBody($event)" [suggestions]="filterDentityBody"
+              (completeMethod)="filterEntityBody($event)" field="EntityBodyName" [dropdown]="true">
+              <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                  <div>{{country.EntityBodyName}}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+          <div>
+            <div class="f-13 label-head">Select Entity Department</div>
+            <p-autoComplete [(ngModel)]="selectedEntityDeptName" inputStyleClass="minWidthOverride"
+              (onSelect)="onSelectEntityDept($event)" [suggestions]="filterDentityDept"
+              (completeMethod)="filterEntityDept($event)" field="DepartmentName" [dropdown]="true">
+              <ng-template let-country pTemplate="item">
+                <div class="country-item">
+                  <div>{{country.DepartmentName}}</div>
+                </div>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+        </div>
+
+        <div>
+          <!-- <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(fruit)">
+            {{fruit}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip> -->
+          <div class="f-14B">List of Entities that user can access</div>
+          <ul class="p-0" style="width: 110%;">
+            <li *ngFor="let value of selectedEntitys; let i = index;" class="listEntity">
+              {{value.entity}}--{{value.entityBody}}--{{value.entityDept}}
+              <span><i class="fa fa-times removeList" (click)="onRemove(i,value)" aria-hidden="true"></i></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="btnAction">
+      <button class="btn btnVender bg-btn-cancel mr-3" (click)="canceleditUser()">Cancel</button>
+      <button class="btn btnVender bg-btn-success"
+        [ngStyle]="{'cursor':(fLevel.invalid && editRole.invalid && mail.invalid && UserName.invalid )? 'not-allowed':'pointer'}"
+        [disabled]="fLevel.invalid && editRole.invalid && mail.invalid && UserName.invalid  "
+        (click)="UpdateUser()">Update</button>
+    </div>
+  </div>
+  <p-toast></p-toast>

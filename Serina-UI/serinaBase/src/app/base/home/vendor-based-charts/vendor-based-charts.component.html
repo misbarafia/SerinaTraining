@@ -1,0 +1,74 @@
+<div>
+  <ul class="nav nav-pills">
+    <li class="nav-item mr-1">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Process'"
+        (click)="choosepageTab('Process')"
+      >
+        Process Reports</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [class.active-pill]="viewType == 'Exception'"
+        (click)="choosepageTab('Exception')"
+      >
+        Exception Reports</a
+      >
+    </li>
+
+    <li class="nav-item">
+      <a
+        class="nav-link ml-1"
+        [class.active-pill]="viewType == 'emailException'"
+        (click)="choosepageTab('emailException')"
+      >
+      Email Reports</a
+      >
+    </li>
+  </ul>
+
+  <div class="filter_inputDash" *ngIf="viewType == 'emailException'">
+    <p-calendar
+      [(ngModel)]="rangeDates"
+      selectionMode="range"
+      [minDate]="minDate"
+      [maxDate]="maxDate"
+      placeholder="Select dates to Filter"
+      [readonlyInput]="true"
+      [showIcon]="true"
+      showButtonBar="true"
+      inputId="range"
+      (onClearClick)="clearDates()"
+    ></p-calendar>
+    <button class="btnUpload filter_btn_m" (click)="filterByDate(rangeDates)">Filter</button>
+  </div>
+
+  <div  [ngSwitch]="viewType" style="padding-top: 12px">
+    <!-- Process invoices Tab -->
+    <div *ngSwitchCase="'Process'">
+      <app-process-reports></app-process-reports>
+    </div>
+
+    <!-- Exception invoices Tab -->
+    <div *ngSwitchCase="'Exception'" class="tableDataDiv">
+      <app-exception-reports></app-exception-reports>
+    </div>
+
+    <!-- Exception invoices Tab -->
+    <div *ngSwitchCase="'emailException'" class="tableDataDiv">
+      <app-table
+        [tableData]="totalTableData"
+        [invoiceColumns]="columnsForTotal"
+        [showPaginator]="showPaginatortotal"
+        [columnsToFilter]="totalColumnField"
+        [columnLength]="ColumnLengthtotal"
+      >
+      </app-table>
+    </div>
+
+    
+  </div>
+</div>

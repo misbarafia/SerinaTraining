@@ -1,0 +1,197 @@
+<h6 class="headh6">Service Based Invoices</h6>
+
+<div class="container-fluid" style="overflow: hidden;max-height: 100vh;">
+
+  <div *ngIf="displayInvoicePage">
+
+    <div>
+      <ul class="nav nav-pills mb-2 ulTab" id="pills-tab" role="tablist">
+        <!-- <li class="nav-item">
+            <a class="nav-link active" id="pills-invoice-tab" data-toggle="pill" href="#pills-invoice" role="tab"
+              aria-controls="pills-invoice" aria-selected="true">Invoice({{invoiceListData.length}})</a>
+          </li>
+  
+          <li class="nav-item">
+            <a class="nav-link" id="pills-grn-tab" data-toggle="pill" href="#pills-grn" role="tab"
+              aria-controls="pills-grn" aria-selected="false">Error({{errorData.length}})</a>
+          </li> -->
+
+        <li [class.active]="viewType == 'invoice'">
+          <a class="nav-link" (click)="viewType = 'invoice'">Invoice({{serviceInvoiceLength}})</a>
+        </li>
+        <li [class.active]="viewType == 'error'">
+          <a class="nav-link" (click)="viewType = 'error'">Error({{serviceErrorInvoiceLength}})</a>
+        </li>
+
+      </ul>
+
+
+
+      <div class="positionCreateUpload">
+        <p-calendar [(ngModel)]="filterdate" view="month" dateFormat="yy-dd" [yearNavigator]="true" [minDate]="minDate"
+          [maxDate]="maxDate" [yearRange]='displayYear' placeholder="Select dates to filter.." [readonlyInput]="false"
+          inputId="monthpicker"></p-calendar>
+        <button class="btnUpload filter_btn_m" (click)="applyDatefilterforinvoice()">Filter</button>
+      </div>
+    </div>
+
+
+    <div class="tab-content" id="pills-tabContent" [ngSwitch]="viewType">
+
+      <!-- Invoice Tab -->
+      <div *ngSwitchCase="'invoice'">
+
+        <div class="tableDataDiv">
+          <div>
+            <div class="searchBar">
+              <input class="searchInput" pInputText type="text"
+                (input)="allInvoice.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+
+              <span class="material-icons searchIcon">
+                search
+              </span>
+            </div>
+            <p-table #allInvoice [value]="invoiceListData" [paginator]="showPaginator" [rows]="50"
+              [showCurrentPageReport]="true" [columns]="serviceInvoiceColumn"
+              [globalFilterFields]="serviceInvoiceColumnField" styleClass="p-datatable-striped"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10,25,50]">
+
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [pTooltip]="col.header" tooltipPosition="top"
+                    [pSortableColumn]="col.field">
+                    {{col.header}}
+                  </th>
+                  <th class="action_Zindex">Actions</th>
+                </tr>
+                <tr>
+                  <td *ngFor="let col of columns">
+                    <input pInputText type="text"
+                      (input)='allInvoice.filter(($event.target.value || " "), col.field, "contains")'
+                      [value]="allInvoice.filters[col.field]?.value" [placeholder]="'Search by ' + col.header"
+                      class=" tableSearchInput" />
+                  </td>
+                  <td>
+
+                  </td>
+
+
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-invoiceData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns;" [title]="invoiceData[col.field]">
+                    {{invoiceData[col.field]}}
+                  </td>
+                  <td>
+                    <i class="pi pi-eye f-16 showEye mr-2" (click)="viewInvoice(invoiceData)"></i>
+                    <i title="Assign" class="fa fa-user-plus actionsBtn" (click)="assignInvoice(invoiceData.idDocument)"
+                      aria-hidden="true"></i>
+                    <!-- <i class="fa fa-pencil-square-o actionsBtn" aria-hidden="true" (click)="editInvoice(invoiceData)"></i> -->
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="10" class="p-t-30">
+                    <img src="assets/Group 2691.png" width="260" alt="imageUrl"> <br>
+                    No Invoices found.</td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft">
+              </ng-template>
+              <ng-template pTemplate="paginatorright">
+              </ng-template>
+            </p-table>
+            <!-- <ngx-spinner bdColor="rgba(251, 251, 251, 0.8)" size="medium" color = "#070900" [fullScreen]="false" type="ball-spin-clockwise">
+                        <p style="color: rgb(0, 0, 0)"> </p>
+                    </ngx-spinner> -->
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Error Tab -->
+      <div *ngSwitchCase="'error'">
+
+        <div class="tableDataDiv">
+          <div>
+            <div class="searchBar">
+              <input class="searchInput" pInputText type="text" placeholder="Search..."
+                (input)="errorInvoice.filterGlobal($event.target.value, 'contains')" />
+
+              <span class="material-icons searchIcon">
+                search
+              </span>
+            </div>
+            <p-table #errorInvoice [value]="errorData" [paginator]="showPaginatorError" [rows]="50"
+              [showCurrentPageReport]="true" [columns]="serviceErrorInvoiceColumn"
+              [globalFilterFields]="serviceErrorInvoiceColumnField" styleClass="p-datatable-striped"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10,25,50]">
+
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns" [pTooltip]="col.header" tooltipPosition="top"
+                    [pSortableColumn]="col.field">
+                    {{col.header}}
+                  </th>
+                  <th class="action_Zindex">Actions</th>
+                </tr>
+                <tr>
+                  <td *ngFor="let col of columns">
+                    <input pInputText type="text"
+                      (input)='errorInvoice.filter(($event.target.value || " "), col.field, "contains")'
+                      [value]="errorInvoice.filters[col.field]?.value" [placeholder]="'Search by ' + col.header"
+                      class=" tableSearchInput" />
+                  </td>
+                  <td>
+
+                  </td>
+
+
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-invoiceData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns;" [title]="invoiceData[col.field]">
+                    {{invoiceData[col.field]}}
+                  </td>
+                  <td>
+                    <i class="pi pi-eye f-16 showEye mr-2" (click)="viewInvoice(invoiceData)"></i>
+                    <i title="Assign" class="fa fa-user-plus actionsBtn" (click)="assignInvoice(invoiceData.idDocument)"
+                      aria-hidden="true"></i>
+                    <!-- <i class="fa fa-pencil-square-o actionsBtn" aria-hidden="true" (click)="editInvoice(invoiceData)"></i> -->
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="10" class="p-t-30">
+                    <img src="assets/Group 2691.png" width="260" alt="imageUrl"> <br>
+                    No Invoices found.</td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft">
+              </ng-template>
+              <ng-template pTemplate="paginatorright">
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <div *ngIf="createInvoice">
+    <div>
+      <span class="goBackIn" (click)="backToInvoice()"><span class="goBack_pos">&#60;</span></span>
+    </div>
+    <app-service-invoices-display [filename]="filename" [erpVoucherStatus]='erpVoucherStatus'>
+    </app-service-invoices-display>
+  </div>

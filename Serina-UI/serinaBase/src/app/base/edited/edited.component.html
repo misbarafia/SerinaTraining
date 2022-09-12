@@ -1,0 +1,415 @@
+<div *ngIf="invoiceListBoolean" style="overflow: hidden; max-height: 100vh">
+  <h6 *ngIf="!dashboardViewBoolean" class="headh6">{{ heading }}</h6>
+
+  <div class="container-fluid">
+    <div *ngIf="!dashboardViewBoolean">
+      <ul class="nav nav-tabs">
+        <li class="nav-item mr-1">
+          <a
+            class="nav-link"
+            (click)="chooseEditedpageTab('invoice')"
+            [class.active-tab]="viewType == 'invoice'"
+            >Invoices({{ allEditedInvoiceLength }})</a
+          >
+        </li>
+        <li class="nav-item mr-1">
+          <a
+            class="nav-link"
+            (click)="chooseEditedpageTab('Inprogess')"
+            [class.active-tab]="viewType == 'Inprogess'"
+            >In Progess({{ inprogressLength }})</a
+          >
+        </li>
+        <!-- <li class="nav-item mr-1">
+          <a
+            class="nav-link"
+            (click)="chooseEditedpageTab('tobeApprove')"
+            [class.active-tab]="viewType == 'tobeApprove'"
+            >To be Approved({{ tobeApprovedLength }})</a
+          >
+        </li> -->
+      </ul>
+
+      <div *ngIf="!dashboardViewBoolean" class="positionCreateUpload">
+        <button class="btnUpload mr-2" (click)="exportExcel()">
+          <i class="fa fa-download" aria-hidden="true"></i>
+        </button>
+        <!-- <button class=" btnUpload mr-2" (click)="toCreateNew()"><span class="f-16">+</span> Create</button> -->
+      </div>
+      <!-- <div class="filter_input">
+        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" placeholder="Select dates to Filter"
+          [readonlyInput]="true" [showIcon]="true" inputId="range"></p-calendar>
+        <button class="btnUpload filter_btn_m "> Filter</button>
+      </div> -->
+    </div>
+
+    <div class="tableDataDiv bg-design-all pt-1" [ngSwitch]="viewType">
+      <!-- All Tab -->
+      <div *ngSwitchCase="'invoice'">
+        <div class="tableDiv">
+          <div>
+            <div *ngIf="!dashboardViewBoolean" class="searchBar">
+              <input
+                class="searchInput"
+                pInputText
+                type="text"
+                (keyup)="searchImport($event.target.value)"
+                (input)="edit.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search..."
+              />
+              <span class="material-icons searchIcon"> search </span>
+            </div>
+            <p-table
+              #edit
+              [value]="EditedinvoiceDispalyData"
+              [paginator]="showPaginatorInvoice"
+              [rows]="10"
+              [showCurrentPageReport]="true"
+              [columns]="invoiceEditedColumn"
+              [globalFilterFields]="invoiceColumnField"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10, 25, 50]"
+              styleClass="p-datatable-striped"
+            >
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th
+                    *ngFor="let col of columns"
+                    [pTooltip]="col.header"
+                    tooltipPosition="top"
+                    [pSortableColumn]="col.field"
+                  >
+                    {{ col.header }}
+                  </th>
+                  <th *ngIf="!dashboardViewBoolean" class="action_Zindex">
+                    Actions
+                  </th>
+                </tr>
+                <tr>
+                  <td *ngFor="let col of columns">
+                    <input
+                      pInputText
+                      type="text"
+                      (input)="
+                        edit.filter(
+                          $event.target.value || ' ',
+                          col.field,
+                          'contains'
+                        )
+                      "
+                      [value]="edit.filters[col.field]?.value"
+                      [placeholder]="'Search by ' + col.header"
+                      class="tableSearchInput"
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              </ng-template>
+              <ng-template
+                pTemplate="body"
+                let-invoiceData
+                let-columns="columns"
+              >
+                <tr>
+                  <td
+                    *ngFor="let col of columns"
+                    [title]="invoiceData[col.field]"
+                  >
+                    {{ invoiceData[col.field] }}
+                  </td>
+                  <td *ngIf="!dashboardViewBoolean">
+                    <i
+                      class="pi pi-eye f-16 showEye mr-2"
+                      (click)="viewInvoice(invoiceData)"
+                    ></i>
+                    <i
+                      title="Assign"
+                      class="fa fa-user-plus actionsBtn"
+                      (click)="assignInvoice(invoiceData.idDocument)"
+                      aria-hidden="true"
+                    ></i>
+                    <span
+                      class="action-i"
+                      [ngbPopover]="popContent"
+                      [popoverTitle]="popTitle"
+                      triggers="manual"
+                      #p1="ngbPopover"
+                      placement="left"
+                      (click)="
+                        toggleRejection(p1, invoiceData.documentdescription)
+                      "
+                    >
+                      <span
+                        ><i
+                          class="fa fa-info-circle info_icon"
+                          aria-hidden="true"
+                        ></i
+                      ></span>
+                    </span>
+                    <!-- <i class="fa fa-pencil-square-o actionsBtn" aria-hidden="true" (click)="editInvoice(invoiceData)"></i> -->
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="10" class="p-t-30">
+                    <img
+                      src="assets/Group 2691.png"
+                      width="260"
+                      alt="imageUrl"
+                    />
+                    <br />
+                    No Invoices found.
+                  </td>
+                </tr>
+              </ng-template>
+              <div>
+                <ng-template pTemplate="paginatorleft"> </ng-template>
+                <ng-template pTemplate="paginatorright"> </ng-template>
+              </div>
+            </p-table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inprogress Tab -->
+      <div *ngSwitchCase="'Inprogess'">
+        <div *ngIf="!dashboardViewBoolean" class="tableDiv">
+          <div>
+            <div class="searchBar">
+              <input
+                class="searchInput"
+                pInputText
+                type="text"
+                (keyup)="searchImporteditIN($event.target.value)"
+                (input)="editIn.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search..."
+              />
+              <span class="material-icons searchIcon"> search </span>
+            </div>
+            <p-table
+              #editIn
+              [value]="inprogressData"
+              [paginator]="showPaginatorInprogress"
+              [rows]="10"
+              [showCurrentPageReport]="true"
+              [globalFilterFields]="inprogressColumnField"
+              [columns]="inprogessColumn"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10, 25, 50]"
+              styleClass="p-datatable-striped"
+            >
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th
+                    *ngFor="let col of columns"
+                    [pSortableColumn]="col.field"
+                    [pTooltip]="col.header"
+                    tooltipPosition="top"
+                  >
+                    {{ col.header }}
+                  </th>
+                  <th class="action_Zindex">Actions</th>
+                </tr>
+                <tr>
+                  <td *ngFor="let col of columns">
+                    <input
+                      pInputText
+                      type="text"
+                      (input)="
+                        editIn.filter(
+                          $event.target.value || ' ',
+                          col.field,
+                          'contains'
+                        )
+                      "
+                      [value]="editIn.filters[col.field]?.value"
+                      [placeholder]="'Search by ' + col.header"
+                      class="tableSearchInput"
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              </ng-template>
+              <ng-template
+                pTemplate="body"
+                let-invoiceData
+                let-columns="columns"
+              >
+                <tr>
+                  <td
+                    *ngFor="let col of columns"
+                    [title]="invoiceData[col.field]"
+                  >
+                    {{ invoiceData[col.field] }}
+                  </td>
+                  <td>
+                    <!-- <i class="pi pi-eye f-16 showEye mr-2" (click)="viewInvoice(invoiceData)"></i> -->
+                    <button
+                      class="b-0 actionsBtn"
+                      [disabled]="!editPermissionBoolean"
+                      [ngStyle]="{
+                        cursor: !editPermissionBoolean
+                          ? 'not-allowed'
+                          : 'pointer'
+                      }"
+                      (click)="editInvoice(invoiceData, 'submit')"
+                    >
+                      <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="10" class="p-t-30">
+                    <img
+                      src="assets/Group 2691.png"
+                      width="260"
+                      alt="imageUrl"
+                    />
+                    <br />
+                    No Invoices found.
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft"> </ng-template>
+              <ng-template pTemplate="paginatorright"> </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+
+      <!-- To be Approved-->
+      <div *ngSwitchCase="'tobeApprove'">
+        <div *ngIf="!dashboardViewBoolean" class="tableDiv">
+          <div>
+            <div class="searchBar">
+              <input
+                class="searchInput"
+                pInputText
+                type="text"
+                (keyup)="searchImporteditApprove($event.target.value)"
+                (input)="
+                  editApprove.filterGlobal($event.target.value, 'contains')
+                "
+                placeholder="Search..."
+              />
+              <span class="material-icons searchIcon"> search </span>
+            </div>
+            <p-table
+              #editApprove
+              [value]="tobeApprovedData"
+              [paginator]="showPaginatortobeApprove"
+              [rows]="10"
+              [showCurrentPageReport]="true"
+              [globalFilterFields]="toBeApproveColumnField"
+              [columns]="tobeApprovedColumn"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              [rowsPerPageOptions]="[10, 25, 50]"
+              styleClass="p-datatable-striped"
+            >
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th
+                    *ngFor="let col of columns"
+                    [pSortableColumn]="col.field"
+                    [pTooltip]="col.header"
+                    tooltipPosition="top"
+                  >
+                    {{ col.header }}
+                  </th>
+                  <th class="action_Zindex">Actions</th>
+                </tr>
+
+                <tr>
+                  <td *ngFor="let col of columns">
+                    <input
+                      pInputText
+                      type="text"
+                      (input)="
+                        editApprove.filter(
+                          $event.target.value || ' ',
+                          col.field,
+                          'contains'
+                        )
+                      "
+                      [value]="editApprove.filters[col.field]?.value"
+                      [placeholder]="'Search by ' + col.header"
+                      class="tableSearchInput"
+                    />
+                  </td>
+                  <td></td>
+                </tr>
+              </ng-template>
+              <ng-template
+                pTemplate="body"
+                let-invoiceData
+                let-columns="columns"
+              >
+                <tr>
+                  <td
+                    *ngFor="let col of columns"
+                    [title]="invoiceData[col.field]"
+                  >
+                    {{ invoiceData[col.field] }}
+                  </td>
+
+                  <td>
+                    <button
+                      class="b-0 actionsBtn"
+                      [disabled]="!editPermissionBoolean"
+                      [ngStyle]="{
+                        cursor: !editPermissionBoolean
+                          ? 'not-allowed'
+                          : 'pointer'
+                      }"
+                      (click)="editInvoice(invoiceData, 'approve')"
+                    >
+                      <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="10" class="p-t-30">
+                    <img
+                      src="assets/Group 2691.png"
+                      width="260"
+                      alt="imageUrl"
+                    />
+                    <br />
+                    No Invoices found.
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="paginatorleft"> </ng-template>
+              <ng-template pTemplate="paginatorright"> </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </div>
+
+      <ngx-spinner
+        bdColor="rgba(251, 251, 251, 0.8)"
+        size="medium"
+        color="#070900"
+        [fullScreen]="false"
+        type="ball-spin-clockwise"
+      >
+        <p style="color: rgb(0, 0, 0)"></p>
+      </ngx-spinner>
+    </div>
+  </div>
+</div>
+
+<ng-template #popContent let-comment="comments">
+  <ng-container>
+    <div class="f-12" style="color: indianred">{{ comment }}</div>
+    <!-- <div class="f-12">Please re-upload invoice</div> -->
+  </ng-container>
+</ng-template>
+
+<ng-template #popTitle let-language="language">Error Comments</ng-template>
+<p-toast></p-toast>

@@ -1,0 +1,53 @@
+<h6 class="headh6 mb-0">Business Reports</h6>
+
+<div
+  class="container-fluid"
+  style="overflow: hidden; min-height: 85vh; background-color: #e5e5e5"
+>
+  <div>
+    <div>
+      <ul class="nav nav-pills centerClass">
+        <li class="nav-item mr-1">
+          <a
+            class="nav-link"
+            [class.active-pill]="viewType == 'vendor'"
+            (click)="choosepageTab('vendor')"
+          >
+            Vendor Based</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            [class.active-pill]="viewType == 'service'"
+            (click)="choosepageTab('service')"
+          >
+            Service Based</a
+          >
+        </li>
+      </ul>
+
+      <div class="positionCreateUpload">
+        <!-- <span (click)="filterData()"  class="filter mr-2">
+                      <i class="fa fa-sliders" style="transform: rotate(90deg);" aria-hidden="true"></i>
+                      <i class="fa fa-sort-desc ml-2" 
+                      style="position: relative;top: -3px;" aria-hidden="true"></i>
+                    </span> -->
+        <!-- <button class=" btnUpload mr-2" (click)="toCreateNew()"><span class="f-16">+</span> Create</button> -->
+      </div>
+      
+    </div>
+
+    <div class="pt-1" [ngSwitch]="viewType">
+      <!-- vendor invoices Tab -->
+      <div *ngSwitchCase="'vendor'">
+        <app-vendor-based-charts></app-vendor-based-charts>
+      </div>
+
+      <!-- Service invoices Tab -->
+      <div *ngSwitchCase="'service'">
+        <app-service-based-charts></app-service-based-charts>
+      </div>
+    </div>
+  </div>
+</div>

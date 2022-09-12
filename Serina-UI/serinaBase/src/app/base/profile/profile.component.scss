@@ -1,0 +1,44 @@
+.inputProfile{
+    width: 50%;
+    display: inline-block;
+    margin-left: 50px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.inputLabel{
+    font-size: 14px;
+    font-weight: 500;
+}
+.editBtn{
+    position: absolute;
+    right: 30%;
+    top: 30%;
+}
+.onEditFalse{
+    cursor: not-allowed;
+    background: white;
+    border: 0;
+}
+.onEditTrue{
+    cursor: pointer;
+    background: white;
+    height: 33px;
+    border: 1px solid lightgray;
+}
+.colon{
+    float: right;
+    margin-right: 40px;
+}
+.tdLeft{
+    font-size: 12px;
+    color: #5d5a5a;
+    font-weight: 500;
+}
+.tdRight{
+    font-size: 12px;
+    color: #5d5a5a;
+    font-weight: 600;
+}
+.trHeight{
+    height: 35px;
+}

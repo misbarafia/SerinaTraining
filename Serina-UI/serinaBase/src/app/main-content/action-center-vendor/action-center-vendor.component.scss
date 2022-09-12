@@ -1,0 +1,76 @@
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #272727 !important;
+    background-color: #f2be42 !important;
+}
+.active{
+    color: #272727 !important;
+    background-color: #f2be42 !important;
+    border-radius: 10px;
+}
+// a{
+//     color: #272727 !important;
+// }
+// .nav-pills .nav-link {
+//     border-radius: 10px;
+//     font-weight: 600;
+//     font-size: 12px;
+//     padding: 4px 14px;
+//     border: none;
+//     cursor: pointer;
+// }
+// .positionCreateUpload{
+//     position: absolute;
+//     right: 30px;
+//     top: 53px;
+//     z-index: 11;
+// }
+
+.tableDiv{
+    box-shadow: none;
+    max-height: 84vh;
+    min-height: 84vh;
+    overflow: auto;
+    margin-top: -5px;
+}
+.action-i {
+    font-size: 18px;
+    position: relative;
+    top: 5px;
+    height: 20px;
+    left: 6px;
+    width: 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    text-align: center;
+    border: 1px solid #f5f5f5;
+    border-width: 0 0 1px 0;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #0f3f62;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+:host ::ng-deep {
+    .p-datatable .p-datatable-thead > tr > th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0px;
+        text-align: center;
+        border: 1px solid #f5f5f5;
+        border-width: 0 0 1px 0;
+        font-weight: 700;
+        padding: 10px;
+    }
+    .popover-header {
+        font-size: 13px !important;
+        font-weight: 600;
+    }
+}
+
+@import "src/styles/documentsStyles";
+@include document;

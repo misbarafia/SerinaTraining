@@ -1,0 +1,79 @@
+<h6 class="headh6">Bulk Upload</h6>
+
+<div class="container-fluid">
+    <div class="d-i-block" [ngClass]="btnEnabled? 'mt-0':'di-ceter'">
+        <div class="d-i-block" [ngClass]="btnEnabled? 'mt-0':'bg-clr'">
+            <div class="d-i-block" *ngIf="displayErpBoolean">
+                <label class="f-13">Select ERP to download Template</label> <br>
+                <select class="form-control w-250 inputHeight mr-4" (change)="selectedErp($event.target.value)">
+                    <option value="" selected disabled>Please Select ERP</option>
+                    <option *ngFor="let erp of ERPList" [value]="erp.erp">
+                        {{erp.erp}}</option>
+                </select>
+                <button *ngIf="erpSelectionBoolean" class="btnUpload" (click)="downloadTemplate()">Download Template</button>
+            </div>
+            <div class="d-i-block ml-3">
+                <label class="f-13">Select file to upload</label><br>
+                <input type="file" id="custom-upload" (change)="onChange($event)" hidden [disabled]="btnEnabled" #inputFile>
+                <label for="custom-upload" class="custom-btn f-12 mr-2">Choose file</label>
+
+                <!-- name of file chosen -->
+                <span class="f-12">{{fileChoosen}}</span>
+            </div>
+        </div>
+        <div class="f-13 text-danger" *ngIf="isExcelFile === false">
+            This is not an Excel file
+        </div>
+    </div>
+
+    <div class="d-inline">
+
+        <button *ngIf="btnEnabled" class="btnUpload mr-3 ml-3" (click)="removeData()">Remove Data</button>
+        <button [disabled]="progress" *ngIf="btnEnabled" class="btnUpload" (click)="uploadXlFile()">
+            <span *ngIf="progress" class="spinner-border spinner-border-sm mr-1"></span>
+            Upload
+        </button>
+        
+        <div *ngIf="spinnerEnabled" class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="f-14 mt-2" *ngIf="btnEnabled">
+            Data Preview
+        </div>
+    </div>
+    <div class="f-12" *ngIf="progress">Upload progressbar</div>
+    <div class="progress mb-2" *ngIf="progress">
+        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" [style.width]="progress + '%'">
+            {{progress}}%</div>
+    </div>
+    <div class="max_height">
+        <div class="f-14 mt-2 template_head_bg" *ngIf="btnEnabled">
+            Master Template
+        </div>
+        <table class="table table-sm mt-2">
+            <th class="f-12" style="background-color: #abbff5;" *ngFor="let key of keys">
+                {{key}}
+            </th>
+            <tr *ngFor="let item of dataSheet | async">
+                <td class="f-11" *ngFor="let key of keys">
+                    {{item[key]}}
+                </td>
+            </tr>
+        </table>
+        <div class="f-14 mt-2 template_head_bg" *ngIf="btnEnabled">
+            Cost category Template
+        </div>
+        <table class="table table-sm mt-2">
+            <th class="f-12" style="background-color: #abbff5;" *ngFor="let key of keys1">
+                {{key}}
+            </th>
+            <tr *ngFor="let item of dataSheet1 | async">
+                <td class="f-11" *ngFor="let key of keys1">
+                    {{item[key]}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<p-toast></p-toast>

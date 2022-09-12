@@ -1,0 +1,130 @@
+.sidebarTab {
+  background: #f0f0f0;
+  font-size: 12px;
+  font-weight: 600;
+  min-height: 100vh;
+  z-index: 1;
+  // padding-left: 5px;
+  position: absolute;
+  width: 12%;
+}
+.sidebarTabContent {
+  position: absolute;
+  width: 88%;
+  left: 12%;
+  overflow: hidden;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  margin-right: 10px;
+  background-color: #f2be42;
+  border-radius: 0px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+a {
+  color: #9c9c9c;
+  text-decoration: none;
+  background-color: transparent;
+}
+.form-control {
+  font-size: 13px;
+}
+.f-13 {
+  font-size: 13px;
+}
+.labelBody {
+  font-size: 13px;
+  font-weight: 600;
+  color: gray;
+  margin-top: 10px;
+}
+
+.nav-tabs .nav-link {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: -1px;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  color: #272727;
+}
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #ffffff;
+  font-size: 13px;
+  background-color: #f2be42;
+  border-color: #dee2e6 #dee2e6 #fff;
+  font-weight: 600;
+}
+.btnMr {
+  margin-left: 180px;
+  margin-top: 100px !important;
+}
+textarea {
+  resize: auto;
+}
+.overTab {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 154px;
+}
+.navLink {
+  color: rgba(39, 39, 39, 0.7);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  margin: 4px 0px;
+  padding: 11px !important;
+  width: 100%;
+  /* display: flex; */
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.navLink:focus {
+  outline: 0 !important;
+}
+.routeLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 28%;
+  // padding-right: 5px
+}
+.active {
+  background: #f2be42;
+  padding: 6px;
+  // border-radius: 0px 30px 30px 0px;
+  color: #272727;
+  margin-right: 0px;
+}
+.active:focus {
+  outline: 0 !important;
+}
+
+@media screen and (max-width: 1100px) {
+  .sidebarTabContent {
+    position: absolute;
+    width: 80%;
+    left: 20%;
+  }
+  .sidebarTab {
+    width: 20%;
+  }
+}
+@media screen and (max-width: 1100px) and (min-width: 800px) {
+  // .sidebarTabContent {
+  //   position: absolute;
+  //   width: 74%;
+  //   left: 26%;
+  // }
+  // .sidebarTab {
+  //   width: 26%;
+  // }
+}

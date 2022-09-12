@@ -1,0 +1,109 @@
+<!-- <h6 class="headh6">Notification Settings</h6> -->
+<h6 class="headh6 ">
+  <span class="goBackIn" (click)="backToSettings()">
+    <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+  </span>
+  <span class="ml-36"> {{ headerText }} </span>
+</h6>
+<div class="row bg-design-all tableDataDiv b-top-left m-2">
+  <div class="col-lg-8 col-md-12">
+    <form
+      #nt_details="ngForm"
+      (ngSubmit)="saveSettings(nt_details.value)"
+      class="formDiv"
+      autocomplete="off"
+    >
+      <table style="width: 100%">
+        <tr class="trHeight">
+          <td class="tdLeft f-12" style="visibility: hidden">
+            Select Entity <span class="colon">:</span>
+          </td>
+          <td class="tdRight">
+            <span class="f-13">Use Default Recipients</span>
+            <span class="f-right">
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  [checked]="isDefaultRecepients"
+                  name="isDefaultRecepients"
+                  [(ngModel)]="isDefaultRecepients"
+                />
+                <span class="slider round"></span>
+              </label>
+            </span>
+          </td>
+        </tr>
+        <tr class="trHeight">
+          <td class="tdLeft f-12">
+            Select Entity <span class="colon">:</span>
+          </td>
+          <td class="tdRight">
+            <select
+              name="entity"
+              class="form-control f-12"
+              (change)="onSelectEntity($event.target.value)"
+            >
+              <option *ngFor="let entity of entity" [value]="entity.idEntity">
+                {{ entity.EntityName }}
+              </option>
+            </select>
+          </td>
+        </tr>
+
+        <tr class="trHeight">
+          <td class="tdLeft f-12">
+            Select Recipients <span class="colon">:</span>
+          </td>
+          <td class="tdRight">
+            <p-multiSelect
+              [options]="recipitentsList"
+              defaultLabel=""
+              optionLabel="email"
+              selectedItemsLabel="{0} items selected"
+              maxSelectedLabels="2"
+              (onChange)="selectedRecipients($event)"
+              class="f-12"
+            >
+            </p-multiSelect>
+            <!-- <input type="text" autocomplete="off" name="recipients" formControlName="recipients"   class="form-control f-12"/> -->
+          </td>
+        </tr>
+
+        <tr class="trHeight">
+          <td class="tdLeft f-12">
+            Add More Recipients <span class="colon">:</span>
+          </td>
+          <td class="tdRight f-12">
+            <p-chips
+              [(ngModel)]="to_addr"
+              name="to_addr"
+              separator=","
+              placeholder="Eg: abc@gmail.com ( ',' separator)"
+            ></p-chips>
+          </td>
+        </tr>
+        <tr class="trHeight">
+          <td class="tdLeft f-12">Add CC <span class="colon">:</span></td>
+          <td class="tdRight f-12">
+            <p-chips
+              [(ngModel)]="cc_addr"
+              name="cc_addr"
+              separator=","
+              placeholder="Eg: abc@gmail.com ( ',' separator)"
+            ></p-chips>
+          </td>
+        </tr>
+      </table>
+
+      <div class="mt-5 d-flex">
+        <button class="btn btnVender f-12 bg-btn-success mr-3" type="submit">
+          Save
+        </button>
+        <button class="btn btnVender bg-btn-cancel f-12" type="button">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<p-toast></p-toast>

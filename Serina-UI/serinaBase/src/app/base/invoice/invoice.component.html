@@ -1,0 +1,343 @@
+<p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000">
+  <h6 style="font-weight: 600">Select Columns</h6>
+
+  <ul
+    class="pl-3 sidebar_height"
+    cdkDropList
+    (cdkDropListDropped)="onOptionDrop($event)"
+  >
+    <li
+      class="allCols"
+      *ngFor="let displayColumn of allColumns; let i = index"
+      cdkDrag
+    >
+      <label class="container" [for]="i" cdkDragHandle
+        >{{ displayColumn.columnName }}
+        <input
+          type="checkbox"
+          [id]="i"
+          (change)="activeColumn($event, displayColumn)"
+          [checked]="displayColumn.isActive == 1"
+        />
+        <span class="checkmark"></span>
+      </label>
+      <i class="fa fa-bars dragCols" aria-hidden="true" cdkDragHandle></i>
+    </li>
+  </ul>
+
+  <!-- <p-orderList [value]="cols" dragdrop="true" (onReorder)="order($event)" controlsPosition="">
+    <ng-template let-product pTemplate="item" let-index = "index">
+      <div class="product-item" >
+        <div class="product-list-detail">
+          <label class="container" >{{product.header}}
+            <input type="checkbox" (change)="activeColumn($event,product)" [checked]="product.isActive == 'true'" >
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="product-list-action">
+          <i class="fa fa-bars dragCols" aria-hidden="true" ></i>
+        </div>
+    </div>
+      
+      </ng-template>
+      </p-orderList> -->
+
+  <div class="btnFooterSave" mat-dialog-actions>
+    <button
+      class="btn btnVender bg-btn-cancel mr-4 clor"
+      type="button"
+      (click)="visibleSidebar2 = false"
+    >
+      Cancel
+    </button>
+    <button
+      class="btn btnVender clor bg-btn-success"
+      (click)="updateColumnPosition()"
+      cdkFocusInitial
+    >
+      Save
+    </button>
+  </div>
+</p-sidebar>
+
+<mat-sidenav-container
+  class="example-container"
+  hasBackdrop="false"
+  (backdropClick)="close('backdrop')"
+>
+  <mat-sidenav #sidenav mode="over" position="end">
+    <h6 style="font-weight: 600">Select Columns</h6>
+
+    <ul
+      class="pl-3 sidebar_height"
+      cdkDropList
+      (cdkDropListDropped)="onOptionDrop($event)"
+    >
+      <li
+        class="allCols"
+        *ngFor="let displayColumn of allColumns; let i = index"
+        cdkDrag
+      >
+        <label class="container" [for]="i" cdkDragHandle
+          >{{ displayColumn.columnName }}
+          <input
+            type="checkbox"
+            [id]="i"
+            (change)="activeColumn($event, displayColumn)"
+            [checked]="displayColumn.isActive == 1"
+          />
+          <span class="checkmark"></span>
+        </label>
+        <i class="fa fa-bars dragCols" aria-hidden="true" cdkDragHandle></i>
+      </li>
+    </ul>
+    <div class="btnFooterSave" mat-dialog-actions>
+      <button
+        class="btn btnVender bg-btn-cancel mr-4 clor"
+        type="button"
+        (click)="sidenav.toggle()"
+      >
+        Cancel
+      </button>
+      <button
+        class="btn btnVender clor bg-btn-success"
+        (click)="updateColumnPosition()"
+        cdkFocusInitial
+      >
+        Save
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <h6 class="headh6">All Documents</h6>
+
+    <div class="container-fluid" style="overflow: hidden; max-height: 100vh">
+      <div>
+        <div class="nav_pane_width">
+          <ul class="nav nav-tabs d-inline-block">
+            <li class="nav-item mr-1">
+              <a
+                [ngClass]="
+                  route.url == invoiceTab ? 'active-tab' : ''
+                "
+                class="nav-link"
+                (click)="menuChange('invoice')"
+                >Invoice({{ allInvoiceLength }})</a
+              >
+            </li>
+            <li class="nav-item mr-1">
+              <a
+                [ngClass]="
+                  route.url == POTab ? 'active-tab' : ''
+                "
+                class="nav-link"
+                (click)="menuChange('po')"
+                >PO({{ poArrayLength }})</a
+              >
+            </li>
+            <li class="nav-item mr-1">
+              <a
+                [ngClass]="
+                  route.url == GRNTab ? 'active-tab' : ''
+                "
+                class="nav-link"
+                (click)="menuChange('grn')"
+                >GRN({{ GRNArrayLength }})</a
+              >
+            </li>
+            <!-- <li><a [ngClass]="route.url == '/customer/invoice/paymentInprogress'?'activeType':'navLink'"
+                    (click)="menuChange('pip')">Payment In
+                    progress({{receiptArrayLength}})</a></li> -->
+            <li class="nav-item mr-1">
+              <a
+                [ngClass]="
+                  route.url == archivedTab ? 'active-tab' : ''
+                "
+                class="nav-link"
+                (click)="menuChange('archived')"
+                >Archived({{ archivedLength }})</a
+              >
+            </li>
+            <li class="nav-item mr-1">
+              <a
+                [ngClass]="
+                  route.url == rejectedTab ? 'active-tab' : ''
+                "
+                class="nav-link"
+                (click)="menuChange('rejected')"
+                >Rejected({{ rejectedLength }})</a
+              >
+            </li>
+            <li class="nav-item mr-1">
+              <a
+                [ngClass]="
+                  route.url == GRNExceptionTab ? 'active-tab' : ''
+                "
+                class="nav-link"
+                (click)="menuChange('GRNException')"
+                >GRN exceptions({{ GRNExcpLength }})</a
+              >
+            </li>
+          </ul>
+          <ul class="nav nav-tabs d-inline-block ml-2" *ngIf="usertypeBoolean">
+            <li class="nav-item service">
+              <a
+                [ngClass]="
+                  route.url == serviceInvoiceTab
+                    ? 'active-tab'
+                    : ''
+                "
+                class="nav-link ite"
+                (click)="menuChange('ServiceInvoices')"
+                >Service Invoices({{ serviceInvoiceLength }})</a
+              >
+            </li>
+            <!-- <li><a [ngClass]="route.url == '/customer/invoice/PO'?'activeType':'navLink'"
+                    (click)="menuChange('po')">Purchase Order({{poArrayLength}})</a>
+                </li> -->
+          </ul>
+        </div>
+
+        <div class="positionCreateUpload ">
+          <div class="input-group  uni_dwn_btn" style="left: -45px;" *ngIf="(route.url.includes('PO') || route.url.includes('GRN'))">
+            <input #serachStr type="text" class="searchInput b-r-right-0" placeholder="Search">
+            <button class="btnUpload b-r-left-0 mr-2" (click)="filterString(serachStr.value)">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+          <button class="btnUpload  mr-2" (click)="exportExcel()" [ngClass]="(route.url.includes('PO') || route.url.includes('GRN'))? 'downlod_btn':''">
+            <i class="fa fa-download" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div
+          class="filter_input"
+          *ngIf="route.url == invoiceTab"
+        >
+          <!-- <label for="range" class="f-12">Select dates to Filter</label> <br> -->
+          <p-calendar
+            [(ngModel)]="rangeDates"
+            selectionMode="range"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            placeholder="Select dates to Filter"
+            [readonlyInput]="true"
+            [showIcon]="true"
+            showButtonBar="true"
+            (onClearClick)="clearDates()"
+            inputId="range"
+          ></p-calendar>
+          <button
+            class="btnUpload filter_btn_m z_index"
+            (click)="filterByDate(rangeDates)"
+          >
+          <i class="fa fa-filter" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="tableDataDiv bg-design-all">
+          <div>
+            <div>
+              <app-all-invoices
+                [tableData]="invoiceDispalyData"
+                [invoiceColumns]="invoiceColumns"
+                [showPaginatorAllInvoice]="showPaginatorAllInvoice"
+                [columnsToDisplay]="columnstodisplayInvoice"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+                (sideBarBoolean)="showSidebar($event)"
+                (paginationEvent) = "paginate($event)"
+                [columnLength]="allInColumnLength"
+                *ngIf="route.url == invoiceTab"
+              >
+              </app-all-invoices>
+
+              <app-all-invoices
+                [tableData]="poDispalyData"
+                [invoiceColumns]="poColumns"
+                [columnsToDisplay]="columnstodisplayPO"
+                [showPaginatorAllInvoice]="showPaginatorPOTable"
+                (sideBarBoolean)="showSidebar($event)"
+                (paginationEvent) = "paginate($event)"
+                [columnLength]="allPOColumnLength"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+                *ngIf="route.url == POTab"
+              ></app-all-invoices>
+
+              <app-grn
+                [tableData]="GRNDispalyData"
+                [showPaginatorGRNTable]="showPaginatorGRNTable"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+                (paginationEvent) = "paginate($event)"
+                *ngIf="route.url == GRNTab"
+              ></app-grn>
+              <!-- <app-pip [tableData]="receiptDispalyData" (searchInvoiceData)="searchInvoiceDataV($event)" *ngIf="route.url == '/customer/invoice/paymentInprogress'"></app-pip> -->
+              <app-all-invoices
+                [tableData]="archivedDisplayData"
+                [invoiceColumns]="archivedColumns"
+                [columnsToDisplay]="columnstodisplayArchived"
+                [showPaginatorAllInvoice]="showPaginatorArchived"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+                (sideBarBoolean)="showSidebar($event)"
+                (paginationEvent) = "paginate($event)"
+                [columnLength]="allARCColumnLength"
+                *ngIf="route.url == archivedTab"
+              ></app-all-invoices>
+
+              <app-all-invoices
+                [tableData]="rejectedDisplayData"
+                [invoiceColumns]="rejectedColumns"
+                [columnsToDisplay]="columnstodisplayrejected"
+                [showPaginatorAllInvoice]="showPaginatorRejected"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+                (sideBarBoolean)="showSidebar($event)"
+                (paginationEvent) = "paginate($event)"
+                [columnLength]="rejectedColumnLength"
+                *ngIf="route.url == rejectedTab"
+              ></app-all-invoices>
+              
+              <app-all-invoices
+                [tableData]="GRNExcpDispalyData"
+                [invoiceColumns]="GRNExcpColumns"
+                [showPaginatorAllInvoice]="showPaginatorGRNExcp"
+                [columnsToDisplay]="columnstodisplayGRNExcp"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+                (sideBarBoolean)="showSidebar($event)"
+                (paginationEvent) = "paginate($event)"
+                [columnLength]="GRNExcpColumnLength"
+                *ngIf="route.url == GRNExceptionTab"
+              >
+              </app-all-invoices>
+
+              <app-all-invoices
+                [tableData]="serviceinvoiceDispalyData"
+                [invoiceColumns]="serviceColumns"
+                [showPaginatorAllInvoice]="showPaginatorServiceInvoice"
+                [columnsToDisplay]="columnstodisplayService"
+                (searchInvoiceData)="searchInvoiceDataV($event)"
+                (sideBarBoolean)="showSidebar($event)"
+                (paginationEvent) = "paginate($event)"
+                [columnLength]="allSRVColumnLength"
+                *ngIf="route.url == serviceInvoiceTab"
+              ></app-all-invoices>
+
+              <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.5)" size="default" type="ball-clip-rotate-pulse">
+                <p style="color: white">Please Wait.....</p>
+              </ngx-spinner> -->
+            </div>
+          </div>
+          <ngx-spinner
+            bdColor="rgba(251, 251, 251, 0.8)"
+            size="medium"
+            color="#070900"
+            [fullScreen]="false"
+            type="ball-spin-clockwise"
+          >
+            <p style="color: rgb(0, 0, 0)"></p>
+          </ngx-spinner>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<p-toast></p-toast>

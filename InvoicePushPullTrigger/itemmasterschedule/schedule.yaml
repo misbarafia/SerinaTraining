@@ -1,0 +1,21 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: itemmaster
+  namespace: rovedev
+spec:
+  concurrencyPolicy: Forbid
+  schedule: '0 */6 * * *' # cron spec of time, here, 8 o'clock
+  failedJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: itemmaster
+            image: roveregistry.azurecr.io/serina-server:itemmaster
+            imagePullPolicy: Always
+          restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: deploymentsecret

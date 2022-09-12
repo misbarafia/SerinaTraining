@@ -1,0 +1,173 @@
+<div class="tableDatDiv">
+    <div> <button class="btnUpload dwnldBtn" (click)="downloadReport()">Download Report</button></div>
+    <div class="filter_inputDash">
+      <p-calendar
+        [(ngModel)]="rangeDates"
+        selectionMode="range"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        placeholder="Select dates to Filter"
+        [readonlyInput]="true"
+        [showIcon]="true"
+        showButtonBar="true"
+        inputId="range"
+        (onClearClick)="clearDates()"
+      ></p-calendar>
+      <button class="btnUpload filter_btn_m" (click)="filterByDate(rangeDates)">Filter</button>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div
+        class="card-div d-flex bg-1"
+        [class.active_card]="tabName == 'Total'"
+        (click)="choosepageTab('Total')"
+      >
+        <div class="img-wrapper">
+          <!-- <i class="fa fa-check"></i> -->
+          <mat-icon class="placement" svgIcon="vendor_up"></mat-icon>
+        </div>
+        <div>
+          <div class="f-12">Total Invoices</div>
+          <div class="f-15">{{ totalInv }}</div>
+        </div>
+      </div>
+  
+      
+  
+      <div
+        class="card-div d-flex bg-3"
+        [class.active_card]="tabName == 'UnderProcess'"
+        (click)="choosepageTab('UnderProcess')"
+      >
+        <div class="img-wrapper">
+          <mat-icon class="placement" svgIcon="vendor_rm"></mat-icon>
+        </div>
+        <div>
+          <div class="f-12">Invoice Under Process </div>
+          <div class="f-15">{{ UnderProcessInv }}</div>
+        </div>
+      </div>
+
+      <div
+        class="card-div d-flex bg-2"
+        [class.active_card]="tabName == 'Posted'"
+        (click)="choosepageTab('Posted')"
+      >
+        <div class="img-wrapper">
+          <!-- <i class="fa fa-exclamation-triangle"></i> -->
+          <mat-icon class="placement" svgIcon="vendor_pr"></mat-icon>
+        </div>
+        <div>
+          <div class="f-12">Invoiced</div>
+          <div class="f-15">{{ PostedInv }}</div>
+        </div>
+      </div>
+
+      <div
+        class="card-div d-flex bg-2"
+        [class.active_card]="tabName == 'Collections'"
+        (click)="choosepageTab('Collections')"
+      >
+        <div class="img-wrapper">
+          <!-- <i class="fa fa-exclamation-triangle"></i> -->
+          <mat-icon class="placement" svgIcon="vendor_pr"></mat-icon>
+        </div>
+        <div>
+          <div class="f-12">Collections</div>
+          <div class="f-15">{{ CollectionsInv }}</div>
+        </div>
+      </div>
+  
+      <div
+        class="card-div d-flex bg-4"
+        [class.active_card]="tabName == 'Rejected'"
+        (click)="choosepageTab('Rejected')"
+      >
+        <div class="img-wrapper">
+          <mat-icon class="placement" svgIcon="vendor_rej"></mat-icon>
+        </div>
+        <div>
+          <div class="f-12">Rejected</div>
+          <div class="f-15">{{ RejectedInv }}</div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="pt-1 tabDiv bg-design-all" [ngSwitch]="tabName">
+      <!-- Total invoices Tab -->
+      <div *ngSwitchCase="'Total'">
+        <app-table
+          [tableData]="totalTableData"
+          [invoiceColumns]="columnsForTotal"
+          [showPaginator]="showPaginatortotal"
+          [columnsToFilter]="totalColumnField"
+          [columnLength]="ColumnLengthtotal"
+        >
+        </app-table>
+      </div>
+  
+      <!-- UnderProcess invoices Tab -->
+      <div *ngSwitchCase="'UnderProcess'">
+        <app-table
+          [tableData]="UnderProcessTableData"
+          [invoiceColumns]="columnsForUnderProcess"
+          [showPaginator]="showPaginatorUnderProcess"
+          [columnsToFilter]="UnderProcessColumnField"
+          [columnLength]="ColumnLengthUnderProcess"
+        >
+        </app-table>
+      </div>
+  
+      <!-- Posted invoices Tab -->
+      <div *ngSwitchCase="'Posted'">
+        <app-table
+          [tableData]="PostedTableData"
+          [invoiceColumns]="columnsForPosted"
+          [showPaginator]="showPaginatorPosted"
+          [columnsToFilter]="PostedColumnField"
+          [columnLength]="ColumnLengthPosted"
+        >
+        </app-table>
+        <!-- <app-table
+            [tableData]="CollectionsTableData"
+            [invoiceColumns]="columnsForCollections"
+            [showPaginator]="showPaginatorCollections"
+            [columnsToFilter]="CollectionsColumnField"
+            [columnLength]="ColumnLengthCollections"
+        >
+        </app-table> -->
+      </div>
+  
+      <!-- Collections invoices Tab -->
+      <div *ngSwitchCase="'Collections'">
+        <app-table
+          [tableData]="CollectionsTableData"
+          [invoiceColumns]="columnsForCollections"
+          [showPaginator]="showPaginatorCollections"
+          [columnsToFilter]="CollectionsColumnField"
+          [columnLength]="ColumnLengthCollections"
+        >
+        </app-table>
+      </div>
+
+      <!-- Rejected invoices Tab -->
+      <div *ngSwitchCase="'Rejected'">
+        <app-table
+          [tableData]="RejectedTableData"
+          [invoiceColumns]="columnsForRejected"
+          [showPaginator]="showPaginatorRejected"
+          [columnsToFilter]="RejectedColumnField"
+          [columnLength]="ColumnLengthRejected"
+        >
+        </app-table>
+      </div>
+      <ngx-spinner
+        bdColor="rgba(251, 251, 251, 0.8)"
+        size="medium"
+        color="#070900"
+        [fullScreen]="false"
+        type="ball-spin-clockwise"
+      >
+        <p style="color: rgb(0, 0, 0)"></p>
+      </ngx-spinner>
+    </div>
+  </div>

@@ -1,0 +1,29 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: maillistener
+  namespace: rovedev
+spec: 
+  selector: 
+    matchLabels: 
+      app: maillistener
+  replicas: 1 # tells deployment to run 2 pods matching the template 
+  revisionHistoryLimit: 0
+  template:
+    metadata: 
+      labels: 
+        app: maillistener
+    spec: 
+      containers: 
+      - name: maillistener 
+        image: roveregistry.azurecr.io/serina-server:mailrove
+        imagePullPolicy: Always
+        ports: 
+        - containerPort: 993 
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            cpu: 50m
+      imagePullSecrets:
+      - name: deploymentsecret

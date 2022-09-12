@@ -1,0 +1,56 @@
+<h6 class="font_weight mt-2"> 
+    <span class="ml-3"> Sharepoint Listener Settings</span>
+</h6>
+<div class="row">
+    <div class="col-md-7">
+        <form [formGroup]="configData" (ngSubmit)="saveConfigData()" class="formDiv" autocomplete="off" >
+
+            <table style="width: 100%;">
+
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Client ID <span style="color: red;">*</span><span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="text" autocomplete="off" formControlName="client_id"   class="form-control f-13" required/>
+                    </td>
+                </tr>
+
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Client Secret <span style="color: red;">*</span><span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="password" autocomplete="off" formControlName="client_secret"   class="form-control f-13" required/>
+                    </td>
+                </tr>
+
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Site url <span style="color: red;">*</span><span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="text" autocomplete="off" formControlName="site_url"   class="form-control f-13" required/>
+                    </td>
+                </tr>
+
+                <tr class="trHeight">
+                    <td class="tdLeft f-13">Folder <span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="text" autocomplete="off" formControlName="folder"   class="form-control f-13"/>
+                    </td>
+                </tr>
+
+                <tr class="trHeight" style="display: none;">
+                    <td class="tdLeft f-13">Service url <span style="color: red;">*</span><span class="colon">:</span></td>
+                    <td class="tdRight">
+                        <input type="text" autocomplete="off" formControlName="service_url"   class="form-control f-13" required/>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="mt-4 d-flex">
+                <button *ngIf="!editable" class="btn btnbg-s f-13 mr-3" type="button" (click)="editBtnCilck()">Edit</button>
+                <button *ngIf="editable" class="btn btnbg-s f-13 mr-3" type="submit" [disabled]="!configData.valid"
+                [ngStyle]="{'cursor':!configData.valid ? 'not-allowed':'pointer'}"
+                >Save</button>
+                <button *ngIf="editable" class="btn btncancel f-13" type="button" (click)="onCancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+<p-toast></p-toast>

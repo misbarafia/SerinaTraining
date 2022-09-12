@@ -1,0 +1,38 @@
+:host ::ng-deep {
+    .stepper-header .steps .step .step-bullet {
+        height: 30px !important;
+        width: 30px !important;
+        font-size: 1.1rem !important;
+    }
+    .stepper-header .steps .step {
+        font-size: 0.9em !important;
+        pointer-events: none !important;
+    }
+    .stepper-body{
+        margin: 25px auto;
+        margin-left: 5vw !important;
+        margin-top: 40px !important;
+        padding: 1rem;
+    }
+    .ngx-json-viewer .segment .segment-main .segment-key {
+        font-size: 13px !important;
+    }
+    .ngx-json-viewer .segment-type-string > .segment-main > .segment-value {
+        font-size: 13px !important;
+    }
+    .ngx-json-viewer .segment-type-array > .segment-main > .segment-value, .ngx-json-viewer .segment-type-function > .segment-main > .segment-value, .ngx-json-viewer .segment-type-object > .segment-main> .segment-value {
+        font-size: 13px !important;
+    }
+}
+.m-r-5{
+    margin-right: 5vw;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+}
+.max_height_div{
+    max-height: clamp(40vh,40vh,60vh);
+    overflow: auto;
+    margin-bottom: 20px;
+}

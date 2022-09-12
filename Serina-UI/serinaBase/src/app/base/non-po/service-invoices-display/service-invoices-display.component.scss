@@ -1,0 +1,210 @@
+.zoom {
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid #ffffff;
+    box-shadow: 1px 2px 20px rgba($color: #000000, $alpha: 0.2);
+    position: absolute;
+    top: 75vh;
+    left: -136%;
+  }
+  
+  .zoom-out {
+    display: inline-block;
+    padding: 5px 10px;
+    height: 30px;
+    color: lightslategray;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .zoom-in {
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    height: 30px;
+    color: lightslategray;
+    border-bottom: 1px solid lightgray;
+    display: inline-block;
+  }
+  
+  .invoice-body {
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 10%);
+    margin: 10px 5px;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 0;
+    height: 90vh;
+    margin-top: 0;
+  }
+  
+  .vendor-body {
+    padding: 20px 90px 30px 20px;
+  }
+  
+  :host ::ng-deep .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #272727 !important;
+    background-color: #f2be42 !important;
+  }
+  
+  a {
+    color: #272727 !important;
+  }
+  
+  :host ::ng-deep .nav-pills .nav-link {
+    border-radius: 10px;
+    font-weight: 600;
+    margin-right: 10px;
+    font-size: 12px;
+    padding: 4px 14px;
+    border: none;
+  }
+  
+  .ulTab {
+    background: #f5e1c6;
+    padding: 5px 10px;
+    width: fit-content;
+    border-radius: 10px;
+  }
+  
+  .btnFooter {
+    bottom: 0%;
+    left: 35%;
+    right: 33%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .label-head {
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 162px;
+    text-overflow: ellipsis;
+  }
+  
+  .nav-tabs .nav-link {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: -1px;
+    border: 1px solid lightgrey;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: #272727;
+  }
+  
+  .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #ffffff;
+    font-size: 13px;
+    background-color: #f2be42;
+    border-color: #dee2e6 #dee2e6 #fff;
+    font-weight: 600;
+  }
+  
+  .tabDiv {
+    max-height: 76vh;
+    min-height: 76vh;
+    overflow-y: auto;
+  }
+  
+  .form-control:disabled, .form-control[readonly] {
+    background-color: #ffffff;
+    opacity: 1;
+  }
+  
+  .btnInvoiceType {
+    border: 1.95px solid #f2be42;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    height: 30px;
+    background: #f2be42;
+    border-radius: 5px;
+    color: black;
+    padding: 4px 12px !important;
+  }
+  
+  .btnInvoiceType1 {
+    background-color: rgb(39, 179, 4) !important;
+    color: white !important;
+    border: 1.95px solid #f2be42;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    height: 30px;
+    border-radius: 5px;
+    padding: 4px 12px !important;
+  }
+  
+  .inputHeight {
+    font-size: 13px;
+    height: 30px;
+    margin-right: 5px;
+    width: 167px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .showandVerify {
+    background: #272727;
+    color: white;
+    width: 100px;
+    text-align: center;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 10px;
+  }
+  
+  .displayFlex {
+    display: flex;
+    flex-wrap: wrap
+  }
+  
+  .preBtn {
+    border: 1px solid #f2be42;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 5px;
+  }
+  
+  .totalPages {
+    font-size: 13px;
+    margin: 5px;
+  }
+  
+  .maxPage {
+    max-height: 87vh;
+    overflow: auto;
+  }
+  
+  .lineTab {
+    max-height: 71vh;
+    overflow: auto;
+  }
+  
+  .lineName {
+    padding: 10px 10px;
+    font-size: 12px;
+    padding-left: 20px;
+    min-width: 130px;
+    font-weight: 500;
+    background: #e3eef9;
+    position: sticky;
+    left: 0px;
+  }
+  
+  .linevalue {
+    padding: 4px 4px 0px;
+    font-size: 12px;
+  
+  }
+  
+  .requiredField {
+    font-size: 12px;
+    color: red
+  }
+  
+  .bgHighlight {
+    border: 1px solid #f24242 !important;
+  }
+  

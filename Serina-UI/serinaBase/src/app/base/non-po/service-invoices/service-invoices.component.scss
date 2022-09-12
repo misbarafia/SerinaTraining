@@ -1,0 +1,294 @@
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #272727 !important;
+    background-color: #f2be42 !important;
+}
+.filterBtn{
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    padding: 7px;
+    margin-left: 10px;
+}
+.p-calendar .p-inputtext {
+    flex: 1 1 auto;
+    height: 30px;
+    width: 1%;
+}
+
+:host ::ng-deep .p-calendar {
+    display: inline-flex;
+    position: relative;
+    height: 34px;
+    font-size: 13px;
+}
+:host ::ng-deep .p-datepicker .p-monthpicker .p-monthpicker-month {
+    padding: 0.5rem;
+    transition: box-shadow 0.2s;
+    border-radius: 3px;
+    font-size: 13px;
+}
+.f-13Table{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: fit-content;
+    font-size: 13px;
+    font-weight: 600;
+}
+.active{
+    color: #272727 !important;
+    background-color: #f2be42 !important;
+    border-radius: 10px;
+}
+a{
+    color: #272727 !important;
+}
+.nav-pills .nav-link {
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 4px 14px;
+    border: none;
+    cursor: pointer;
+}
+.ulTab{
+    background: #f5e1c6;
+    padding: 5px 10px;
+    width: fit-content;
+    border-radius: 10px;
+}
+.positionCreateUpload{
+    position: absolute;
+    right: 250px;
+    top: 55px;
+    z-index: 11;
+}
+.label-head{
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.vendor-body{
+    padding: 20px 90px 30px 20px;
+}
+.invoice-body{
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 10%);
+    margin: 10px 5px;
+    border-radius: 10px;
+    padding: 10px;
+    height: 90vh;
+    margin-top: 50px;
+}
+.btnFooter{
+    margin-top: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+  }
+
+
+//   td, th {
+//     width: 25%;
+//   }
+
+
+  .table th, .table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+    border-top: 0 !important;
+    border: none !important;
+}
+
+
+
+.f-16{
+    font-size: 16px;
+}
+
+tbody{
+    overflow: auto;
+    max-height: 80vh;
+}
+:host ::ng-deep .table th, .table td {
+    padding: 0 10px !important;
+    vertical-align: middle;
+    border-top: 0 !important;
+    border: none !important;
+}
+
+.nav-tabs .nav-link {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: -1px;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: #272727;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #ffffff;
+    font-size: 14px;
+    background-color: #f2be42;
+    border-color: #dee2e6 #dee2e6 #fff;
+    font-weight: 500;
+}
+.f-12{
+    font-size: 12px;
+}
+.btnActions{
+    position: relative;
+    top: 20%;
+    left: 63.3%;
+}
+.btnFilled{
+    background: #000000;
+    color: white;
+}
+
+    .uploadIcon{
+        font-size: 40px;
+        color: #f2be42;
+    }
+    .b-type{
+        border: 1px solid lightgray;
+        padding: 15px;
+        margin: 10px 50px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .cls:focus{
+        outline: 0;
+    }
+
+    .btn-up-center{
+        padding-bottom: 40px;
+        text-align: center;
+    }
+    .btn-up{
+        width: 50%;
+        border-radius: 20px;
+        background: #f2be42;
+    }
+
+  .goBack{
+    position: relative;
+    left: 15%;
+    top: 9%;
+    font-size: 30px;
+  }
+  .goBackIn{
+    position: absolute;
+    top: 0%;
+    font-size: 30px;
+    color: #f2be42;
+    cursor: pointer;
+  }
+  .ShowInvoiceTypeSize{
+    max-height: 87vh;
+    overflow: auto;
+  }
+
+
+
+
+// filter CSS
+.calenderFilter{
+    position: absolute;
+    top: 11%;
+    border-radius: 10px;
+    left: 33%;
+  }
+
+:host ::ng-deep button:focus {
+    outline: none;
+}
+
+
+:host ::ng-deep .mat-form-field-underline { display: none; }
+
+
+
+
+:host ::ng-deep .p-dropdown {
+    border: 1px solid lightgray;
+    font-weight: 500;
+    border-radius: 6px;
+
+}
+:host ::ng-deep .p-dropdown-panel {
+    position: absolute;
+    border: 1px solid lightgray;
+    box-shadow: 1px 1px 8px rgb(0 0 0 / 20%);
+    background: white;
+}
+:host ::ng-deep  .p-dropdown-item {
+    cursor: pointer;
+    font-weight: 400;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #635f5f;
+    padding: 4px 8px;
+}
+:host ::ng-deep  .p-dropdown-item:hover{
+    background-color: #e9ecef;
+}
+:host ::ng-deep .p-dropdown .p-dropdown-label.p-placeholder {
+    color: #6c757d;
+    font-size: 13px;
+}
+:host ::ng-deep .p-dropdown .p-dropdown-label {
+    background: transparent;
+    border: 0 none;
+    font-size: 13px;
+}
+
+
+
+// filter Css ends
+
+.formInvalid{
+    border:2px solid red;
+}
+.formInvalid1{
+    border: 1px solid lightgray
+}
+
+
+.example-chip-list {
+    width: 100%;
+  }
+
+  .modal-header{
+      border-bottom: 0 !important;
+  }
+  canvas {
+    border: 1px solid lightgray;
+}
+
+
+  .statusType{
+    color: white !important;
+    width: 90px !important;
+    padding: 4px 12px 6px 12px !important;
+    display: inline-block;
+    border-radius: 20px;
+    text-align: center !important;
+    background: #107e3e;
+    margin: 4px 8px;
+}
+.statusTypeactive{
+    background-color: #107e3e;
+}
+.statusTypepending{
+    background-color: #e0e0e0;
+    color: #0f3f62;
+}
+
+

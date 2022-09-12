@@ -1,0 +1,145 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12" style="padding: 30px 50px;">
+            <h4>Account Settings</h4>
+            <div>
+                <img src="/assets/maskGroup89.png" alt="Logo">
+            </div>
+            <div class="editBtn" *ngIf="!editable">
+                <button class="btn btnVender bg-btn-success" (click)="onEdit()">Edit</button>
+            </div>
+            <div class="mt-4">
+                <h6>Personal Details</h6>
+                <table style="width: 50%;">
+                    <tr class="trHeight">
+                        <td class="tdLeft">
+                          <label for="Fname" class="inputLabel">First name</label><span class="colon">:</span>
+                        </td>
+
+                      <td class="tdRight">
+                        <input type="text" 
+                        id="Fname" 
+                        class="form-control inputProfile" 
+                        [disabled]= "!editable" 
+                        [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                        [value]="loginUser.userId">
+                      </td>
+                    </tr>
+                    <tr class="trHeight">
+                      <td class="tdLeft"> 
+                          <label for="Lname" class="inputLabel">Last name</label> <span class="colon">:</span>
+                        </td>
+                      <td class="tdRight">
+                        <input type="text" 
+                        id="Lname" 
+                        class="form-control inputProfile"
+                        [disabled]= "!editable" 
+                        [ngClass]="!editable? 'onEditFalse':'onEditTrue'">
+                      </td>
+                    </tr>
+                    <tr class="trHeight">
+                      <td class="tdLeft">
+                          <label for="password" class="inputLabel">Password</label><span class="colon">:</span>
+                        </td>
+                      <td class="tdRight">
+                        <input type="password" 
+                        id="password" 
+                        [disabled]= "!editable" 
+                        [ngClass]="!editable? 'onEditFalse':'onEditTrue'" 
+                        class="form-control inputProfile" 
+                        [value]="loginUser.password">
+                      </td>
+                    </tr>
+      
+                  </table>
+                <!-- <div>
+                    <label for="Fname" class="inputLabel">First name :</label>
+                    <input type="text" 
+                            id="Fname" 
+                            class="form-control inputProfile" 
+                            [disabled]= "!editable" 
+                            [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                            [value]="loginUser.userId">
+                </div>
+                
+    
+              <div>
+                <label for="Lname" class="inputLabel">Last name :</label>
+                <input type="text" 
+                        id="Lname" 
+                        class="form-control inputProfile"
+                        [disabled]= "!editable" 
+                        [ngClass]="!editable? 'onEditFalse':'onEditTrue'">
+              </div>
+              
+    
+                <div>
+                    <label for="password" class="inputLabel">Password :</label>
+                    <input type="password" 
+                            id="password" 
+                            [disabled]= "!editable" 
+                            [ngClass]="!editable? 'onEditFalse':'onEditTrue'" 
+                            class="form-control inputProfile" 
+                            [value]="loginUser.password">
+                </div> -->
+                
+            </div>
+
+            <div class="mt-5">
+                <h6>Contact Info</h6>
+
+                <table style="width: 50%;">
+                    <tr class="trHeight">
+                      <td class="tdLeft">
+                          <label for="mobile" class="inputLabel">Mobile</label> <span class="colon" style="margin-left: 25px;">:</span>
+                        </td>
+                      <td class="tdRight">
+                        <input type="tel" 
+                        id="mobile" 
+                        [disabled]= "!editable" 
+                        [ngClass]="!editable? 'onEditFalse':'onEditTrue'" 
+                        class="form-control inputProfile">
+                      </td>
+                    </tr>
+                    <tr class="trHeight">
+                      <td class="tdLeft">
+                          <label for="email" class="inputLabel">Email ID</label><span class="colon">:</span>
+                        </td>
+                      <td class="tdRight">
+                        <input type="email" 
+                        id="email" 
+                        [disabled]= "!editable" 
+                        [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                        class="form-control inputProfile">
+                      </td>
+                    </tr>
+      
+                  </table>
+                <!-- <div>
+                    <label for="mobile" class="inputLabel">Mobile :</label>
+                    <input type="tel" 
+                            id="mobile" 
+                            [disabled]= "!editable" 
+                            [ngClass]="!editable? 'onEditFalse':'onEditTrue'" 
+                            class="form-control inputProfile">
+                </div>
+                
+    
+              <div>
+                <label for="email" class="inputLabel">Email ID :</label>
+                <input type="email" 
+                        id="email" 
+                        [disabled]= "!editable" 
+                        [ngClass]="!editable? 'onEditFalse':'onEditTrue'"
+                        class="form-control inputProfile">
+              </div> -->
+                
+            </div>
+
+            <div *ngIf="editable" class="mt-4">
+                <button class="btn btnVender bg-btn-success mr-3" (click)="onSave()">Save</button>
+                <button class="btn btnVender bg-btn-cancel" (click)="onCancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

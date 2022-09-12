@@ -1,0 +1,75 @@
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 10px !important;
+}
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  padding: 10px;
+  width: 100%;
+}
+
+.table_top {
+  position: relative;
+  top: 10px;
+}
+
+.card-div {
+  // border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 20px 13px 15px;
+  // background-color: #5DC5CC;
+  color: #ffffff;
+  min-width: 16vw;
+}
+.f-15 {
+  font-size: 15px;
+  font-weight: 600;
+}
+.text_color {
+  font-size: 12px;
+  // color: #666363;
+}
+
+.img-wrapper {
+  width: 46px;
+  height: 46px;
+  margin: 0 15px 0 0;
+  padding: 10px 13px 12px 12px;
+  border-radius: 28px;
+  text-align: center;
+  color: white;
+}
+.card1-bg {
+  background-color: #5dc5cc;
+}
+.card2-bg {
+  background-color: #716197;
+}
+
+.bg-2 {
+  background-color: #ffffff;
+  color: #716197;
+}
+.bg-1 {
+  background-color: white;
+  color: #5dc5cc;
+}
+
+.table_scroll {
+  max-height: 72vh;
+  overflow: auto;
+}
+
+// :host ::ng-deep .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+//     color: #272727 !important;
+//     background-color: #f2be42 !important;
+// }
+// a{
+//     color: #272727 !important;
+// }
+// :host ::ng-deep .nav-pills .nav-link {
+//     border-radius: 10px;
+//     font-weight: 600;
+//     margin-right: 10px;
+//     font-size: 12px;
+//     padding: 4px 14px;
+//     border: none;
+// }

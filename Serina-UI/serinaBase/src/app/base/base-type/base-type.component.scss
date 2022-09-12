@@ -1,0 +1,49 @@
+@import "src/styles/sharedStyles";
+@include auth;
+
+:host ::ng-deep {
+  .p-dialog .p-dialog-header {
+    padding: 0.5rem;
+  }
+  .p-badge {
+    background: #f2be42;
+    font-size: 10px;
+    font-weight: 700;
+    min-width: 15px;
+    color: #272727;
+    height: 15px;
+    line-height: 1;
+  }
+}
+.showHide {
+  list-style-type: none;
+  color: #9c9c9c;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+#sp_sub {
+  padding: 4px 4px 4px 10px !important;
+  // max-width: 130px;
+  // min-width: 100px;
+}
+#ex_sub {
+  padding: 4px 4px 4px 10px !important;
+  // max-width: 130px;
+}
+.ml-9 {
+  margin-left: 9px !important;
+}
+@media screen and (min-width: 1400px) {
+  #sp_sub {
+    max-width: none;
+    // min-width: 132px;
+  }
+  #ex_sub {
+    max-width: none;
+    // min-width: 140px;
+  }
+  // .showHide{
+  //     padding-left: 10px;
+  // }
+}

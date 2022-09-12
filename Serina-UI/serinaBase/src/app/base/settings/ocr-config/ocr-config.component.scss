@@ -1,0 +1,310 @@
+a {
+    color: #9c9c9c;
+    text-decoration: none;
+    background-color: transparent;
+}
+.p-l-50 {
+    padding-left: 50px;
+}
+.form-control{
+    
+    font-size: 12px;
+    font-weight: 600;
+}
+.f-13{
+    
+    font-size: 13px;
+    font-weight: 600;
+}
+.labelBody{
+    font-size: 12px;
+    font-weight: 600;
+    color: gray;
+    margin-top: 10px;
+}
+// .nav-tabs {
+//     width: fit-content;
+// }
+
+// .nav-tabs .nav-link {
+//     font-weight: 600;
+//     font-size: 13px;
+//     color: #272727;
+//     border: 1px solid #d3d3d3;
+//     // border-bottom: 0;
+//     background-color: white;
+// }
+// .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+//     color: #ffffff;
+//     font-size: 13px;
+//     background-color: #121d7c;
+//     // border: 0;
+//     font-weight: 600;
+// }
+// .nav-tabs {
+//     border-bottom: 0px;
+// }
+// .nav-tabs .nav-item {
+//     margin-bottom: 0px;
+// }
+.b-l-active {
+    // border-radius: 10px 0px 0px 10px;
+}
+.b-r-active {
+    // border-radius: 0px 10px 10px 0px;
+}
+.btnMr{
+    margin-left: 180px;
+    margin-top: 100px !important;
+}
+textarea{
+    resize: auto;
+    border: 0;
+}
+.overTab{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 154px;
+}
+
+:host ::ng-deep .p-accordion-header-text {
+    line-height: 1;
+    font-size: 13px;
+}
+:host ::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+    margin-right: 0.5rem;
+    font-size: 12px;
+}
+:host ::ng-deep  .p-accordion p-accordiontab .p-accordion-tab {
+    margin-bottom: 0;
+    width: 98%;
+}
+a:hover {
+    text-decoration: none !important;
+}
+.overFlow{
+    max-height: 80vh;
+    overflow: auto;
+    min-height: 60vh;
+    padding: 10px;
+    overflow-x: hidden;
+}
+.checkPlace{
+    position: relative;
+    top: 24px;
+    left: 20px;
+}
+.labelText{
+    color: gray;
+    position: relative;
+    top: 0px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.labelTextT{
+    color: gray;
+    position: relative;
+    top: -3px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.ulF-14{
+    font-size: 13px;
+    font-weight: 700;
+}
+.liF-13{
+    font-size: 13px;
+    font-weight: 400;
+}
+.btnHelp{
+    border: 1px solid lightgray;
+    margin-top: 5px;
+    background-color: #b2b2b2;
+    color: white;
+    font-size: 12px;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.actiontypeBtn{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 30px;
+}
+:host ::ng-deep .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #e8f3ff;
+}
+
+:host ::ng-deep .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+}
+.b-sm-4{
+    border-left: 1px solid #e9ecef;
+    min-height: 77vh;
+}
+:host ::ng-deep .p-tooltip-text{
+    font-size: 13px !important;
+}
+.emailCheckposition{
+    position: relative;
+    top: 6px;
+}
+.searchIcon{
+    position: absolute;
+    top: 33px;
+    right: 8px;
+    font-size: 18px;
+}
+.selectDp{
+    height: 28px; 
+    padding: 1px 10px; 
+    width: 120px;
+    border: 1px solid rgba(114, 112, 120, 0.14);
+}
+.f-12{
+    font-size: 12px;
+    font-weight: 600;
+}
+:host ::ng-deep {
+     .mat-expansion-panel-content {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    }
+    .mat-expansion-panel-body {
+        background-color: #f5f5f5;
+    }
+    .mat-expansion-panel-header {
+        background-color: #f5f5f5 !important; 
+    }
+    .mat-expansion-indicator::after {
+        position: relative;
+        top: -4px;
+    }
+        .p-multiselect-label-container {
+        //   width: 27vw !important;
+          // height: 35px;
+          font-size: 12px;
+        }
+        .p-multiselect {
+            height: 28px;
+            padding: 1px 10px;
+            width: 180px;
+            border: 1px solid rgba(114, 112, 120, 0.14);
+        }
+        .p-multiselect:not(.p-disabled):hover {
+          border-color: #e9ecef;
+        }
+        .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+          font-size: 12px;
+        }
+        .p-multiselect-panel .p-multiselect-header .p-checkbox {
+          display: none;
+        }
+        .p-multiselect-panel .p-multiselect-header .p-multiselect-filter-container .p-inputtext {
+          height: 28px;
+          font-size: 12px;
+        }
+        .p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
+          font-size: 12px;
+          font-weight: 600;
+        }
+        .p-multiselect .p-multiselect-label {
+            padding: 2px;
+            font-weight: 600;
+            color: #495057;
+        }
+        .p-multiselect .p-multiselect-trigger {
+            width: 10px;
+        }
+}
+.head-pos {
+    position: relative;
+    top: 2px;
+}
+.bg-btn-sm{
+    background: #313971;
+    color: white;
+}
+.custom-checkbox input[type="checkbox"],
+.custom-checkbox .checked {
+display: none;
+}
+
+.custom-checkbox input[type="checkbox"]:checked ~ .checked
+{
+display: inline-block;
+}
+
+.custom-checkbox input[type="checkbox"]:checked ~ .unchecked
+{
+display: none;
+}
+.checkPlace1 {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+}
+.labelPlace {
+    position: relative;
+    top: 4px;
+}
+.custom-checkbox .material-icons {
+    cursor: pointer;
+}
+@media screen and (max-width: 800px) {
+    .labelText{
+        font-size: 7px;
+    }
+    .labelTextT{
+        font-size: 7px;
+        top: -6px;
+    }
+    .selectDp{
+        height: 20px;
+        padding: 1px 10px;
+        width: 55px;
+    }
+    .form-control {
+        font-size: 7px;
+    }
+    .f-13{
+        font-size: 8px;
+    }
+    .ulF-14 {
+        font-size: 8px;
+        font-weight: 500;
+    }
+    .f-12{
+        font-size: 7px;
+    }
+}
+@media screen and (max-width: 1100px) and (min-width: 800px) { 
+    .labelText{
+        font-size: 10px;
+    }
+    .labelTextT{
+        font-size: 10px;
+        top: -4px;
+    }
+    .selectDp{
+        height: 24px;
+        padding: 1px 10px;
+        width: 85px;
+    }
+    .form-control {
+        font-size: 9px;
+    }
+    .f-13{
+        font-size: 10px;
+    }
+    .ulF-14 {
+        font-size: 10px;
+        font-weight: 500;
+    }
+    .f-12{
+        font-size: 9px;
+    }
+  }

@@ -1,0 +1,73 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2 
+kind: Deployment 
+metadata: 
+  name: server
+  namespace: rovedev
+spec: 
+  selector: 
+    matchLabels: 
+      app: server
+  replicas: 10 # tells deployment to run 2 pods matching the template 
+  revisionHistoryLimit: 0
+  template:
+    metadata: 
+      labels: 
+        app: server
+    spec: 
+      containers: 
+      - name: server 
+        image: roveregistry.azurecr.io/serina-server:rovedev
+        imagePullPolicy: Always
+        ports: 
+        - containerPort: 8000 
+        resources:
+          requests:
+            cpu: 150m
+          limits:
+            cpu: 250m
+        env:
+        - name: DATABASE_HOST
+          value: 'serina-qa-server1.mysql.database.azure.com'
+        - name: DATABASE_USER
+          value: serina
+        - name: DATABASE_PASS
+          value: dsserina
+        - name: DATABASE_DB
+          value: rove_hotels
+        - name: Azure_conn_str
+          value: DefaultEndpointsProtocol=https;AccountName=rovest001;AccountKey=I5mSGj5Ak1lTT3AOVwjD8oEdhpHVWPAQxCnv21cj8q0i/agOwjqPR79iQE3VfIVTNwcWYx8DX4i8IyXmdiYAlw==;EndpointSuffix=core.windows.net
+        - name: WAIT_HOSTS
+          value: serina-qa-server1.mysql.database.azure.com:3306 
+        - name: WAIT_HOSTS_TIMEOUT
+          value: "300"
+        - name: WAIT_SLEEP_INTERVAL   
+          value: "30"
+        - name: WAIT_HOST_CONNECT_TIMEOUT
+          value: "30"
+        - name: MAIL_USERNAME
+          value: serinaplus.dev@datasemantics.co
+        - name: MAIL_PASSWORD
+          value: ravager55@rocket
+        - name: STORAGE_ACC
+          value: rovest001
+        - name: STORAGE_KEY
+          value: I5mSGj5Ak1lTT3AOVwjD8oEdhpHVWPAQxCnv21cj8q0i/agOwjqPR79iQE3VfIVTNwcWYx8DX4i8IyXmdiYAlw==
+        - name: serina_tz
+          value: Asia/Dubai
+      imagePullSecrets:
+      - name: deploymentsecret
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-cluster
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: server

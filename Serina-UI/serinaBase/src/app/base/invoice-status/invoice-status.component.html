@@ -1,0 +1,127 @@
+<div class="pos_rel">
+  <span class="goBackIn ml-3" (click)="backToInvoice()">
+    <mat-icon class="goBack_pos" svgIcon="back_arrow"></mat-icon>
+  </span>
+  <h6 class="headh6 pl-80">
+    Invoice Status history -
+    <span class="f-13">
+      Invoice Number : <span style="color: #2b96e2">{{ invoiceNumber }}</span>
+    </span>
+  </h6>
+
+  <div class="max-h">
+    <!-- <div class="f-13 mb-3">Invoice Number : <span style="color: #2b96e2;">{{invoiceNumber}}</span></div> -->
+    <div class="d-flex justify-content-end mb-2">
+      <button class="btnUpload btn_extra_bg" (click)="download()">Download journey DOC</button>
+    </div>
+    <div class="bg-design-all b-top-left p-2">
+      <span *ngFor="let item of statusData; let i = index">
+        <span
+          [ngStyle]="{
+            visibility: item.DocumentHistoryLogs.CreatedOn
+              ? 'visible'
+              : 'hidden'
+          }"
+          class="date_box"
+          [class.circle-desc-active]="
+            orderStatus == item.dochistorystatus && i == statusData.length - 1
+          "
+        >
+          <span *ngIf="item.DocumentHistoryLogs.CreatedOn">{{
+            item.DocumentHistoryLogs?.CreatedOn + "Z" | date: "medium"
+          }}</span>
+        </span>
+        <span
+          class="circles"
+          [class.active]="
+            orderStatus == item.dochistorystatus && i == statusData.length - 1
+          "
+        ></span>
+        <!-- <span class="material-icons circles" [class.active]="((orderStatus == item.dochistorystatus) && (i == statusData.length-1))">
+                    check_circle
+                </span> -->
+
+        <div
+          class="circle-desc"
+          [class.circle-desc-active]="
+            orderStatus == item.dochistorystatus && i == statusData.length - 1
+          "
+        >
+          <div class="row">
+            <div class="col-sm-4 status_text">{{ item.dochistorystatus }}</div>
+            <div class="col-sm-7">
+              <div>
+                <span class="f-12">Done by</span> :
+                <span style="font-weight: 500"
+                  >{{ item.firstName }} {{ item.lastName }}</span
+                >
+              </div>
+              <div *ngIf="item.DocumentHistoryLogs.documentdescription">
+                <span class="f-12">Description</span> :
+                <span style="font-weight: 500">{{
+                  item.DocumentHistoryLogs.documentdescription
+                }}</span>
+              </div>
+              <div
+                *ngIf="
+                  item.documentFinancialStatus &&
+                  item.documentFinancialStatus != 'UNKNOWN'
+                "
+              >
+                <span class="f-12">Finance Info</span> :
+                <span style="font-weight: 500">{{
+                  item.documentFinancialStatus
+                }}</span>
+              </div>
+            </div>
+            <!-- <span class="action-i" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="manual"
+                              #p1="ngbPopover" placement="right" (click)="toggleRejection(p1, item)">
+                              <span><i class="fa fa-info-circle info_icon" aria-hidden="true"></i></span>
+                        </span> -->
+            <div class="f-12 rotateText col-sm-1">DONE</div>
+          </div>
+        </div>
+        <span class="bar" *ngIf="i != statusData.length - 1"></span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<ng-template #popContent let-comment="comments">
+  <ng-container>
+    <div class="f-12">
+      <div>
+        <span class="f-13">Done by</span> :
+        <span style="font-weight: 500"
+          >{{ comment.firstName }} {{ comment.lastName }}</span
+        >
+      </div>
+      <div *ngIf="comment.DocumentHistoryLogs.CreatedOn">
+        <span class="f-13">Time</span> :
+        <span style="font-weight: 500">{{
+          comment.DocumentHistoryLogs.CreatedOn + "Z" | date: "medium"
+        }}</span>
+      </div>
+      <div *ngIf="comment.DocumentHistoryLogs.documentdescription">
+        <span class="f-13">Description</span> :
+        <span style="font-weight: 500">{{
+          comment.DocumentHistoryLogs.documentdescription
+        }}</span>
+      </div>
+      <div
+        *ngIf="
+          comment.documentFinancialStatus &&
+          comment.documentFinancialStatus != 'UNKNOWN'
+        "
+      >
+        <span class="f-13">Finance Info</span> :
+        <span style="font-weight: 500">{{
+          comment.documentFinancialStatus
+        }}</span>
+      </div>
+    </div>
+    <!-- <div class="f-12">Please re-upload invoice</div> -->
+  </ng-container>
+</ng-template>
+
+<ng-template #popTitle let-language="language">Status Info</ng-template>
